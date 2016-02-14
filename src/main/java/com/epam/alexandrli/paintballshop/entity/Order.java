@@ -8,16 +8,16 @@ import java.util.List;
 public class Order extends BaseEntity {
     private UserProfile userProfile;
     private List<OrderLine> orderLines = new ArrayList<>();
-    private DateTime dateTime;
+    private DateTime date;
 
     public Order() {
     }
 
-    public Order(Integer id, UserProfile userProfile, List<OrderLine> orderLines, DateTime dateTime) {
+    public Order(Integer id, UserProfile userProfile, List<OrderLine> orderLines, DateTime date) {
         super(id);
         this.userProfile = userProfile;
         this.orderLines = orderLines;
-        this.dateTime = dateTime;
+        this.date = date;
     }
 
     public UserProfile getUserProfile() {
@@ -36,11 +36,19 @@ public class Order extends BaseEntity {
         this.orderLines = orderLines;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
+    public DateTime getDate() {
+        return date;
     }
 
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(DateTime date) {
+        this.date = date;
+    }
+
+    public boolean addProduct(OrderLine orderLine) {
+        return orderLines.add(orderLine);
+    }
+
+    public void removeProduct(OrderLine orderLine) {
+        orderLines.remove(orderLine);
     }
 }
