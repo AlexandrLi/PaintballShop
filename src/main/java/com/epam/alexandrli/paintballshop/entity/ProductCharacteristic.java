@@ -6,7 +6,7 @@ public class ProductCharacteristic extends NamedEntity {
     public ProductCharacteristic() {
     }
 
-    public ProductCharacteristic(int id, String name, String value) {
+    public ProductCharacteristic(Integer id, String name, String value) {
         super(id, name);
         this.value = value;
     }

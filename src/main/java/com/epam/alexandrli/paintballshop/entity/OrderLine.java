@@ -11,7 +11,7 @@ public class OrderLine extends BaseEntity {
     public OrderLine() {
     }
 
-    public OrderLine(int id, Product product, int amount, Money price, Order order) {
+    public OrderLine(Integer id, Product product, int amount, Money price, Order order) {
         super(id);
         this.product = product;
         this.amount = amount;

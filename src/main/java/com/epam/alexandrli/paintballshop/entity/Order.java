@@ -13,7 +13,7 @@ public class Order extends BaseEntity {
     public Order() {
     }
 
-    public Order(int id, UserProfile userProfile, List<OrderLine> orderLines, DateTime dateTime) {
+    public Order(Integer id, UserProfile userProfile, List<OrderLine> orderLines, DateTime dateTime) {
         super(id);
         this.userProfile = userProfile;
         this.orderLines = orderLines;

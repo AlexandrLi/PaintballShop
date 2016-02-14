@@ -6,14 +6,14 @@ public class UserProfile extends BaseEntity {
     private String password;
     private String firstName;
     private String lastName;
-    private String gender;
+    private Gender gender;
     private String country;
     private String phoneNumber;
 
     public UserProfile() {
     }
 
-    public UserProfile(int id, String email, String password, String firstName, String lastName, String gender, String country, String phoneNumber) {
+    public UserProfile(Integer id, String email, String password, String firstName, String lastName, Gender gender, String country, String phoneNumber) {
         super(id);
         this.email = email;
         this.password = password;
@@ -56,11 +56,11 @@ public class UserProfile extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

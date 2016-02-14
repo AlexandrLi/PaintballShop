@@ -6,7 +6,7 @@ public abstract class NamedEntity extends BaseEntity {
     public NamedEntity() {
     }
 
-    public NamedEntity(int id, String name) {
+    public NamedEntity(Integer id, String name) {
         super(id);
         this.name = name;
     }

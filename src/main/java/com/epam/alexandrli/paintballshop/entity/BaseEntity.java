@@ -2,17 +2,16 @@ package com.epam.alexandrli.paintballshop.entity;
 
 public abstract class BaseEntity {
 
-    private int id;
+    private Integer id;
 
     public BaseEntity() {
-
     }
 
-    public BaseEntity(int id) {
+    public BaseEntity(Integer id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -2,7 +2,7 @@ package com.epam.alexandrli.paintballshop.entity;
 
 import org.joda.money.Money;
 
-public abstract class Product extends NamedEntity {
+public class Product extends NamedEntity {
 
     private Money price;
     private int availableQuantity;
@@ -12,7 +12,7 @@ public abstract class Product extends NamedEntity {
     public Product() {
     }
 
-    public Product(int id, String name, Money price, int availableQuantity, ProductType type, String description) {
+    public Product(Integer id, String name, Money price, int availableQuantity, ProductType type, String description) {
         super(id, name);
         this.price = price;
         this.availableQuantity = availableQuantity;
@@ -51,4 +51,6 @@ public abstract class Product extends NamedEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }
