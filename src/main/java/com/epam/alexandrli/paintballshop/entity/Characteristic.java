@@ -1,12 +1,12 @@
 package com.epam.alexandrli.paintballshop.entity;
 
-public class ProductCharacteristic extends NamedEntity {
+public class Characteristic extends NamedEntity {
     private String value;
 
-    public ProductCharacteristic() {
+    public Characteristic() {
     }
 
-    public ProductCharacteristic(Integer id, String name, String value) {
+    public Characteristic(Integer id, String name, String value) {
         super(id, name);
         this.value = value;
     }

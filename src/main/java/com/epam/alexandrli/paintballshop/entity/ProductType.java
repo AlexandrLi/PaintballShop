@@ -5,12 +5,12 @@ import java.util.Set;
 
 public class ProductType extends NamedEntity {
 
-    private Set<ProductCharacteristic> characteristics = new HashSet<>();
+    private Set<Characteristic> characteristics = new HashSet<>();
 
     public ProductType() {
     }
 
-    public ProductType(int id, String name, Set<ProductCharacteristic> characteristics) {
+    public ProductType(int id, String name, Set<Characteristic> characteristics) {
         super(id, name);
         this.characteristics = characteristics;
     }
