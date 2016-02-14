@@ -52,5 +52,12 @@ public class Product extends NamedEntity {
         this.description = description;
     }
 
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "price=" + price +
+                ", type=" + type +
+                ", availableQuantity=" + availableQuantity +
+                '}';
+    }
 }
