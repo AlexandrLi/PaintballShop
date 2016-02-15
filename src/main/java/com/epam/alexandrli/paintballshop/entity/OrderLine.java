@@ -36,4 +36,11 @@ public class OrderLine extends BaseEntity implements Priceable {
         return product.getPrice().multipliedBy(amount);
     }
 
+    @Override
+    public String toString() {
+        return "OrderLine{" +
+                "product=" + product.getName() +
+                ", amount=" + amount +
+                '}';
+    }
 }
