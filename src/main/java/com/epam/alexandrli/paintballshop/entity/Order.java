@@ -7,11 +7,10 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order extends BaseEntity {
+public class Order extends BaseEntity implements Priceable {
     private UserProfile userProfile;
     private List<OrderLine> orderLines = new ArrayList<>();
     private DateTime date;
-    private Money totalPrice;
 
     public Order() {
     }
@@ -49,18 +48,18 @@ public class Order extends BaseEntity {
 
     public void addProduct(OrderLine orderLine) {
         orderLines.add(orderLine);
-        calculatePrice();
     }
 
     public void removeProduct(OrderLine orderLine) {
         orderLines.remove(orderLine);
-        calculatePrice();
     }
 
-    private void calculatePrice() {
-        totalPrice = Money.zero(CurrencyUnit.USD);
+    @Override
+    public Money getPrice() {
+        Money totalPrice = Money.zero(CurrencyUnit.USD);
         for (OrderLine orderLine : orderLines) {
             totalPrice.plus(orderLine.getPrice());
         }
+        return totalPrice;
     }
 }

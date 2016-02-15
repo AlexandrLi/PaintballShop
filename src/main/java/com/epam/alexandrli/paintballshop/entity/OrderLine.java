@@ -2,20 +2,18 @@ package com.epam.alexandrli.paintballshop.entity;
 
 import org.joda.money.Money;
 
-public class OrderLine extends BaseEntity {
+public class OrderLine extends BaseEntity implements Priceable {
     private Product product;
     private int amount;
-    private Money price;
     private Order order;
 
     public OrderLine() {
     }
 
-    public OrderLine(Integer id, Product product, int amount, Money price, Order order) {
+    public OrderLine(Integer id, Product product, int amount, Order order) {
         super(id);
         this.product = product;
         this.amount = amount;
-        this.price = price;
         this.order = order;
     }
 
@@ -35,12 +33,9 @@ public class OrderLine extends BaseEntity {
         this.amount = amount;
     }
 
+    @Override
     public Money getPrice() {
-        return price;
-    }
-
-    public void setPrice(Money price) {
-        this.price = price;
+        return product.getPrice().multipliedBy(amount);
     }
 
     public Order getOrder() {
