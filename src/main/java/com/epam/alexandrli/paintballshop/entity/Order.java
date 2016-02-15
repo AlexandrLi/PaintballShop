@@ -58,7 +58,7 @@ public class Order extends BaseEntity implements Priceable {
     public Money getPrice() {
         Money totalPrice = Money.zero(CurrencyUnit.USD);
         for (OrderLine orderLine : orderLines) {
-            totalPrice.plus(orderLine.getPrice());
+            totalPrice = totalPrice.plus(orderLine.getPrice());
         }
         return totalPrice;
     }
