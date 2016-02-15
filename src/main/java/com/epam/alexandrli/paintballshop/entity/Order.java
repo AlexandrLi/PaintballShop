@@ -1,5 +1,7 @@
 package com.epam.alexandrli.paintballshop.entity;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class Order extends BaseEntity {
     private UserProfile userProfile;
     private List<OrderLine> orderLines = new ArrayList<>();
     private DateTime date;
+    private Money totalPrice;
 
     public Order() {
     }
@@ -44,11 +47,20 @@ public class Order extends BaseEntity {
         this.date = date;
     }
 
-    public boolean addProduct(OrderLine orderLine) {
-        return orderLines.add(orderLine);
+    public void addProduct(OrderLine orderLine) {
+        orderLines.add(orderLine);
+        calculatePrice();
     }
 
     public void removeProduct(OrderLine orderLine) {
         orderLines.remove(orderLine);
+        calculatePrice();
+    }
+
+    private void calculatePrice() {
+        totalPrice = Money.zero(CurrencyUnit.USD);
+        for (OrderLine orderLine : orderLines) {
+            totalPrice.plus(orderLine.getPrice());
+        }
     }
 }
