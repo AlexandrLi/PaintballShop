@@ -30,10 +30,19 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testFilterProducts() {
+    public void testFilterAvailableProducts() {
         List<Product> filteredList = productList;
         assertTrue(filteredList.contains(secondProduct));
         filteredList = filterProducts(productList, isAvailable());
+        assertFalse(filteredList.contains(secondProduct));
+
+    }
+
+    @Test
+    public void testFilterProductsInPriceRange() {
+        List<Product> filteredList = productList;
+        assertTrue(filteredList.contains(secondProduct));
+        filteredList = filterProducts(productList, isInPriceRange(Money.parse("USD 50"), Money.parse("USD 100")));
         assertFalse(filteredList.contains(secondProduct));
 
     }
