@@ -9,16 +9,16 @@ import java.util.List;
 
 public class Order extends BaseEntity implements Priceable {
     private UserProfile userProfile;
-    private List<OrderLine> orderLines = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
     private DateTime date;
 
     public Order() {
     }
 
-    public Order(Integer id, UserProfile userProfile, List<OrderLine> orderLines, DateTime date) {
+    public Order(Integer id, UserProfile userProfile, List<OrderItem> orderItems, DateTime date) {
         super(id);
         this.userProfile = userProfile;
-        this.orderLines = orderLines;
+        this.orderItems = orderItems;
         this.date = date;
     }
 
@@ -30,12 +30,12 @@ public class Order extends BaseEntity implements Priceable {
         this.userProfile = userProfile;
     }
 
-    public List<OrderLine> getOrderLines() {
-        return orderLines;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setOrderLines(List<OrderLine> orderLines) {
-        this.orderLines = orderLines;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public DateTime getDate() {
@@ -46,19 +46,19 @@ public class Order extends BaseEntity implements Priceable {
         this.date = date;
     }
 
-    public void addProduct(OrderLine orderLine) {
-        orderLines.add(orderLine);
+    public void addProduct(OrderItem orderItem) {
+        orderItems.add(orderItem);
     }
 
-    public void removeProduct(OrderLine orderLine) {
-        orderLines.remove(orderLine);
+    public void removeProduct(OrderItem orderItem) {
+        orderItems.remove(orderItem);
     }
 
     @Override
     public Money getPrice() {
         Money totalPrice = Money.zero(CurrencyUnit.USD);
-        for (OrderLine orderLine : orderLines) {
-            totalPrice = totalPrice.plus(orderLine.getPrice());
+        for (OrderItem orderItem : orderItems) {
+            totalPrice = totalPrice.plus(orderItem.getPrice());
         }
         return totalPrice;
     }

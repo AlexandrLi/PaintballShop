@@ -8,17 +8,17 @@ import java.util.HashSet;
 
 import static junit.framework.Assert.assertEquals;
 
-public class OrderLineTest {
-    OrderLine firstLine;
-    OrderLine secondLine;
+public class OrderItemTest {
+    OrderItem firstLine;
+    OrderItem secondLine;
 
     @Before
     public void setUp() {
         Product firstProduct = new Product(5, "Mask", Money.parse("USD 100"), 5, new ProductType(11, "Masks", new HashSet<>()), "Black Mask");
         Product secondProduct = new Product(7, "Marker", Money.parse("USD 500"), 0, new ProductType(12, "Markers", new HashSet<>()), "Electronic Marker");
 
-        firstLine = new OrderLine(11, firstProduct, 2);
-        secondLine = new OrderLine(13, secondProduct, 1);
+        firstLine = new OrderItem(11, firstProduct, 2);
+        secondLine = new OrderItem(13, secondProduct, 1);
     }
 
     @Test

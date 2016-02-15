@@ -2,14 +2,14 @@ package com.epam.alexandrli.paintballshop.entity;
 
 import org.joda.money.Money;
 
-public class OrderLine extends BaseEntity implements Priceable {
+public class OrderItem extends BaseEntity implements Priceable {
     private Product product;
     private int amount;
 
-    public OrderLine() {
+    public OrderItem() {
     }
 
-    public OrderLine(Integer id, Product product, int amount) {
+    public OrderItem(Integer id, Product product, int amount) {
         super(id);
         this.product = product;
         this.amount = amount;
@@ -38,7 +38,7 @@ public class OrderLine extends BaseEntity implements Priceable {
 
     @Override
     public String toString() {
-        return "OrderLine{" +
+        return "OrderItem{" +
                 "product=" + product.getName() +
                 ", amount=" + amount +
                 '}';
