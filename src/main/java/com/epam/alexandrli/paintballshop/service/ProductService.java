@@ -1,6 +1,7 @@
 package com.epam.alexandrli.paintballshop.service;
 
 import com.epam.alexandrli.paintballshop.entity.Product;
+import org.joda.money.Money;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,6 +15,10 @@ public class ProductService {
 
     public static Predicate<Product> isAvailable() {
         return predicate -> predicate.getAvailableQuantity() > 0;
+    }
+
+    public static Predicate<Product> isInPriceRange(Money lowPrice, Money topPrice) {
+        return predicate -> predicate.getPrice().minus(lowPrice).isPositiveOrZero() && predicate.getPrice().minus(topPrice).isNegativeOrZero();
     }
 
     public static List<Product> filterProducts(List<Product> products, Predicate<Product> predicate) {
