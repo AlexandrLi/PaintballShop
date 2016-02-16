@@ -14,4 +14,12 @@ public class ProductType extends NamedEntity {
         super(id, name);
         this.characteristics = characteristics;
     }
+
+    public Set<Characteristic> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(Set<Characteristic> characteristics) {
+        this.characteristics = characteristics;
+    }
 }
