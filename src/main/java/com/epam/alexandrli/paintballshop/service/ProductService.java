@@ -11,11 +11,6 @@ import java.util.stream.Collectors;
 public class ProductService {
     public static final Comparator<Product> ID_ORDER = new IdComparator();
     public static final Comparator<Product> PRICE_ORDER = new PriceComparator();
-    public static final Comparator<Product> AVAILABILITY_ORDER = new AvailabilityComparator();
-
-    public static Predicate<Product> isAvailable() {
-        return predicate -> predicate.getAvailableQuantity() > 0;
-    }
 
     public static Predicate<Product> isInPriceRange(Money lowPrice, Money topPrice) {
         return predicate -> predicate.getPrice().minus(lowPrice).isPositiveOrZero() && predicate.getPrice().minus(topPrice).isNegativeOrZero();
@@ -29,14 +24,6 @@ public class ProductService {
         @Override
         public int compare(Product firstProduct, Product secondProduct) {
             return firstProduct.getPrice().compareTo(secondProduct.getPrice());
-        }
-    }
-
-    private static class AvailabilityComparator implements Comparator<Product> {
-        @Override
-        public int compare(Product firstProduct, Product secondProduct) {
-
-            return Integer.compare(firstProduct.getAvailableQuantity(), secondProduct.getAvailableQuantity());
         }
     }
 
