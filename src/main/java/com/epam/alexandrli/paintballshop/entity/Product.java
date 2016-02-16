@@ -2,12 +2,15 @@ package com.epam.alexandrli.paintballshop.entity;
 
 import org.joda.money.Money;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Product extends NamedEntity {
 
     private Money price;
-    private int availableQuantity;
     private ProductType type;
     private String description;
+    private Map<Characteristic, CharacteristicValue> characteristics = new HashMap<>();
 
     public Product() {
     }
@@ -15,7 +18,6 @@ public class Product extends NamedEntity {
     public Product(Integer id, String name, Money price, int availableQuantity, ProductType type, String description) {
         super(id, name);
         this.price = price;
-        this.availableQuantity = availableQuantity;
         this.type = type;
         this.description = description;
     }
@@ -26,14 +28,6 @@ public class Product extends NamedEntity {
 
     public void setPrice(Money price) {
         this.price = price;
-    }
-
-    public int getAvailableQuantity() {
-        return availableQuantity;
-    }
-
-    public void setAvailableQuantity(int availableQuantity) {
-        this.availableQuantity = availableQuantity;
     }
 
     public ProductType getType() {
@@ -56,8 +50,6 @@ public class Product extends NamedEntity {
     public String toString() {
         return "Product{" +
                 "price=" + price +
-                ", type=" + type +
-                ", availableQuantity=" + availableQuantity +
-                '}';
+                ", type=" + type + '}';
     }
 }
