@@ -30,15 +30,6 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testFilterAvailableProducts() {
-        List<Product> filteredList = productList;
-        assertTrue(filteredList.contains(secondProduct));
-        filteredList = filterProducts(productList, isAvailable());
-        assertFalse(filteredList.contains(secondProduct));
-
-    }
-
-    @Test
     public void testFilterProductsInPriceRange() {
         List<Product> filteredList = productList;
         assertTrue(filteredList.contains(secondProduct));
@@ -53,14 +44,6 @@ public class ProductServiceTest {
         assertEquals(thirdProduct, productList.get(0));
         assertEquals(firstProduct, productList.get(1));
         assertEquals(secondProduct, productList.get(2));
-    }
-
-    @Test
-    public void testAvailabilityComparator() {
-        productList.sort(AVAILABILITY_ORDER);
-        assertEquals(secondProduct, productList.get(0));
-        assertEquals(thirdProduct, productList.get(1));
-        assertEquals(firstProduct, productList.get(2));
     }
 
     @Test
