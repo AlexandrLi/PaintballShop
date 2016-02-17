@@ -1,5 +1,8 @@
 package com.epam.alexandrli.paintballshop.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserProfile extends BaseEntity {
     private String email;
     // TODO: 07.02.2016 find type for password variable
@@ -7,20 +10,20 @@ public class UserProfile extends BaseEntity {
     private String firstName;
     private String lastName;
     private Gender gender;
-    private String country;
+    private List<Address> addressList = new ArrayList<>();
     private String phoneNumber;
 
     public UserProfile() {
     }
 
-    public UserProfile(Integer id, String email, String password, String firstName, String lastName, Gender gender, String country, String phoneNumber) {
+    public UserProfile(Integer id, String email, String password, String firstName, String lastName, Gender gender, List<Address> addressList, String phoneNumber) {
         super(id);
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.country = country;
+        this.addressList = addressList;
         this.phoneNumber = phoneNumber;
     }
 
@@ -64,12 +67,12 @@ public class UserProfile extends BaseEntity {
         this.gender = gender;
     }
 
-    public String getCountry() {
-        return country;
+    public List<Address> getAddressList() {
+        return addressList;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
     }
 
     public String getPhoneNumber() {
