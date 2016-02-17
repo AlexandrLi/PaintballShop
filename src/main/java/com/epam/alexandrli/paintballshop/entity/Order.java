@@ -11,15 +11,17 @@ public class Order extends BaseEntity implements Priceable {
     private UserProfile userProfile;
     private List<OrderItem> orderItems = new ArrayList<>();
     private DateTime date;
+    private String comment;
 
     public Order() {
     }
 
-    public Order(Integer id, UserProfile userProfile, List<OrderItem> orderItems, DateTime date) {
+    public Order(Integer id, UserProfile userProfile, List<OrderItem> orderItems, DateTime date, String comment) {
         super(id);
         this.userProfile = userProfile;
         this.orderItems = orderItems;
         this.date = date;
+        this.comment = comment;
     }
 
     public UserProfile getUserProfile() {
@@ -44,6 +46,14 @@ public class Order extends BaseEntity implements Priceable {
 
     public void setDate(DateTime date) {
         this.date = date;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void addProduct(OrderItem orderItem) {
