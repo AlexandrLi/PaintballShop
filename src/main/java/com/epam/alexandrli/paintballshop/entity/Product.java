@@ -10,7 +10,7 @@ public class Product extends NamedEntity {
     private Money price;
     private ProductType type;
     private String description;
-    private Map<Characteristic, CharacteristicValue> characteristics = new HashMap<>();
+    private Map<Characteristic, String> characteristics = new HashMap<>();
 
     public Product() {
     }
