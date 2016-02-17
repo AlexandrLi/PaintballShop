@@ -5,14 +5,15 @@ import org.joda.money.Money;
 public class OrderItem extends BaseEntity implements Priceable {
     private Product product;
     private int amount;
+    private Order order;
 
     public OrderItem() {
     }
 
-    public OrderItem(Integer id, Product product, int amount) {
-        super(id);
+    public OrderItem(Product product, int amount, Order order) {
         this.product = product;
         this.amount = amount;
+        this.order = order;
     }
 
     public Product getProduct() {
@@ -31,6 +32,14 @@ public class OrderItem extends BaseEntity implements Priceable {
         this.amount = amount;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Override
     public Money getPrice() {
         return product.getPrice().multipliedBy(amount);
@@ -40,7 +49,6 @@ public class OrderItem extends BaseEntity implements Priceable {
     public String toString() {
         return "OrderItem{" +
                 "product=" + product.getName() +
-                ", amount=" + amount +
-                '}';
+                ", amount=" + amount + '}';
     }
 }
