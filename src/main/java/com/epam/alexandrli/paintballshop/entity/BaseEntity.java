@@ -25,8 +25,10 @@ public abstract class BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
 
         BaseEntity that = (BaseEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
+        if (this.id == null || that.id == null) {
+            throw new NullPointerException();
+        }
+        return id.equals(that.id);
 
     }
 
