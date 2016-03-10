@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
+import java.util.List;
 
 public class Runner {
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
@@ -14,9 +15,11 @@ public class Runner {
 
         SAXParser saxParser = factory.newSAXParser();
         MyHandler handler = new MyHandler();
-        saxParser.parse(Runner.class.getClassLoader().getResourceAsStream("test.xml"), handler);
+        saxParser.parse(Runner.class.getClassLoader().getResourceAsStream("users.xml"), handler);
 
-        UserProfile userFromXML = handler.userFromXML;
-        System.out.println(userFromXML);
+        List<UserProfile> users = handler.users;
+        for (UserProfile user : users) {
+            System.out.println(user);
+        }
     }
 }
