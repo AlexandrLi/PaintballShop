@@ -16,4 +16,8 @@ public class Stock extends NamedEntity {
     public void setStockItems(Map<Product, Integer> stockItems) {
         this.stockItems = stockItems;
     }
+
+    public Integer addProduct(Product product, Integer quantity) {
+        return stockItems.put(product, quantity);
+    }
 }

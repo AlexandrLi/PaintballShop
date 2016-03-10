@@ -21,9 +21,9 @@ public class ProductServiceTest {
 
     @Before
     public void setUp() {
-        firstProduct = new Product(5, "Mask", Money.parse("USD 100"), 5, new ProductType(11, "Masks", new HashSet<>()), "Black Mask");
-        secondProduct = new Product(7, "Marker", Money.parse("USD 500"), 0, new ProductType(12, "Markers", new HashSet<>()), "Electronic Marker");
-        thirdProduct = new Product(3, "Tank", Money.parse("USD 50"), 2, new ProductType(13, "Tanks", new HashSet<>()), "Carbon Tank");
+        firstProduct = new Product(5, "Mask", Money.parse("USD 100"), new ProductType(11, "Masks", new HashSet<>()), "Black Mask");
+        secondProduct = new Product(7, "Marker", Money.parse("USD 500"), new ProductType(12, "Markers", new HashSet<>()), "Electronic Marker");
+        thirdProduct = new Product(3, "Tank", Money.parse("USD 50"), new ProductType(13, "Tanks", new HashSet<>()), "Carbon Tank");
         productList.add(firstProduct);
         productList.add(secondProduct);
         productList.add(thirdProduct);

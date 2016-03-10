@@ -9,13 +9,13 @@ public class Product extends NamedEntity {
 
     private Money price;
     private ProductType type;
-    private String description;
     private Map<Characteristic, String> characteristics = new HashMap<>();
+    private String description;
 
     public Product() {
     }
 
-    public Product(Integer id, String name, Money price, int availableQuantity, ProductType type, String description) {
+    public Product(Integer id, String name, Money price, ProductType type, String description) {
         super(id, name);
         this.price = price;
         this.type = type;
