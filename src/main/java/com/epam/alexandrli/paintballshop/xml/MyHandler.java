@@ -6,56 +6,51 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MyHandler extends DefaultHandler {
 
     UserProfile userFromXML;
-    boolean id;
-    boolean email;
-    boolean password;
-    boolean firstName;
-    boolean lastName;
-    boolean phoneNumber;
-    String[] varNames = {"id", "email", "password", "firstName", "lastName", "phoneNumber"};
+    List<UserProfile> users = new ArrayList<>();
+    Map<String, Boolean> varMap = new HashMap<>();
+
+
+    public MyHandler() {
+        varMap.put("email", false);
+        varMap.put("password", false);
+        varMap.put("firstName", false);
+        varMap.put("lastName", false);
+        varMap.put("phoneNumber", false);
+    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equalsIgnoreCase("UserProfile")) {
+            String id = attributes.getValue("id");
             userFromXML = new UserProfile();
-        } else if (qName.equalsIgnoreCase("id")) {
-            id = true;
-        } else if (qName.equalsIgnoreCase("email")) {
-            email = true;
-        } else if (qName.equalsIgnoreCase("password")) {
-            password = true;
-        } else if (qName.equalsIgnoreCase("firstName")) {
-            firstName = true;
-        } else if (qName.equalsIgnoreCase("lastName")) {
-            lastName = true;
-        } else if (qName.equalsIgnoreCase("phoneNumber")) {
-            phoneNumber = true;
+            userFromXML.setId(Integer.parseInt(id));
+        } else if (varMap.containsKey(qName)) {
+            varMap.put(qName, true);
         }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
+        if (userFromXML.getClass().getSimpleName().equalsIgnoreCase(qName)) {
+            users.add(userFromXML);
+        }
         System.out.println("Element parsed: " + qName);
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        boolean[] variables = {id, email, password, firstName, lastName, phoneNumber};
         String value = new String(ch, start, length);
-
-        for (int i = 0; i < variables.length; i++) {
-            if (variables[i]) {
-                if (varNames[i].equals("id")) {
-                    userFromXML.setId(Integer.parseInt(value));
-                    id = false;
-                } else {
-                    setFieldUsingReflection(value, varNames[i]);
-                }
-
+        for (Map.Entry<String, Boolean> varPair : varMap.entrySet()) {
+            if (varPair.getValue()) {
+                setFieldUsingReflection(value, varPair.getKey());
             }
         }
     }
@@ -78,6 +73,7 @@ public class MyHandler extends DefaultHandler {
                         e.printStackTrace();
                     }
                 }
+                varMap.put(varName, false);
             }
         }
     }
