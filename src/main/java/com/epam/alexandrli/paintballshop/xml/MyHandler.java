@@ -13,10 +13,13 @@ import java.util.Map;
 
 public class MyHandler extends DefaultHandler {
 
-    UserProfile userFromXML;
-    List<UserProfile> users = new ArrayList<>();
-    Map<String, Boolean> varMap = new HashMap<>();
+    private UserProfile userFromXML;
+    private List<UserProfile> users = new ArrayList<>();
+    private Map<String, Boolean> varMap = new HashMap<>();
 
+    public List<UserProfile> getUsers() {
+        return users;
+    }
 
     public MyHandler() {
         varMap.put("email", false);

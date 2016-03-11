@@ -17,7 +17,7 @@ public class Runner {
         MyHandler handler = new MyHandler();
         saxParser.parse(Runner.class.getClassLoader().getResourceAsStream("users.xml"), handler);
 
-        List<UserProfile> users = handler.users;
+        List<UserProfile> users = handler.getUsers();
         for (UserProfile user : users) {
             System.out.println(user);
         }
