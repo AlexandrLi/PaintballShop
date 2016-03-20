@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product>
+        <id>1</id>
+        <name>Proto Reflex Rail 2013</name>
+        <price>USD 400</price>
+        <type>Paintball Marker</type>
+        <description>This is paintball marker manufactured by dye precision inc.</description>
+    </product>
+    <product>
+        <id>2</id>
+        <name>DYE 2015 DM</name>
+        <price>USD 1000</price>
+        <type>Paintball Marker</type>
+        <description>This is paintball marker manufactured by dye precision inc.</description>
+    </product>
+</products>
