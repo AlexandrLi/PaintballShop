@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order extends BaseEntity implements Priceable {
-    private UserProfile userProfile;
+    private User user;
     private List<OrderItem> orderItems = new ArrayList<>();
     private DateTime date;
     private String comment;
@@ -16,20 +16,20 @@ public class Order extends BaseEntity implements Priceable {
     public Order() {
     }
 
-    public Order(Integer id, UserProfile userProfile, List<OrderItem> orderItems, DateTime date, String comment) {
+    public Order(Integer id, User user, List<OrderItem> orderItems, DateTime date, String comment) {
         super(id);
-        this.userProfile = userProfile;
+        this.user = user;
         this.orderItems = orderItems;
         this.date = date;
         this.comment = comment;
     }
 
-    public UserProfile getUserProfile() {
-        return userProfile;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<OrderItem> getOrderItems() {

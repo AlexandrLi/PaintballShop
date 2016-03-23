@@ -30,7 +30,7 @@ public class OrderTest {
         orderItems.add(firstLine);
         orderItems.add(secondLine);
         orderItems.add(thirdLine);
-        order = new Order(333, new UserProfile(), orderItems, new DateTime(), "Test");
+        order = new Order(333, new User(), orderItems, new DateTime(), "Test");
     }
 
     @Test

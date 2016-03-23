@@ -3,7 +3,7 @@ package com.epam.alexandrli.paintballshop.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserProfile extends BaseEntity {
+public class User extends BaseEntity {
     private String email;
     // TODO: 07.02.2016 find type for password variable
     private String password;
@@ -13,10 +13,10 @@ public class UserProfile extends BaseEntity {
     private List<Address> addressList = new ArrayList<>();
     private String phoneNumber;
 
-    public UserProfile() {
+    public User() {
     }
 
-    public UserProfile(Integer id, String email, String password, String firstName, String lastName, Gender gender, List<Address> addressList, String phoneNumber) {
+    public User(Integer id, String email, String password, String firstName, String lastName, Gender gender, List<Address> addressList, String phoneNumber) {
         super(id);
         this.email = email;
         this.password = password;
