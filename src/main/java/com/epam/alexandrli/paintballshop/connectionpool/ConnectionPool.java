@@ -195,12 +195,12 @@ public class ConnectionPool implements DataSource {
         @Override
         public void close() throws SQLException {
             try {
-                connection.setAutoCommit(true);
-                usedConnections.remove(connection);
-                if (connection.isClosed()) {
+                setAutoCommit(true);
+                usedConnections.remove(this);
+                if (isClosed()) {
                     initConnections(1);
                 } else {
-                    freeConnections.put((PooledConnection) connection);
+                    freeConnections.put(this);
                 }
             } catch (SQLException | InterruptedException e) {
                 throw new ConnectionPoolException("Couldn't release current connection", e);
