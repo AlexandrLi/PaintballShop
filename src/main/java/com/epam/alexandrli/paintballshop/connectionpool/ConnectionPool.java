@@ -80,6 +80,7 @@ public class ConnectionPool implements DataSource {
         try {
             pooledConnection = freeConnections.take();
             usedConnections.put(pooledConnection);
+            logger.debug("connection used. freeCon: {} usedCon: {}", freeConnections.size(), usedConnections.size());
         } catch (InterruptedException e) {
             throw new ConnectionPoolException("Couldn't get connection", e);
         }
@@ -202,6 +203,7 @@ public class ConnectionPool implements DataSource {
                 } else {
                     freeConnections.put(this);
                 }
+                logger.debug("connection released. freeCon: {} usedCon: {}", freeConnections.size(), usedConnections.size());
             } catch (SQLException | InterruptedException e) {
                 throw new ConnectionPoolException("Couldn't release current connection", e);
             }
