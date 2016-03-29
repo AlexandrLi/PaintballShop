@@ -7,15 +7,11 @@ public abstract class BaseEntity {
     public BaseEntity() {
     }
 
-    public BaseEntity(Integer id) {
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -15,19 +15,20 @@ public class Product extends NamedEntity {
     public Product() {
     }
 
-    public Product(Integer id, String name, Money price, ProductType type, String description) {
-        super(id, name);
-        this.price = price;
-        this.type = type;
-        this.description = description;
-    }
-
     public Money getPrice() {
         return price;
     }
 
     public void setPrice(Money price) {
         this.price = price;
+    }
+
+    public Map<Characteristic, String> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(Map<Characteristic, String> characteristics) {
+        this.characteristics = characteristics;
     }
 
     public ProductType getType() {
@@ -46,10 +47,4 @@ public class Product extends NamedEntity {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "price=" + price +
-                ", type=" + type + '}';
-    }
 }

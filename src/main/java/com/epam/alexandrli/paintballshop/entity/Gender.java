@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.entity;
 
-public enum Gender {
-    MALE, FEMALE, UNDEFINED
+public class Gender extends NamedEntity {
+    public Gender() {
+    }
 }

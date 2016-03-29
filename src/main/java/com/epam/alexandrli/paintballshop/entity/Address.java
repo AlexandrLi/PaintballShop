@@ -10,15 +10,6 @@ public class Address extends BaseEntity {
     public Address() {
     }
 
-    public Address(Integer id, String country, String city, String street, String buildingNumber, String apartmentNumber) {
-        super(id);
-        this.country = country;
-        this.city = city;
-        this.street = street;
-        this.buildingNumber = buildingNumber;
-        this.apartmentNumber = apartmentNumber;
-    }
-
     public String getCountry() {
         return country;
     }

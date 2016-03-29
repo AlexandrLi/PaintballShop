@@ -5,26 +5,23 @@ import java.util.List;
 
 public class User extends BaseEntity {
     private String email;
-    // TODO: 07.02.2016 find type for password variable
     private String password;
     private String firstName;
     private String lastName;
     private Gender gender;
     private List<Address> addressList = new ArrayList<>();
+    private List<Image> images = new ArrayList<>();
     private String phoneNumber;
 
     public User() {
     }
 
-    public User(Integer id, String email, String password, String firstName, String lastName, Gender gender, List<Address> addressList, String phoneNumber) {
-        super(id);
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.addressList = addressList;
-        this.phoneNumber = phoneNumber;
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public String getEmail() {
