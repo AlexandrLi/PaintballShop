@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.DAO2;
+package com.epam.alexandrli.paintballshop.dao;
 
 public abstract class AbstractDaoFactory {
     public static final int JDBC = 0;

@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.DAO2;
+package com.epam.alexandrli.paintballshop.dao;
 
 import java.sql.Connection;
 
