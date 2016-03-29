@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.DAO2;
 
 import com.epam.alexandrli.paintballshop.entity.Gender;
 
@@ -16,9 +16,9 @@ public class Runner {
 //        address.setApartmentNumber("37");
 //        Gender gender = new Gender();
 //        gender.setName("Мужчина");
-//        dao.insert(gender);
+//        DAO2.insert(gender);
 //        gender.setName("Женщина");
-//        dao.insert(gender);
+//        DAO2.insert(gender);
 //        System.out.println(gender.getId());
 
         Gender gender1 = (Gender) dao.read(3);

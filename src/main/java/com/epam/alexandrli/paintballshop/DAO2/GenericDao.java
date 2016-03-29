@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.DAO2;
 
 import java.sql.SQLException;
 import java.util.List;

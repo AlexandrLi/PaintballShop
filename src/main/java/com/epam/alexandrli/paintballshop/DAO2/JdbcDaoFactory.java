@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.DAO2;
 
 import com.epam.alexandrli.paintballshop.connectionpool.ConnectionPool;
 
@@ -17,7 +17,7 @@ public class JdbcDaoFactory extends AbstractDaoFactory {
         String inputClassName = clazz.getSimpleName();
         AbstractJdbcDao daoObject;
         try {
-            daoObject = (AbstractJdbcDao) Class.forName("com.epam.alexandrli.paintballshop.dao." + inputClassName + "Dao").newInstance();
+            daoObject = (AbstractJdbcDao) Class.forName("com.epam.alexandrli.paintballshop.DAO2." + inputClassName + "Dao").newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new DaoException("Dao object for " + clazz + " not found.", e);
         }
