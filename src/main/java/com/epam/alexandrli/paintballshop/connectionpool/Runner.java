@@ -28,7 +28,7 @@ public class Runner {
                 counter.incrementAndGet();
                 try (Connection connection = connectionPool.getConnection();
                      Statement statement = connection.createStatement();
-                     ResultSet resultSet = statement.executeQuery("SELECT * FROM products")) {
+                     ResultSet resultSet = statement.executeQuery("SELECT * FROM product")) {
                     Thread.sleep(10L);
                 } catch (SQLException | InterruptedException e) {
                     e.printStackTrace();
