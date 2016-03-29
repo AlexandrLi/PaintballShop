@@ -10,11 +10,6 @@ public class ProductType extends NamedEntity {
     public ProductType() {
     }
 
-    public ProductType(int id, String name, Set<Characteristic> characteristics) {
-        super(id, name);
-        this.characteristics = characteristics;
-    }
-
     public Set<Characteristic> getCharacteristics() {
         return characteristics;
     }

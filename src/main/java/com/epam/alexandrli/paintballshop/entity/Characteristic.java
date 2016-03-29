@@ -6,11 +6,6 @@ public class Characteristic extends NamedEntity {
     public Characteristic() {
     }
 
-    public Characteristic(Integer id, String name, ProductType type) {
-        super(id, name);
-        this.type = type;
-    }
-
     public ProductType getType() {
         return type;
     }

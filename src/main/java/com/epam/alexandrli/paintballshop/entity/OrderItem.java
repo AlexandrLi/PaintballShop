@@ -10,12 +10,6 @@ public class OrderItem extends BaseEntity implements Priceable {
     public OrderItem() {
     }
 
-    public OrderItem(Product product, int amount, Order order) {
-        this.product = product;
-        this.amount = amount;
-        this.order = order;
-    }
-
     public Product getProduct() {
         return product;
     }
@@ -45,10 +39,4 @@ public class OrderItem extends BaseEntity implements Priceable {
         return product.getPrice().multipliedBy(amount);
     }
 
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                "product=" + product.getName() +
-                ", amount=" + amount + '}';
-    }
 }

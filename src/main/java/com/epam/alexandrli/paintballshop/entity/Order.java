@@ -11,17 +11,9 @@ public class Order extends BaseEntity implements Priceable {
     private User user;
     private List<OrderItem> orderItems = new ArrayList<>();
     private DateTime date;
-    private String comment;
+    private String description;
 
     public Order() {
-    }
-
-    public Order(Integer id, User user, List<OrderItem> orderItems, DateTime date, String comment) {
-        super(id);
-        this.user = user;
-        this.orderItems = orderItems;
-        this.date = date;
-        this.comment = comment;
     }
 
     public User getUser() {
@@ -48,12 +40,12 @@ public class Order extends BaseEntity implements Priceable {
         this.date = date;
     }
 
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void addProduct(OrderItem orderItem) {

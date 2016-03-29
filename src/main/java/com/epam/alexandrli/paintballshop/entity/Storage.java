@@ -5,8 +5,17 @@ import java.util.Map;
 
 public class Storage extends NamedEntity {
     private Map<Product, Integer> storageItems = new HashMap<>();
+    private String description;
 
     public Storage() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Map<Product, Integer> getStorageItems() {
