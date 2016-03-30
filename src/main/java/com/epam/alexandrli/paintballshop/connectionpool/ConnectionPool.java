@@ -41,7 +41,7 @@ public class ConnectionPool implements DataSource {
         initConnections(connectionsLimit);
     }
 
-    public static ConnectionPool getInstance() {
+    public static DataSource getInstance() {
         return InstanceHolder.instance;
     }
 
@@ -143,7 +143,7 @@ public class ConnectionPool implements DataSource {
     }
 
     private static class InstanceHolder {
-        static final ConnectionPool instance = new ConnectionPool();
+        static final DataSource instance = new ConnectionPool();
     }
 
     private class PooledConnection implements Connection {
