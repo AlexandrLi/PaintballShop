@@ -21,18 +21,6 @@ public class GenderDao extends AbstractJdbcDao<Gender> {
     }
 
     @Override
-    public Gender read(int id) throws SQLException {
-        Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM gender WHERE id=" + id);
-        Gender gender = new Gender();
-        while (rs.next()) {
-            gender.setId(rs.getInt("id"));
-            gender.setName(rs.getString("name"));
-        }
-        return gender;
-    }
-
-    @Override
     public List<Gender> readAll() {
         return null;
     }
@@ -45,5 +33,19 @@ public class GenderDao extends AbstractJdbcDao<Gender> {
     @Override
     public void delete(Gender gender) {
 
+    }
+
+    @Override
+    protected Gender prepareObject(ResultSet rs) throws DaoException {
+        Gender gender = new Gender();
+        try {
+            while (rs.next()) {
+                gender.setId(rs.getInt("id"));
+                gender.setName(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't set object variables from db", e);
+        }
+        return gender;
     }
 }

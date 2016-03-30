@@ -2,13 +2,15 @@ package com.epam.alexandrli.paintballshop.dao;
 
 import com.epam.alexandrli.paintballshop.connectionpool.ConnectionPool;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class JdbcDaoFactory extends AbstractDaoFactory {
     private Connection connection;
 
-    public JdbcDaoFactory() {
-        ConnectionPool pool = ConnectionPool.getInstance();
+    public JdbcDaoFactory() throws SQLException {
+        DataSource pool = ConnectionPool.getInstance();
         connection = pool.getConnection();
     }
 
@@ -24,4 +26,13 @@ public class JdbcDaoFactory extends AbstractDaoFactory {
         daoObject.setConnection(connection);
         return daoObject;
     }
+
+    public void beginTransaction() throws DaoException {
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't setAutoCommit to false", e);
+        }
+    }
+
 }

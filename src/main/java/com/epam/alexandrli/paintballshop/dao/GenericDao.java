@@ -7,7 +7,7 @@ public interface GenericDao<T> {
 
     void insert(T t) throws SQLException;
 
-    T read(int id) throws SQLException;
+    T read(int id) throws DaoException;
 
     List<T> readAll();
 

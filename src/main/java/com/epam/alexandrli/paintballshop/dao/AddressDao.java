@@ -28,8 +28,21 @@ public class AddressDao extends AbstractJdbcDao<Address> {
     }
 
     @Override
-    public Address read(int id) {
-        return null;
+    protected Address prepareObject(ResultSet rs) throws DaoException {
+        Address address = new Address();
+        try {
+            while (rs.next()) {
+                address.setId(rs.getInt("id"));
+                address.setCountry(rs.getString("country"));
+                address.setCity(rs.getString("city"));
+                address.setStreet(rs.getString("street"));
+                address.setBuildingNumber(rs.getString("building_number"));
+                address.setApartmentNumber(rs.getString("apartment_number"));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't set object variables from db", e);
+        }
+        return address;
     }
 
     @Override
