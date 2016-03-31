@@ -1,9 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
     Connection connection;
@@ -19,16 +16,40 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
         this.connection = connection;
     }
 
-    protected abstract T prepareObject(ResultSet rs) throws DaoException;
+    protected abstract String getQueryForInsert();
 
-    public T read(int id) throws DaoException {
-        T resultObject;
-        try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM gender WHERE id=" + id)) {
-            resultObject = prepareObject(rs);
+    protected abstract String getQueryToFindByPK();
+
+    protected abstract void setVariablesForPreparedStatement(T t, PreparedStatement ps) throws SQLException;
+
+    protected abstract void setResultObjectId(T t, ResultSet rs) throws SQLException;
+
+    protected abstract T getObjectFromResultSet(ResultSet rs) throws SQLException;
+
+    public void insert(T t) throws DaoException {
+        try (PreparedStatement ps = connection.prepareStatement(getQueryForInsert(), Statement.RETURN_GENERATED_KEYS)) {
+            setVariablesForPreparedStatement(t, ps);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            while (rs.next()) {
+                setResultObjectId(t, rs);
+            }
         } catch (SQLException e) {
-            throw new DaoException("Couldn't read object from db", e);
+            throw new DaoException("Couldn't insert Gender Object to db", e);
         }
-        return resultObject;
     }
+
+    public T findByPK(int id) throws DaoException {
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(getQueryToFindByPK() + id)) {
+            rs.next();
+            return getObjectFromResultSet(rs);
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't find object by current id", e);
+        }
+    }
+
+
 }
+
+
