@@ -14,7 +14,7 @@ public abstract class DaoFactory implements AutoCloseable {
         }
     }
 
-    public abstract GenericDao getDao(Class clazz);
+    public abstract <T> GenericDao<T> getDao(Class<T> clazz);
 
     public abstract void beginTransaction() throws DaoException;
 

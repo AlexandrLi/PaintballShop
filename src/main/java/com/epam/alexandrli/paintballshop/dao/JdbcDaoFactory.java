@@ -23,11 +23,13 @@ public class JdbcDaoFactory extends DaoFactory {
     }
 
     @Override
-    public GenericDao getDao(Class clazz) throws DaoException {
-        String inputClassName = clazz.getSimpleName();
-        AbstractJdbcDao daoObject;
+    public <T> GenericDao<T> getDao(Class<T> clazz) throws DaoException {
+        AbstractJdbcDao<T> daoObject;
         try {
-            daoObject = (AbstractJdbcDao) Class.forName("com.epam.alexandrli.paintballshop.dao." + inputClassName + "Dao").newInstance();
+            String inputClassName = clazz.getSimpleName();
+            String packageName = this.getClass().getPackage().getName();
+            String resultClassName = String.format("%s.%sDao", packageName, inputClassName);
+            daoObject = (AbstractJdbcDao<T>) Class.forName(resultClassName).newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new DaoException("Dao object for " + clazz + " not found.", e);
         }
