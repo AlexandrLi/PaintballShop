@@ -1,17 +1,21 @@
 package com.epam.alexandrli.paintballshop.dao;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface GenericDao<T> {
 
-    void insert(T t) throws SQLException;
+    void insert(T t) throws DaoException;
 
-    T read(int id) throws DaoException;
+    T findByPK(int id) throws DaoException;
 
-    List<T> readAll();
+    List<T> findAllByParams(Map<String, String> params) throws DaoException;
 
-    void update(T t);
+    List<T> findAll() throws DaoException;
 
-    void delete(T t);
+    List<T> findAll(int pageNumber, int pageSize) throws DaoException;
+
+    void update(T t) throws DaoException;
+
+    void delete(int id) throws DaoException;
 }
