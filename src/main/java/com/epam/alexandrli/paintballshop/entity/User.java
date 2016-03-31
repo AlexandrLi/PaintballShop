@@ -10,18 +10,9 @@ public class User extends BaseEntity {
     private String lastName;
     private Gender gender;
     private List<Address> addressList = new ArrayList<>();
-    private List<Image> images = new ArrayList<>();
     private String phoneNumber;
 
     public User() {
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
     }
 
     public String getEmail() {
