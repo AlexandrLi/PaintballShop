@@ -6,7 +6,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class JdbcDaoFactory extends AbstractDaoFactory {
+public class JdbcDaoFactory extends DaoFactory {
     private Connection connection;
 
     public JdbcDaoFactory() throws SQLException {
@@ -14,8 +14,16 @@ public class JdbcDaoFactory extends AbstractDaoFactory {
         connection = pool.getConnection();
     }
 
+    public void close() throws DaoException {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't close factory", e);
+        }
+    }
+
     @Override
-    public GenericDao getDAO(Class clazz) throws DaoException {
+    public GenericDao getDao(Class clazz) throws DaoException {
         String inputClassName = clazz.getSimpleName();
         AbstractJdbcDao daoObject;
         try {
@@ -35,4 +43,19 @@ public class JdbcDaoFactory extends AbstractDaoFactory {
         }
     }
 
+    public void commit() throws DaoException {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't commit transaction", e);
+        }
+    }
+
+    public void rollback() throws DaoException {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't rollback changes", e);
+        }
+    }
 }
