@@ -5,47 +5,49 @@ import com.epam.alexandrli.paintballshop.entity.Gender;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
 
 public class GenderDao extends AbstractJdbcDao<Gender> {
-    @Override
-    public void insert(Gender gender) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO gender(name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, gender.getName());
-        ps.executeUpdate();
-        ResultSet rs = ps.getGeneratedKeys();
-        while (rs.next()) {
-            gender.setId(rs.getInt(1));
-        }
-    }
+
+    public static final String INSERT_GENDER = "INSERT INTO gender(name) VALUES (?)";
+    public static final String UPDATE_GENDER_BY_ID = "UPDATE gender SET name=? WHERE id=?";
 
     @Override
-    public List<Gender> readAll() {
-        return null;
-    }
-
-    @Override
-    public void update(Gender gender) {
-
-    }
-
-    @Override
-    public void delete(Gender gender) {
-
-    }
-
-    @Override
-    protected Gender prepareObject(ResultSet rs) throws DaoException {
+    protected Gender getObjectFromResultSet(ResultSet rs) throws SQLException {
         Gender gender = new Gender();
-        try {
-            while (rs.next()) {
-                gender.setId(rs.getInt("id"));
-                gender.setName(rs.getString("name"));
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Couldn't set object variables from db", e);
-        }
+        gender.setId(rs.getInt("id"));
+        gender.setName(rs.getString("name"));
         return gender;
     }
+
+    @Override
+    protected String getQueryForInsert() throws DaoException {
+        return INSERT_GENDER;
+    }
+
+    @Override
+    protected void setVariablesForPreparedStatementExceptId(Gender gender, PreparedStatement ps) throws SQLException {
+        ps.setString(1, gender.getName());
+    }
+
+    @Override
+    protected void setVariablesForPreparedStatement(Gender gender, PreparedStatement ps) throws SQLException {
+        setVariablesForPreparedStatementExceptId(gender, ps);
+        ps.setInt(2, gender.getId());
+    }
+
+    @Override
+    protected void setResultObjectId(Gender gender, ResultSet rs) throws SQLException {
+        gender.setId(rs.getInt(1));
+    }
+
+    @Override
+    protected String getTableName() {
+        return "gender";
+    }
+
+    @Override
+    protected String getQueryToUpdateById() {
+        return UPDATE_GENDER_BY_ID;
+    }
+
 }

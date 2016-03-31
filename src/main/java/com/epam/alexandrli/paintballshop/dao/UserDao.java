@@ -2,34 +2,62 @@ package com.epam.alexandrli.paintballshop.dao;
 
 import com.epam.alexandrli.paintballshop.entity.User;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class UserDao extends AbstractJdbcDao<User> {
 
+    public static final String INSERT_USER = "INSERT INTO user(email, password, first_name, last_name, phone_number, gender_id) VALUES (?,?,?,?,?,?)";
+    public static final String UPDATE_USER_BY_ID = "UPDATE user SET email=?, password=?, first_name=?, last_name=?, gender_id=?, phone_number=? WHERE id=?";
+
     @Override
-    protected User prepareObject(ResultSet rs) throws DaoException {
-        return null;
+    protected User getObjectFromResultSet(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
+        user.setPhoneNumber(rs.getString("phone_number"));
+        return user;
     }
 
     @Override
-    public void insert(User user) throws SQLException {
-
+    protected String getQueryForInsert() {
+        return INSERT_USER;
     }
 
     @Override
-    public List<User> readAll() {
-        return null;
+    protected void setVariablesForPreparedStatementExceptId(User user, PreparedStatement ps) throws SQLException {
+        ps.setString(1, user.getEmail());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getFirstName());
+        ps.setString(4, user.getLastName());
+        ps.setString(5, user.getPhoneNumber());
+        ps.setInt(6, user.getGender().getId());
     }
 
     @Override
-    public void update(User user) {
-
+    protected void setVariablesForPreparedStatement(User user, PreparedStatement ps) throws SQLException {
+        setVariablesForPreparedStatementExceptId(user, ps);
+        ps.setInt(7, user.getId());
     }
 
     @Override
-    public void delete(User user) {
-
+    protected void setResultObjectId(User user, ResultSet rs) throws SQLException {
+        user.setId(rs.getInt(1));
     }
+
+
+    @Override
+    protected String getQueryToUpdateById() {
+        return UPDATE_USER_BY_ID;
+    }
+
+    @Override
+    protected String getTableName() {
+        return "user";
+    }
+
 }
