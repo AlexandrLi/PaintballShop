@@ -1,11 +1,13 @@
 package com.epam.alexandrli.paintballshop.dao;
 
+import com.epam.alexandrli.paintballshop.entity.BaseEntity;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
+public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDao<T> {
     public static final String SELECT_FROM = "SELECT * FROM ";
     public static final String WHERE_ID = " WHERE id = ";
     Connection connection;
@@ -21,6 +23,7 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
         this.connection = connection;
     }
 
+    protected abstract String getTableName();
 
     protected abstract String getQueryForInsert();
 
@@ -30,9 +33,11 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
 
     protected abstract void setVariablesForPreparedStatementExceptId(T t, PreparedStatement ps) throws SQLException;
 
-    protected abstract void setVariablesForPreparedStatement(T t, PreparedStatement ps) throws SQLException;
-
-    protected abstract void setResultObjectId(T t, ResultSet rs) throws SQLException;
+    private void setVariablesForPreparedStatement(T t, PreparedStatement ps) throws SQLException {
+        setVariablesForPreparedStatementExceptId(t, ps);
+        int lastParameterIndex = ps.getParameterMetaData().getParameterCount();
+        ps.setInt(lastParameterIndex, t.getId());
+    }
 
 
     public void insert(T t) throws DaoException {
@@ -40,9 +45,8 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
             setVariablesForPreparedStatementExceptId(t, ps);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            while (rs.next()) {
-                setResultObjectId(t, rs);
-            }
+            rs.next();
+            t.setId(rs.getInt(1));
         } catch (SQLException e) {
             throw new DaoException("Couldn't insert Gender Object to db", e);
         }
@@ -119,7 +123,7 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
     }
 
     private String getQueryToFindAllByParams(Map<String, String> params) {
-        String resultQuery = "SELECT * FROM " + getTableName() + " WHERE ";
+        String resultQuery = SELECT_FROM + getTableName() + " WHERE ";
         for (Map.Entry<String, String> param : params.entrySet()) {
             if (params.size() == 1) {
                 resultQuery += param.getKey() + " = " + param.getValue();
@@ -130,9 +134,6 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
         }
         return resultQuery.substring(0, resultQuery.length() - 5);
     }
-
-    protected abstract String getTableName();
-
 
 }
 
