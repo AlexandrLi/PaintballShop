@@ -1,5 +1,7 @@
 package com.epam.alexandrli.paintballshop.dao;
 
+import com.epam.alexandrli.paintballshop.entity.BaseEntity;
+
 import java.sql.SQLException;
 
 public abstract class DaoFactory implements AutoCloseable {
@@ -14,7 +16,7 @@ public abstract class DaoFactory implements AutoCloseable {
         }
     }
 
-    public abstract <T> GenericDao<T> getDao(Class<T> clazz);
+    public abstract <T extends BaseEntity> GenericDao<T> getDao(Class<T> clazz);
 
     public abstract void beginTransaction() throws DaoException;
 

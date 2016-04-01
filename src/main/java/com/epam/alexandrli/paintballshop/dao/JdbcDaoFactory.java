@@ -1,6 +1,7 @@
 package com.epam.alexandrli.paintballshop.dao;
 
 import com.epam.alexandrli.paintballshop.connectionpool.ConnectionPool;
+import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -23,7 +24,7 @@ public class JdbcDaoFactory extends DaoFactory {
     }
 
     @Override
-    public <T> GenericDao<T> getDao(Class<T> clazz) throws DaoException {
+    public <T extends BaseEntity> GenericDao<T> getDao(Class<T> clazz) throws DaoException {
         AbstractJdbcDao<T> daoObject;
         try {
             String inputClassName = clazz.getSimpleName();
