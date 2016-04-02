@@ -10,10 +10,11 @@ import java.util.List;
 public class Order extends BaseEntity implements Priceable {
     private User user;
     private List<OrderItem> orderItems = new ArrayList<>();
-    private DateTime date;
+    private DateTime created;
     private String description;
 
     public Order() {
+        created = DateTime.now();
     }
 
     public User getUser() {
@@ -32,12 +33,12 @@ public class Order extends BaseEntity implements Priceable {
         this.orderItems = orderItems;
     }
 
-    public DateTime getDate() {
-        return date;
+    public DateTime getCreated() {
+        return created;
     }
 
-    public void setDate(DateTime date) {
-        this.date = date;
+    public void setCreated(DateTime created) {
+        this.created = created;
     }
 
     public String getDescription() {
@@ -58,7 +59,7 @@ public class Order extends BaseEntity implements Priceable {
 
     @Override
     public Money getPrice() {
-        Money totalPrice = Money.zero(CurrencyUnit.USD);
+        Money totalPrice = Money.zero(CurrencyUnit.getInstance("KZT"));
         for (OrderItem orderItem : orderItems) {
             totalPrice = totalPrice.plus(orderItem.getPrice());
         }
