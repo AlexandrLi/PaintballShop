@@ -76,9 +76,10 @@ CREATE TABLE IF NOT EXISTS characteristic (
 
 # Table order
 CREATE TABLE IF NOT EXISTS `order` (
-  id      INT      NOT NULL AUTO_INCREMENT,
-  date    DATETIME NOT NULL,
-  user_id INT      NOT NULL,
+  id          INT      NOT NULL AUTO_INCREMENT,
+  user_id     INT      NOT NULL,
+  date        DATETIME NOT NULL,
+  description VARCHAR(255),
   PRIMARY KEY (id, user_id),
   INDEX fk_order_user_idx (user_id ASC),
   CONSTRAINT fk_order_user
@@ -92,9 +93,9 @@ CREATE TABLE IF NOT EXISTS `order` (
 # Table product
 CREATE TABLE IF NOT EXISTS product (
   id              INT          NOT NULL AUTO_INCREMENT,
-  name            VARCHAR(254) NOT NULL,
+  name            VARCHAR(255) NOT NULL,
   price           DECIMAL(8)   NOT NULL,
-  description     VARCHAR(254) NULL,
+  description     VARCHAR(255) NULL,
   product_type_id INT          NOT NULL,
   PRIMARY KEY (id),
   INDEX fk_product_product_type_idx (product_type_id ASC),
