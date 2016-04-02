@@ -30,17 +30,6 @@ public class GenderDao extends AbstractJdbcDao<Gender> {
     }
 
     @Override
-    protected void setVariablesForPreparedStatement(Gender gender, PreparedStatement ps) throws SQLException {
-        setVariablesForPreparedStatementExceptId(gender, ps);
-        ps.setInt(2, gender.getId());
-    }
-
-    @Override
-    protected void setResultObjectId(Gender gender, ResultSet rs) throws SQLException {
-        gender.setId(rs.getInt(1));
-    }
-
-    @Override
     protected String getTableName() {
         return "gender";
     }

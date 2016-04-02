@@ -39,18 +39,6 @@ public class UserDao extends AbstractJdbcDao<User> {
     }
 
     @Override
-    protected void setVariablesForPreparedStatement(User user, PreparedStatement ps) throws SQLException {
-        setVariablesForPreparedStatementExceptId(user, ps);
-        ps.setInt(7, user.getId());
-    }
-
-    @Override
-    protected void setResultObjectId(User user, ResultSet rs) throws SQLException {
-        user.setId(rs.getInt(1));
-    }
-
-
-    @Override
     protected String getQueryToUpdateById() {
         return UPDATE_USER_BY_ID;
     }
