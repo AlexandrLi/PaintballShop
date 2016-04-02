@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS characteristic (
 CREATE TABLE IF NOT EXISTS `order` (
   id          INT      NOT NULL AUTO_INCREMENT,
   user_id     INT      NOT NULL,
-  date        DATETIME NOT NULL,
+  created     DATETIME NOT NULL,
   description VARCHAR(255),
   PRIMARY KEY (id, user_id),
   INDEX fk_order_user_idx (user_id ASC),
@@ -161,10 +161,12 @@ CREATE TABLE IF NOT EXISTS storage_item (
 
 # Table image
 CREATE TABLE IF NOT EXISTS image (
-  id         INT         NOT NULL AUTO_INCREMENT,
-  name       VARCHAR(45) NOT NULL,
-  content    BLOB        NOT NULL,
-  product_id INT         NOT NULL,
+  id             INT         NOT NULL AUTO_INCREMENT,
+  name           VARCHAR(45) NOT NULL,
+  content        BLOB        NOT NULL,
+  product_id     INT         NOT NULL,
+  `modified`     DATETIME    NOT NULL,
+  `content_type` VARCHAR(10) NOT NULL,
   PRIMARY KEY (id, product_id),
   INDEX fk_image_product_idx (product_id ASC),
   CONSTRAINT fk_image_product
