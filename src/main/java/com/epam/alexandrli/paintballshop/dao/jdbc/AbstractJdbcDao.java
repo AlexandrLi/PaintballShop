@@ -1,5 +1,7 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
+import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 
 import java.sql.*;

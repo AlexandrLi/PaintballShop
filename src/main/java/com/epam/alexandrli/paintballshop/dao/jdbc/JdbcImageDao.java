@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.Image;
 import org.joda.time.DateTime;
@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class ImageDao extends AbstractJdbcDao<Image> {
+public class JdbcImageDao extends AbstractJdbcDao<Image> {
 
     public static final String INSERT_IMAGE = "INSERT INTO image(name, content, product_id, modified, content_type) VALUES (?,?,?,?,?)";
     public static final String UPDATE_IMAGE_BY_ID = "UPDATE image SET name=?, content=?, modified=?, content_type=? WHERE id=?";

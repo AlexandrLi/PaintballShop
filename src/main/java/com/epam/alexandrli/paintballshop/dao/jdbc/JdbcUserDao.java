@@ -1,12 +1,13 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.entity.Gender;
 import com.epam.alexandrli.paintballshop.entity.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao extends AbstractJdbcDao<User> {
+public class JdbcUserDao extends AbstractJdbcDao<User> {
 
     public static final String INSERT_USER = "INSERT INTO user(email, password, first_name, last_name, phone_number, gender_id) VALUES (?,?,?,?,?,?)";
     public static final String UPDATE_USER_BY_ID = "UPDATE user SET email=?, password=?, first_name=?, last_name=?, gender_id=?, phone_number=? WHERE id=?";
@@ -20,6 +21,9 @@ public class UserDao extends AbstractJdbcDao<User> {
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
         user.setPhoneNumber(rs.getString("phone_number"));
+        Gender userGender = new Gender();
+        userGender.setId(rs.getInt("gender_id"));
+        user.setGender(userGender);
         return user;
     }
 
