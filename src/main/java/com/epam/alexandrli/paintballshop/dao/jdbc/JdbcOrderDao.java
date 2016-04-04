@@ -1,11 +1,11 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.Order;
 import org.joda.time.DateTime;
 
 import java.sql.*;
 
-public class OrderDao extends AbstractJdbcDao<Order> {
+public class JdbcOrderDao extends AbstractJdbcDao<Order> {
 
     public static final String INSERT_ORDER = "INSERT `order`(user_id,created, description) VALUES (?,?,?)";
     public static final String UPDATE_ORDER_BY_ID = "UPDATE `order` SET created=?, description=? WHERE id=?";
@@ -40,4 +40,5 @@ public class OrderDao extends AbstractJdbcDao<Order> {
     protected String getTableName() {
         return "`order`";
     }
+
 }

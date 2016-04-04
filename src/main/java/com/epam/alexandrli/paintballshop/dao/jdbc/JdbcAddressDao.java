@@ -1,14 +1,15 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Address;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AddressDao extends AbstractJdbcDao<Address> {
+public class JdbcAddressDao extends AbstractJdbcDao<Address> {
 
-    public static final String INSERT_ADDRESS = "INSERT address(country, city, street, building_number, apartment_number, user_id) VALUES (?,?,?,?,?,?)";
+    public static final String INSERT_ADDRESS = "INSERT address(country, city, street, building_number, apartment_number) VALUES (?,?,?,?,?)";
     public static final String UPDATE_ADDRESS_BY_ID = "UPDATE address SET country=?, city=?, street=?, building_number=?, apartment_number=? WHERE id=?";
 
     @Override
@@ -45,5 +46,14 @@ public class AddressDao extends AbstractJdbcDao<Address> {
     @Override
     protected String getTableName() {
         return "address";
+    }
+
+    public void setFKById(Integer userId, Integer id) {
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE address SET user_id=? WHERE id=" + id)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't update Object in db", e);
+        }
     }
 }

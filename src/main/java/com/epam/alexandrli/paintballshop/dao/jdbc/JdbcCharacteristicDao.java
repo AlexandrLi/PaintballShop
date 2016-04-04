@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.Characteristic;
 
@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CharacteristicDao extends AbstractJdbcDao<Characteristic> {
+public class JdbcCharacteristicDao extends AbstractJdbcDao<Characteristic> {
 
     public static final String INSERT_CHARACTERISTIC = "INSERT characteristic(name, product_type_id) VALUES (?,?)";
     public static final String UPDATE_CHARACTERISTIC_BY_ID = "UPDATE characteristic SET name=? WHERE id=?";
@@ -39,4 +39,5 @@ public class CharacteristicDao extends AbstractJdbcDao<Characteristic> {
     protected String getTableName() {
         return "characteristic";
     }
+
 }

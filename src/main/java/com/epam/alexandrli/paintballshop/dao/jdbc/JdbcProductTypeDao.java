@@ -1,12 +1,13 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.ProductType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductTypeDao extends AbstractJdbcDao<ProductType> {
+public class JdbcProductTypeDao extends AbstractJdbcDao<ProductType> {
 
     public static final String INSERT_PRODUCT_TYPE = "INSERT INTO product_type(name) VALUES (?)";
     public static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE product_type SET name=? WHERE id=?";

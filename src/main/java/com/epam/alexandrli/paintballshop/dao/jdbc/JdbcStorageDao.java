@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.Storage;
 
@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class StorageDao extends AbstractJdbcDao<Storage> {
+public class JdbcStorageDao extends AbstractJdbcDao<Storage> {
 
     public static final String INSERT_STORAGE = "INSERT storage(name, description) VALUES (?,?)";
     public static final String UPDATE_STORAGE_BY_ID = "UPDATE storage SET name=?, description=? WHERE id=?";
@@ -41,4 +41,5 @@ public class StorageDao extends AbstractJdbcDao<Storage> {
     protected String getTableName() {
         return "description";
     }
+
 }

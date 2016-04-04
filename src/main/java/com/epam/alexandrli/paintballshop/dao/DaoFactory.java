@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao;
 
+import com.epam.alexandrli.paintballshop.dao.jdbc.JdbcDaoFactory;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 
 import java.sql.SQLException;

@@ -1,12 +1,13 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Gender;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GenderDao extends AbstractJdbcDao<Gender> {
+public class JdbcGenderDao extends AbstractJdbcDao<Gender> {
 
     public static final String INSERT_GENDER = "INSERT INTO gender(name) VALUES (?)";
     public static final String UPDATE_GENDER_BY_ID = "UPDATE gender SET name=? WHERE id=?";

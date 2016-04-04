@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.Product;
 import org.joda.money.CurrencyUnit;
@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductDao extends AbstractJdbcDao<Product> {
+public class JdbcProductDao extends AbstractJdbcDao<Product> {
 
     public static final String INSERT_PRODUCT_ITEM = "INSERT product(name, price, description, product_type_id) VALUES (?,?,?,?)";
     public static final String UPDATE_PRODUCT_BY_ID = "UPDATE product SET name=?, price=?, description=? WHERE id=?";
@@ -45,4 +45,5 @@ public class ProductDao extends AbstractJdbcDao<Product> {
     protected String getTableName() {
         return "product";
     }
+
 }

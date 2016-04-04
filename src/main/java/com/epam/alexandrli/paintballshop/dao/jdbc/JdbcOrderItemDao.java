@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.dao;
+package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.OrderItem;
 
@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderItemDao extends AbstractJdbcDao<OrderItem> {
+public class JdbcOrderItemDao extends AbstractJdbcDao<OrderItem> {
 
     public static final String INSERT_ORDER_ITEM = "INSERT order_item(amount, order_id, product_id) VALUES (?,?,?)";
     public static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE order_item SET amount=? WHERE id=?";
@@ -40,4 +40,5 @@ public class OrderItemDao extends AbstractJdbcDao<OrderItem> {
     protected String getTableName() {
         return "order_item";
     }
+
 }

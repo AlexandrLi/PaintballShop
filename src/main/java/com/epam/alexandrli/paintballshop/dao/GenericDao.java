@@ -9,7 +9,7 @@ public interface GenericDao<T extends BaseEntity> {
 
     void insert(T t) throws DaoException;
 
-    T findByPK(int id) throws DaoException;
+    T findByPK(Integer id) throws DaoException;
 
     List<T> findAllByParams(Map<String, String> params) throws DaoException;
 
@@ -19,5 +19,6 @@ public interface GenericDao<T extends BaseEntity> {
 
     void update(T t) throws DaoException;
 
-    void delete(int id) throws DaoException;
+    void delete(Integer id) throws DaoException;
+
 }
