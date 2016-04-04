@@ -48,11 +48,11 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             rs.next();
             t.setId(rs.getInt(1));
         } catch (SQLException e) {
-            throw new DaoException("Couldn't insert Gender Object to db", e);
+            throw new DaoException("Couldn't insert Object to db", e);
         }
     }
 
-    public T findByPK(int id) throws DaoException {
+    public T findByPK(Integer id) throws DaoException {
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(SELECT_FROM + getTableName() + WHERE_ID + id)) {
             rs.next();
@@ -92,7 +92,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
         return objects;
     }
 
-    public void delete(int id) throws DaoException {
+    public void delete(Integer id) throws DaoException {
         try (Statement st = connection.createStatement()) {
             st.execute("DELETE FROM " + getTableName() + WHERE_ID + id);
         } catch (SQLException e) {
@@ -105,7 +105,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             setVariablesForPreparedStatement(t, ps);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Couldn't update Gender Object in db", e);
+            throw new DaoException("Couldn't update Object in db", e);
         }
     }
 
@@ -126,10 +126,10 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
         String resultQuery = SELECT_FROM + getTableName() + " WHERE ";
         for (Map.Entry<String, String> param : params.entrySet()) {
             if (params.size() == 1) {
-                resultQuery += param.getKey() + " = " + param.getValue();
+                resultQuery += param.getKey() + " = '" + param.getValue() + "'";
                 return resultQuery;
             } else {
-                resultQuery += param.getKey() + " = " + param.getValue() + " AND ";
+                resultQuery += param.getKey() + " = '" + param.getValue() + "' AND ";
             }
         }
         return resultQuery.substring(0, resultQuery.length() - 5);
