@@ -3,19 +3,19 @@ package com.epam.alexandrli.paintballshop.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Storage extends NamedEntity {
+public class Storage extends DescriptionedEnRuEntity {
+    private String name;
     private Map<Product, Integer> storageItems = new HashMap<>();
-    private String description;
 
     public Storage() {
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Map<Product, Integer> getStorageItems() {

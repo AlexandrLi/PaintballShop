@@ -7,15 +7,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Product extends NamedEntity {
+public class Product extends DescriptionedEnRuEntity {
 
+    private String name;
     private Money price;
     private ProductType type;
     private Map<Characteristic, String> characteristics = new HashMap<>();
     private List<Image> images = new ArrayList<>();
-    private String description;
 
     public Product() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Image> getImages() {
@@ -48,14 +56,6 @@ public class Product extends NamedEntity {
 
     public void setType(ProductType type) {
         this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }
