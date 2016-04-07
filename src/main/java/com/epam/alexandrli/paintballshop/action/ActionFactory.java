@@ -8,10 +8,13 @@ public class ActionFactory {
 
     public ActionFactory() {
         actions = new HashMap<>();
-        actions.put("GET/home", new ShowPageAction("home"));
+        actions.put("GET/home", new ShowHomePageAction());
         actions.put("GET/login", new ShowPageAction("login"));
-        actions.put("GET/register", new ShowPageAction("register"));
+        actions.put("GET/logout", new LogoutAction());
+        actions.put("GET/register", new ShowRegisterPageAction());
+        actions.put("POST/register", new RegisterAction());
         actions.put("POST/login", new LoginAction());
+        actions.put("GET/locale", new SelectLocaleAction());
 
     }
 
