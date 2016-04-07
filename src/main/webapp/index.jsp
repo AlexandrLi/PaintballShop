@@ -3,6 +3,6 @@
 <html>
 <head></head>
 <body>
-<c:redirect url="/do/login"/>
+<c:redirect url="/do/home"/>
 </body>
 </html>
