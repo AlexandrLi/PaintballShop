@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface GenericDao<T extends BaseEntity> {
 
-    void insert(T t) throws DaoException;
+    T insert(T t) throws DaoException;
 
     T findByPK(Integer id) throws DaoException;
 
