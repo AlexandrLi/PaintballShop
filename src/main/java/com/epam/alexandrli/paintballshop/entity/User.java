@@ -6,6 +6,7 @@ import java.util.List;
 public class User extends BaseEntity {
     private String email;
     private String password;
+    private Role role;
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -13,6 +14,15 @@ public class User extends BaseEntity {
     private String phoneNumber;
 
     public User() {
+        this.role = Role.user;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -69,5 +79,10 @@ public class User extends BaseEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+
+    private enum Role {
+        user, admin
     }
 }
