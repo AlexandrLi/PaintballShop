@@ -82,7 +82,7 @@ public class User extends BaseEntity {
     }
 
 
-    private enum Role {
+    public enum Role {
         user, admin
     }
 }
