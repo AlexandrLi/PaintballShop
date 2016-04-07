@@ -1,7 +1,7 @@
 package com.epam.alexandrli.paintballshop.entity;
 
-public class Characteristic extends NamedEntity {
-    ProductType type;
+public class Characteristic extends NamedEnRuEntity {
+    private ProductType type;
 
     public Characteristic() {
     }
@@ -13,4 +13,5 @@ public class Characteristic extends NamedEntity {
     public void setType(ProductType type) {
         this.type = type;
     }
+
 }

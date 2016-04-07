@@ -3,7 +3,7 @@ package com.epam.alexandrli.paintballshop.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ProductType extends NamedEntity {
+public class ProductType extends NamedEnRuEntity {
 
     private Set<Characteristic> characteristics = new HashSet<>();
 
