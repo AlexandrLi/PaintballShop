@@ -9,14 +9,15 @@ import java.sql.SQLException;
 
 public class JdbcGenderDao extends AbstractJdbcDao<Gender> {
 
-    public static final String INSERT_GENDER = "INSERT INTO gender(name) VALUES (?)";
-    public static final String UPDATE_GENDER_BY_ID = "UPDATE gender SET name=? WHERE id=?";
+    public static final String INSERT_GENDER = "INSERT INTO gender(name_ru, name_en) VALUES (?,?)";
+    public static final String UPDATE_GENDER_BY_ID = "UPDATE gender SET name_ru=?, name_en=? WHERE id=?";
 
     @Override
     protected Gender getObjectFromResultSet(ResultSet rs) throws SQLException {
         Gender gender = new Gender();
         gender.setId(rs.getInt("id"));
-        gender.setName(rs.getString("name"));
+        gender.setNameRu(rs.getString("name_ru"));
+        gender.setNameEn(rs.getString("name_en"));
         return gender;
     }
 
@@ -27,7 +28,8 @@ public class JdbcGenderDao extends AbstractJdbcDao<Gender> {
 
     @Override
     protected void setVariablesForPreparedStatementExceptId(Gender gender, PreparedStatement ps) throws SQLException {
-        ps.setString(1, gender.getName());
+        ps.setString(1, gender.getNameRu());
+        ps.setString(2, gender.getNameEn());
     }
 
     @Override

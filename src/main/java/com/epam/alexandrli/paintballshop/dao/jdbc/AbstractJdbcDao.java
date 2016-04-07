@@ -42,7 +42,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
     }
 
 
-    public void insert(T t) throws DaoException {
+    public T insert(T t) throws DaoException {
         try (PreparedStatement ps = connection.prepareStatement(getQueryForInsert(), Statement.RETURN_GENERATED_KEYS)) {
             setVariablesForPreparedStatementExceptId(t, ps);
             ps.executeUpdate();
@@ -52,6 +52,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
         } catch (SQLException e) {
             throw new DaoException("Couldn't insert Object to db", e);
         }
+        return t;
     }
 
     public T findByPK(Integer id) throws DaoException {
@@ -67,7 +68,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
     public List<T> findAll() throws DaoException {
         List<T> objects = new ArrayList<>();
         try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(SELECT_FROM + getTableName())) {
+             ResultSet rs = st.executeQuery(SELECT_FROM + getTableName() + " ORDER BY id")) {
             while (rs.next()) {
                 objects.add(getObjectFromResultSet(rs));
             }

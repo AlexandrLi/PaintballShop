@@ -9,14 +9,15 @@ import java.sql.SQLException;
 
 public class JdbcProductTypeDao extends AbstractJdbcDao<ProductType> {
 
-    public static final String INSERT_PRODUCT_TYPE = "INSERT INTO product_type(name) VALUES (?)";
-    public static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE product_type SET name=? WHERE id=?";
+    public static final String INSERT_PRODUCT_TYPE = "INSERT INTO product_type(name_ru, name_en) VALUES (?,?)";
+    public static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE product_type SET name_ru=?,name_en=? WHERE id=?";
 
     @Override
     protected ProductType getObjectFromResultSet(ResultSet rs) throws SQLException {
         ProductType productType = new ProductType();
         productType.setId(rs.getInt("id"));
-        productType.setName(rs.getString("name"));
+        productType.setNameRu(rs.getString("name_ru"));
+        productType.setNameEn(rs.getString("name_en"));
         return productType;
     }
 
@@ -27,7 +28,8 @@ public class JdbcProductTypeDao extends AbstractJdbcDao<ProductType> {
 
     @Override
     protected void setVariablesForPreparedStatementExceptId(ProductType productType, PreparedStatement ps) throws SQLException {
-        ps.setString(1, productType.getName());
+        ps.setString(1, productType.getNameRu());
+        ps.setString(2, productType.getNameEn());
     }
 
     @Override

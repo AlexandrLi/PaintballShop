@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class JdbcProductDao extends AbstractJdbcDao<Product> {
 
-    public static final String INSERT_PRODUCT_ITEM = "INSERT product(name, price, description, product_type_id) VALUES (?,?,?,?)";
-    public static final String UPDATE_PRODUCT_BY_ID = "UPDATE product SET name=?, price=?, description=? WHERE id=?";
+    public static final String INSERT_PRODUCT_ITEM = "INSERT product(name, price, description_ru, description_en, product_type_id) VALUES (?,?,?,?,?)";
+    public static final String UPDATE_PRODUCT_BY_ID = "UPDATE product SET name=?, price=?, description_ru=?,description_en=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {
@@ -29,7 +29,8 @@ public class JdbcProductDao extends AbstractJdbcDao<Product> {
         product.setId(rs.getInt("id"));
         product.setName(rs.getString("name"));
         product.setPrice(Money.of(CurrencyUnit.getInstance("KZT"), rs.getBigDecimal("price")));
-        product.setDescription(rs.getString("description"));
+        product.setDescriptionRu(rs.getString("description_ru"));
+        product.setDescriptionEn(rs.getString("description_en"));
         return product;
     }
 
@@ -37,8 +38,9 @@ public class JdbcProductDao extends AbstractJdbcDao<Product> {
     protected void setVariablesForPreparedStatementExceptId(Product product, PreparedStatement ps) throws SQLException {
         ps.setString(1, product.getName());
         ps.setBigDecimal(2, product.getPrice().getAmount());
-        ps.setString(3, product.getDescription());
-        ps.setInt(4, product.getType().getId());
+        ps.setString(3, product.getDescriptionRu());
+        ps.setString(4, product.getDescriptionEn());
+        ps.setInt(5, product.getType().getId());
     }
 
     @Override

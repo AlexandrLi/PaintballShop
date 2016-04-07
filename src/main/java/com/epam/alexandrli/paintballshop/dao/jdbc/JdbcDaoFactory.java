@@ -32,7 +32,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             String inputClassName = clazz.getSimpleName();
             String packageName = this.getClass().getPackage().getName();
-            String resultClassName = String.format("%s.%sDao", packageName, inputClassName);
+            String resultClassName = String.format("%s.Jdbc%sDao", packageName, inputClassName);
             daoObject = (AbstractJdbcDao<T>) Class.forName(resultClassName).newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new DaoException("Dao object for " + clazz + " not found.", e);
