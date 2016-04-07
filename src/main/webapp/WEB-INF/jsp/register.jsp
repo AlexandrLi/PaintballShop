@@ -2,8 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:set var="locale" value="${pageContext.request.locale}" scope="session"/>
-<c:set var="locale" value="en" scope="session"/>
 
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
@@ -59,25 +57,13 @@
             <div class="form-group input-group">
                 <label for="gender">${gender_title}</label>
                 <select class="form-control" id="gender" name="gender">
+                        <%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
                     <c:forEach items="${genders}" var="gender">
-                        <option value="${gender.id}">${gender.name}</option>
+                        <option value="${gender.id}">${gender.getName(locale)}</option>
                     </c:forEach>
                 </select>
             </div>
             <button value="submit" class="btn btn-default">${b_register}</button>
-            <a href="<c:url value="/do/login"/>" class="btn btn-default">${b_cancel}</a>
         </form>
     </div>
 </my:genericpage>
-<html>
-<head>
-    <title>${pagetitle}</title>
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
-    <script src="<c:url value="/js/jquery-1.12.2.min.js"/>"></script>
-    <script src="<c:url value="/js/jquery-2.2.2.min.js"/>"></script>
-    <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
-</head>
-<body>
-
-</body>
-</html>

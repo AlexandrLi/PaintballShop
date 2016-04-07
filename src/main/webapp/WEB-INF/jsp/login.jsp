@@ -2,8 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:set var="locale" value="${pageContext.request.locale}" scope="session"/>
-<c:set var="locale" value="en" scope="session"/>
 
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
@@ -36,11 +34,9 @@
                     <p class="alert alert-danger" style="width: 250px;height: 30px;padding: 5px">${error}</p>
                 </c:if>
                 <button type="submit" class="btn btn-primary btn-primary-spacing"
-                        style="margin-right: 50px;width: 100px">
+                        style="width: 200px">
                         ${b_login}
                 </button>
-                <a href="<c:url value="/do/register"/>" class="btn btn-primary btn-primary-spacing"
-                   style="width: 100px">${b_register}</a>
             </div>
         </form>
     </div>
