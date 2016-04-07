@@ -4,7 +4,6 @@ import com.epam.alexandrli.paintballshop.dao.DaoFactory;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.dao.jdbc.JdbcDaoFactory;
 import com.epam.alexandrli.paintballshop.entity.Address;
-import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 import com.epam.alexandrli.paintballshop.entity.Gender;
 import com.epam.alexandrli.paintballshop.entity.User;
 
@@ -20,56 +19,47 @@ public class UserService {
     private GenericDao<Address> addressDao;
 
     public UserService() throws SQLException {
-        jdbcDaoFactory = new JdbcDaoFactory();
+        initDaoFactory();
+        this.userDao = jdbcDaoFactory.getDao(User.class);
+        this.genderDao = jdbcDaoFactory.getDao(Gender.class);
+        this.addressDao = jdbcDaoFactory.getDao(Address.class);
     }
 
-    private void initUserDao() {
-        if (userDao == null) {
-            userDao = jdbcDaoFactory.getDao(User.class);
+    private void initDaoFactory() throws SQLException {
+        if (jdbcDaoFactory == null) {
+            jdbcDaoFactory = new JdbcDaoFactory();
         }
     }
 
-    private void initGenderDao() {
-        if (genderDao == null) {
-            genderDao = jdbcDaoFactory.getDao(Gender.class);
-        }
+    public User registerUser(User user) throws SQLException {
+        initDaoFactory();
+        User registeredUser = userDao.insert(user);
+        jdbcDaoFactory.close();
+        return registeredUser;
     }
 
-    private void initAddressDao() {
-        if (addressDao == null) {
-            addressDao = jdbcDaoFactory.getDao(Address.class);
-        }
-    }
-
-    public void registerUser(User user) {
-        initUserDao();
-        userDao.insert(user);
-    }
-
-    public User performUserLogin(String email, String password) {
+    public User performUserLogin(String email, String password) throws SQLException {
+        initDaoFactory();
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
         List<User> users = userDao.findAllByParams(params);
+        jdbcDaoFactory.close();
         if (!users.isEmpty()) {
             return users.get(0);
         }
         return null;
     }
 
-    public User getUserById(Integer id) {
-        initUserDao();
+    public User getUserById(Integer id) throws SQLException {
+        initDaoFactory();
         User user = userDao.findByPK(id);
-        initGenderDao();
         user.setGender(genderDao.findByPK(user.getGender().getId()));
-        initAddressDao();
         Map<String, String> userIdParam = new HashMap<>();
         userIdParam.put("user_id", String.valueOf(user.getId()));
         user.setAddressList(addressDao.findAllByParams(userIdParam));
+        jdbcDaoFactory.close();
         return user;
     }
 
-    private <T extends BaseEntity> boolean hasNullId(T entity) {
-        return entity.getId() == null;
-    }
 }
