@@ -1,13 +1,21 @@
 package com.epam.alexandrli.paintballshop.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Storage extends DescriptionedEnRuEntity {
+public class Storage extends DescriptionedEntity {
     private String name;
-    private Map<Product, Integer> storageItems = new HashMap<>();
+    private List<StorageItem> storageItems = new ArrayList<>();
 
     public Storage() {
+    }
+
+    public List<StorageItem> getStorageItems() {
+        return storageItems;
+    }
+
+    public void setStorageItems(List<StorageItem> storageItems) {
+        this.storageItems = storageItems;
     }
 
     public String getName() {
@@ -18,15 +26,7 @@ public class Storage extends DescriptionedEnRuEntity {
         this.name = name;
     }
 
-    public Map<Product, Integer> getStorageItems() {
-        return storageItems;
-    }
-
-    public void setStorageItems(Map<Product, Integer> storageItems) {
-        this.storageItems = storageItems;
-    }
-
-    public Integer addProduct(Product product, Integer quantity) {
-        return storageItems.put(product, quantity);
+    public boolean addProduct(StorageItem storageItem) {
+        return storageItems.add(storageItem);
     }
 }

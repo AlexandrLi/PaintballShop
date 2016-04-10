@@ -5,7 +5,6 @@ import org.joda.money.Money;
 public class OrderItem extends BaseEntity implements Priceable {
     private Product product;
     private int amount;
-    private Order order;
 
     public OrderItem() {
     }
@@ -24,14 +23,6 @@ public class OrderItem extends BaseEntity implements Priceable {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     @Override

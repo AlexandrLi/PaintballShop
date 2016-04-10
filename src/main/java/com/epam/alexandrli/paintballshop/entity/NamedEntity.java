@@ -2,11 +2,11 @@ package com.epam.alexandrli.paintballshop.entity;
 
 import java.util.Locale;
 
-public class NamedEnRuEntity extends BaseEntity {
+public class NamedEntity extends BaseEntity {
     private String nameRu;
     private String nameEn;
 
-    public NamedEnRuEntity() {
+    public NamedEntity() {
     }
 
     public String getNameRu() {

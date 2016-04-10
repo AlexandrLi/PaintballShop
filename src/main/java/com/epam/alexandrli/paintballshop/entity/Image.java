@@ -2,14 +2,25 @@ package com.epam.alexandrli.paintballshop.entity;
 
 import org.joda.time.DateTime;
 
+import java.io.InputStream;
+
 public class Image extends BaseEntity {
     private String name;
     // TODO: 02.04.2016 можно и getContentType к сущности прицепить, который будет смотреть на расширение и возвращать соответствующее значение типа image/jpeg из мапы.
     private DateTime modified;
     private String contentType;
+    private InputStream content;
 
     public Image() {
         modified = DateTime.now();
+    }
+
+    public InputStream getContent() {
+        return content;
+    }
+
+    public void setContent(InputStream content) {
+        this.content = content;
     }
 
     public String getName() {

@@ -3,16 +3,14 @@ package com.epam.alexandrli.paintballshop.entity;
 import org.joda.money.Money;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Product extends DescriptionedEnRuEntity {
+public class Product extends DescriptionedEntity {
 
     private String name;
     private Money price;
     private ProductType type;
-    private Map<Characteristic, String> characteristics = new HashMap<>();
+    private List<CharacteristicItem> characteristics = new ArrayList<>();
     private List<Image> images = new ArrayList<>();
 
     public Product() {
@@ -42,11 +40,11 @@ public class Product extends DescriptionedEnRuEntity {
         this.price = price;
     }
 
-    public Map<Characteristic, String> getCharacteristics() {
+    public List<CharacteristicItem> getCharacteristics() {
         return characteristics;
     }
 
-    public void setCharacteristics(Map<Characteristic, String> characteristics) {
+    public void setCharacteristics(List<CharacteristicItem> characteristics) {
         this.characteristics = characteristics;
     }
 

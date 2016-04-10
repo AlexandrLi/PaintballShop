@@ -3,8 +3,17 @@ package com.epam.alexandrli.paintballshop.entity;
 public abstract class BaseEntity {
 
     private Integer id;
+    private boolean deleted;
 
     public BaseEntity() {
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Integer getId() {

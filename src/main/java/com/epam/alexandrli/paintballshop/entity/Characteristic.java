@@ -1,17 +1,8 @@
 package com.epam.alexandrli.paintballshop.entity;
 
-public class Characteristic extends NamedEnRuEntity {
-    private ProductType type;
+public class Characteristic extends NamedEntity {
 
     public Characteristic() {
-    }
-
-    public ProductType getType() {
-        return type;
-    }
-
-    public void setType(ProductType type) {
-        this.type = type;
     }
 
 }
