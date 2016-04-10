@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `gender` (
   `id`      INT         NOT NULL AUTO_INCREMENT,
   `name_ru` VARCHAR(45) NOT NULL,
   `name_en` VARCHAR(45) NOT NULL,
+  `deleted` TINYINT(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name_ru` ASC),
   UNIQUE INDEX `name_en_UNIQUE` (`name_en` ASC)
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_name`    VARCHAR(45) NULL,
   `phone_number` VARCHAR(45) NULL,
   `gender_id`    INT         NOT NULL,
+  `deleted`      TINYINT(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   INDEX `fk_user_gender_idx` (`gender_id` ASC),
@@ -44,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `building_number`  VARCHAR(45) NOT NULL,
   `apartment_number` VARCHAR(45) NOT NULL,
   `user_id`          INT         NOT NULL,
+  `deleted`          TINYINT(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`, `user_id`),
   INDEX `fk_address_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_address_user`
@@ -59,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `product_type` (
   `id`      INT          NOT NULL AUTO_INCREMENT,
   `name_ru` VARCHAR(255) NOT NULL,
   `name_en` VARCHAR(255) NOT NULL,
+  `deleted` TINYINT(1)   NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
@@ -69,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `characteristic` (
   `name_ru`         VARCHAR(255) NOT NULL,
   `name_en`         VARCHAR(255) NOT NULL,
   `product_type_id` INT          NOT NULL,
+  `deleted`         TINYINT(1)   NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`, `product_type_id`),
   INDEX `fk_characteristics_product_type_idx` (`product_type_id` ASC),
   CONSTRAINT `fk_characteristics_product_type`
@@ -85,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   `created`     DATETIME     NOT NULL,
   `user_id`     INT          NOT NULL,
   `description` VARCHAR(255) NULL,
+  `deleted`     TINYINT(1)   NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`, `user_id`),
   INDEX `fk_orders_users_idx` (`user_id` ASC),
   CONSTRAINT `fk_orders_users`
@@ -103,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `description_ru`  VARCHAR(255) NULL,
   `description_en`  VARCHAR(255) NULL,
   `product_type_id` INT          NOT NULL,
+  `deleted`         TINYINT(1)   NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_product_product_type_idx` (`product_type_id` ASC),
   CONSTRAINT `fk_product_product_type`
@@ -115,10 +122,12 @@ CREATE TABLE IF NOT EXISTS `product` (
 
 # Table `order_item`
 CREATE TABLE IF NOT EXISTS `order_item` (
-  `amount`     INT NOT NULL,
-  `order_id`   INT NOT NULL,
-  `product_id` INT NOT NULL,
-  PRIMARY KEY (`order_id`, `product_id`),
+  `id`         INT        NOT NULL AUTO_INCREMENT,
+  `amount`     INT        NOT NULL,
+  `order_id`   INT        NOT NULL,
+  `product_id` INT        NOT NULL,
+  `deleted`    TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`, `order_id`, `product_id`),
   INDEX `fk_order_item_orders_idx` (`order_id` ASC),
   INDEX `fk_order_item_product_idx` (`product_id` ASC),
   CONSTRAINT `fk_order_item_orders`
@@ -140,16 +149,19 @@ CREATE TABLE IF NOT EXISTS `storage` (
   `name`           VARCHAR(45)  NOT NULL,
   `description_ru` VARCHAR(255) NULL,
   `description_en` VARCHAR(255) NULL,
+  `deleted`        TINYINT(1)   NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
 # Table `storage_item`
 CREATE TABLE IF NOT EXISTS `storage_item` (
-  `amount`     INT NOT NULL,
-  `storage_id` INT NOT NULL,
-  `product_id` INT NOT NULL,
-  PRIMARY KEY (`storage_id`, `product_id`),
+  `id`         INT        NOT NULL AUTO_INCREMENT,
+  `amount`     INT        NOT NULL,
+  `storage_id` INT        NOT NULL,
+  `product_id` INT        NOT NULL,
+  `deleted`    TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`, `storage_id`, `product_id`),
   INDEX `fk_storage_items_storages_idx` (`storage_id` ASC),
   INDEX `fk_storage_item_product_idx` (`product_id` ASC),
   CONSTRAINT `fk_storage_items_storages`
@@ -173,6 +185,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `product_id`   INT         NOT NULL,
   `modified`     DATETIME    NOT NULL,
   `content_type` VARCHAR(45) NOT NULL,
+  `deleted`      TINYINT(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`, `product_id`),
   INDEX `fk_image_product_idx` (`product_id` ASC),
   CONSTRAINT `fk_image_product`
@@ -183,20 +196,22 @@ CREATE TABLE IF NOT EXISTS `image` (
 )
   ENGINE = InnoDB;
 
-# Table `characteristic_value`
-CREATE TABLE IF NOT EXISTS `characteristic_value` (
+# Table `characteristic_item`
+CREATE TABLE IF NOT EXISTS `characteristic_item` (
+  `id`                INT          NOT NULL AUTO_INCREMENT,
   `value`             VARCHAR(255) NULL,
   `characteristic_id` INT          NOT NULL,
   `product_id`        INT          NOT NULL,
-  PRIMARY KEY (`product_id`, `characteristic_id`),
-  INDEX `fk_characteristic_value_characteristic_idx` (`characteristic_id` ASC),
-  INDEX `fk_characteristic_value_product_idx` (`product_id` ASC),
-  CONSTRAINT `fk_characteristic_value_characteristic`
+  `deleted`           TINYINT(1)   NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`, `characteristic_id`, `product_id`),
+  INDEX `fk_characteristic_item_characteristic_idx` (`characteristic_id` ASC),
+  INDEX `fk_characteristic_item_product_idx` (`product_id` ASC),
+  CONSTRAINT `fk_characteristic_item_characteristic`
   FOREIGN KEY (`characteristic_id`)
   REFERENCES `characteristic` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_characteristic_value_product`
+  CONSTRAINT `fk_characteristic_item_product`
   FOREIGN KEY (`product_id`)
   REFERENCES `product` (`id`)
     ON DELETE NO ACTION
