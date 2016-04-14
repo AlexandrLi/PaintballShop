@@ -11,7 +11,6 @@ public class SelectLocaleAction implements Action {
         Locale locale = new Locale(language);
         req.getSession(false).setAttribute("locale", locale);
         String referer = req.getHeader("referer");
-        String[] split = referer.split("/");
-        return new ActionResult(split[split.length - 1],true);
+        return new ActionResult(referer, true);
     }
 }

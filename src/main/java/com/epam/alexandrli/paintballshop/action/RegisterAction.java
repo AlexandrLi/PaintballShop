@@ -64,6 +64,7 @@ public class RegisterAction implements Action {
             invalid = true;
         }
         if (invalid) {
+            invalid = false;
             return new ActionResult("register");
         }
         Gender gender = new Gender();
