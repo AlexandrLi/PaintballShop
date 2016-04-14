@@ -95,6 +95,9 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
+    public void spendCash(Money cashAmount) {
+        this.cash = this.cash.minus(cashAmount);
+    }
 
     public enum Role {
         user, admin
