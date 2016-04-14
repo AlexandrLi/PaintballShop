@@ -242,10 +242,10 @@ INSERT INTO gender (name_ru, name_en) VALUES ('Не указано', 'None');
 INSERT INTO gender (name_ru, name_en) VALUES ('Мужчина', 'Male');
 INSERT INTO gender (name_ru, name_en) VALUES ('Женщина', 'Female');
 
-INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id)
-VALUES ('muzikant1990@gmail.com', 'qwerty', 'admin', 'Alexandr', 'Li', '+77051794745', 2);
-INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id, cash)
-VALUES ('muzikant_1990@mail.ru', '123456', 'user', 'Александр', 'Ли', '+77001794745', 2, 800000);
+INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id, cash, address_id)
+VALUES ('muzikant1990@gmail.com', 'qwerty', 'admin', 'Alexandr', 'Li', '+77051794745', 2, 0, 1);
+INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id, cash, address_id)
+VALUES ('muzikant_1990@mail.ru', '123456', 'user', 'Александр', 'Ли', '+77001794745', 2, 800000, 2);
 
 INSERT INTO address (country, city, street, building_number, apartment_number)
 VALUES ('Kazakhstan', 'Karaganda', 'Alihanov', '34/2', '37');
@@ -305,33 +305,33 @@ INSERT INTO product (name, price, description_ru, description_en, product_type_i
                                                                                            'One of the smallest profile, lightest, and best field of vision goggle system currently available.',
                                                                                            3);
 
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Electronic', 1, 1);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Electronic', 1, 2);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Electronic', 1, 3);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Rasta', 2, 1);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Tiger', 2, 2);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Woody', 2, 3);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Two piece', 3, 1);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Two piece', 3, 2);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Two piece', 3, 3);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Agitating', 4, 4);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Agitating', 4, 5);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Agitating', 4, 6);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Rasta', 5, 4);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Tiger', 5, 5);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Woody', 5, 6);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('200/260', 6, 4);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('200/260', 6, 5);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('200/260', 6, 6);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('i4', 7, 7);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('i4', 7, 8);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('i4', 7, 9);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Rasta', 8, 7);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Tiger', 8, 8);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Woody', 8, 9);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Thermal', 9, 7);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Thermal', 9, 8);
-INSERT INTO characteristic_value (value, characteristic_id, product_id) VALUES ('Thermal', 9, 9);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Electronic', 1, 1);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Electronic', 1, 2);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Electronic', 1, 3);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Rasta', 2, 1);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Tiger', 2, 2);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Woody', 2, 3);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Two piece', 3, 1);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Two piece', 3, 2);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Two piece', 3, 3);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Agitating', 4, 4);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Agitating', 4, 5);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Agitating', 4, 6);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Rasta', 5, 4);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Tiger', 5, 5);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Woody', 5, 6);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('200/260', 6, 4);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('200/260', 6, 5);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('200/260', 6, 6);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('i4', 7, 7);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('i4', 7, 8);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('i4', 7, 9);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Rasta', 8, 7);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Tiger', 8, 8);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Woody', 8, 9);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Thermal', 9, 7);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Thermal', 9, 8);
+INSERT INTO characteristic_item (value, characteristic_id, product_id) VALUES ('Thermal', 9, 9);
 
 INSERT INTO storage (name, description_ru, description_en)
 VALUES ('Central', 'Центральный склад на Каскадной площади', 'Central storage on cascade square');
