@@ -13,18 +13,13 @@ public class GenderService {
     private GenericDao<Gender> genderDao;
 
     public GenderService() throws SQLException {
-        initDaoFactory();
+        jdbcDaoFactory = new JdbcDaoFactory();
         this.genderDao = jdbcDaoFactory.getDao(Gender.class);
-    }
-
-    private void initDaoFactory() throws SQLException {
-        if (jdbcDaoFactory == null) {
-            jdbcDaoFactory = new JdbcDaoFactory();
-        }
+        jdbcDaoFactory.close();
     }
 
     public List<Gender> getAllGenders() throws SQLException {
-        initDaoFactory();
+        jdbcDaoFactory.getConnection();
         List<Gender> genders = genderDao.findAll();
         jdbcDaoFactory.close();
         return genders;
