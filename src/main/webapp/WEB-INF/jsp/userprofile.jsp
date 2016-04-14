@@ -74,11 +74,10 @@
                       method="post">
                     <h4>Transfer cash:</h4>
                     <div class="form-group">
-                        <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                         <div class="input-group">
                             <div class="input-group-addon">KZT</div>
                             <input type="number" class="form-control" id="exampleInputAmount" placeholder="Amount"
-                                   name="cash">
+                                   name="cash" value="0" min="0">
                             <div class="input-group-addon">.00</div>
                         </div>
                     </div>
