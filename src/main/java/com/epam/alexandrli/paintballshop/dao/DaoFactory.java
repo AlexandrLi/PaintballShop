@@ -21,6 +21,8 @@ public abstract class DaoFactory implements AutoCloseable {
 
     public abstract void close() throws DaoException;
 
+    public abstract void getConnection() throws SQLException;
+
     public abstract void beginTransaction() throws DaoException;
 
     public abstract void commit() throws DaoException;
