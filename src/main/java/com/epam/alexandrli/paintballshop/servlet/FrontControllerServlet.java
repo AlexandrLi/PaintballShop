@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "FrontController", urlPatterns = "/do/*")
-public class FrontController extends HttpServlet {
+@WebServlet(name = "FrontControllerServlet", urlPatterns = "/do/*")
+public class FrontControllerServlet extends HttpServlet {
     private ActionFactory actionFactory;
 
     @Override
@@ -24,20 +24,20 @@ public class FrontController extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionName = req.getMethod() + req.getPathInfo();
         Action action = actionFactory.getAction(actionName);
-
-//        if (action == null) {
-//            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
-//            return;
-//        }
-
+        if (action == null) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
+            return;
+        }
         ActionResult result = action.execute(req, resp);
-
-        doForwardOrRedirect(result, req, resp);
+        checkActionResult(result, req, resp);
     }
 
-    private void doForwardOrRedirect(ActionResult result, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void checkActionResult(ActionResult result, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (result.isRedirect()) {
-            String location = req.getContextPath() + "/do/" + result.getView();
+            String location = result.getView();
+            if (!location.startsWith("http")) {
+                location = req.getContextPath() + "/do/" + result.getView();
+            }
             resp.sendRedirect(location);
         } else {
             String path = "/WEB-INF/jsp/" + result.getView() + ".jsp";
