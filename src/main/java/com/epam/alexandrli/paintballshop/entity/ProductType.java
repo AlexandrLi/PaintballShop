@@ -10,6 +10,10 @@ public class ProductType extends NamedEntity {
     public ProductType() {
     }
 
+    public ProductType(Integer id) {
+        setId(id);
+    }
+
     public Set<Characteristic> getCharacteristics() {
         return characteristics;
     }

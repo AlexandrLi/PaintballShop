@@ -4,9 +4,18 @@ import org.joda.money.Money;
 
 public class OrderItem extends BaseEntity implements Priceable {
     private Product product;
+    private Order order;
     private int amount;
 
     public OrderItem() {
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {

@@ -8,11 +8,20 @@ public class Image extends BaseEntity {
     private String name;
     // TODO: 02.04.2016 можно и getContentType к сущности прицепить, который будет смотреть на расширение и возвращать соответствующее значение типа image/jpeg из мапы.
     private DateTime modified;
+    private Product product;
     private String contentType;
     private InputStream content;
 
     public Image() {
         modified = DateTime.now();
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public InputStream getContent() {

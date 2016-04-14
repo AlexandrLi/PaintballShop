@@ -1,7 +1,7 @@
 package com.epam.alexandrli.paintballshop.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 public class User extends BaseEntity {
     private String email;
@@ -10,11 +10,25 @@ public class User extends BaseEntity {
     private String firstName;
     private String lastName;
     private Gender gender;
-    private List<Address> addressList = new ArrayList<>();
+    private Address address;
     private String phoneNumber;
+    private Money cash;
 
     public User() {
         this.role = Role.user;
+        this.cash = Money.zero(CurrencyUnit.getInstance("KZT"));
+    }
+
+    public User(Integer id) {
+        setId(id);
+    }
+
+    public Money getCash() {
+        return cash;
+    }
+
+    public void setCash(Money cash) {
+        this.cash = cash;
     }
 
     public Role getRole() {
@@ -65,12 +79,12 @@ public class User extends BaseEntity {
         this.gender = gender;
     }
 
-    public List<Address> getAddressList() {
-        return addressList;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getPhoneNumber() {

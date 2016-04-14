@@ -1,10 +1,19 @@
 package com.epam.alexandrli.paintballshop.entity;
 
 public class CharacteristicItem extends BaseEntity {
+    private Product product;
     private Characteristic characteristic;
     private String value;
 
     public CharacteristicItem() {
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Characteristic getCharacteristic() {

@@ -3,6 +3,8 @@ package com.epam.alexandrli.paintballshop.entity;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,22 @@ public class Order extends BaseEntity implements Priceable {
     private List<OrderItem> orderItems = new ArrayList<>();
     private DateTime created;
     private String description;
+    private OrderStatus status;
 
     public Order() {
         created = DateTime.now();
+    }
+
+    public Order(Integer id) {
+        setId(id);
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public User getUser() {
@@ -39,6 +54,11 @@ public class Order extends BaseEntity implements Priceable {
 
     public void setCreated(DateTime created) {
         this.created = created;
+    }
+
+    public String getFormattedCreatedTime() {
+        DateTimeFormatter formatter = DateTimeFormat.shortDateTime();
+        return created.toString(formatter);
     }
 
     public String getDescription() {

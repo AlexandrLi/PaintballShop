@@ -16,6 +16,14 @@ public class Product extends DescriptionedEntity {
     public Product() {
     }
 
+    public Product(Integer id) {
+        setId(id);
+    }
+
+    public void addCharacteristic(CharacteristicItem characteristicItem) {
+        this.characteristics.add(characteristicItem);
+    }
+
     public String getName() {
         return name;
     }

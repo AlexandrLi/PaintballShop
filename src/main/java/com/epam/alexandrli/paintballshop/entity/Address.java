@@ -10,6 +10,10 @@ public class Address extends BaseEntity {
     public Address() {
     }
 
+    public Address(Integer id) {
+        setId(id);
+    }
+
     public String getCountry() {
         return country;
     }
