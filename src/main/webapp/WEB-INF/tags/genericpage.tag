@@ -11,6 +11,7 @@
     <fmt:message key="genericpage.navbar.contacts" var="contacts"/>
     <fmt:message key="genericpage.navbar.about" var="about"/>
     <fmt:message key="genericpage.navbar.register" var="register"/>
+    <fmt:message key="genericpage.navbar.locale" var="lang"/>
     <fmt:message key="genericpage.navbar.login" var="login"/>
     <fmt:message key="genericpage.navbar.logout" var="logout"/>
     <fmt:message key="genericpage.footer.madeby" var="madeby"/>
@@ -44,25 +45,35 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">${products}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Markers</a></li>
-                            <li><a href="#">Armor</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Accessories</li>
-                            <li><a href="#">Parts</a></li>
-                            <li><a href="#">Batteries</a></li>
+                            <%--@elvariable id="productTypes" type="java.util.List"--%>
+                            <%--@elvariable id="type" type="com.epam.alexandrli.paintballshop.entity.ProductType"--%>
+                            <c:forEach items="${productTypes}" var="type">
+                                <li>
+                                    <a href="<c:url value="/do/catalog?type=${type.id}"></c:url>">${type.getName(locale)}</a>
+                                </li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li><a href="#contact">${contacts}</a></li>
                     <li><a href="#about">${about}</a></li>
-                    <li><a href="<c:url value="/do/locale?locale=ru"></c:url>" class="language"><img style="height: 18px"
-                            src="<c:url value="/images/ru.png"/>" alt="Ru"/></a></li>
-                    <li><a href="<c:url value="/do/locale?locale=en"></c:url>" class="language"><img style="height: 18px"
-                            src="<c:url value="/images/us.png"/>" alt="En"/></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">${lang}<span class="caret"></span></a>
+                        <ul class="dropdown-menu" style="min-width: 60px">
+                            <li><a href="<c:url value="/do/locale?locale=ru"></c:url>" class="language"><img
+                                    style="height: 18px"
+                                    src="<c:url value="/images/ru.png"/>" alt="Ru"/> Ru</a></li>
+                            <li><a href="<c:url value="/do/locale?locale=en"></c:url>" class="language"><img
+                                    style="height: 18px"
+                                    src="<c:url value="/images/us.png"/>" alt="En"/> En</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:choose>
                         <c:when test="${not empty user}">
-                            <li><a href="<c:url value="/do/logout"/>"><span class="glyphicon glyphicon-log-out"></span>
+                            <li><a href="<c:url value="/do/logout"/>"><span
+                                    class="glyphicon glyphicon-log-out"></span>
                                     ${logout}</a>
                             </li>
                         </c:when>
@@ -70,7 +81,8 @@
                             <li><a href="<c:url value="/do/register"/>"><span
                                     class="glyphicon glyphicon-user"></span> ${register}</a>
                             </li>
-                            <li><a href="<c:url value="/do/login"/>"><span class="glyphicon glyphicon-log-in"></span>
+                            <li><a href="<c:url value="/do/login"/>"><span
+                                    class="glyphicon glyphicon-log-in"></span>
                                     ${login}</a>
                             </li>
                         </c:otherwise>

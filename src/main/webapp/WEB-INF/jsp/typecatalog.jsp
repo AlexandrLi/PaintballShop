@@ -5,22 +5,17 @@
 
 <fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
-    <fmt:message key="home.pagetitle" var="pagetitle"/>
-    <fmt:message key="home.aboutcompanytitle" var="titleabout"/>
-    <fmt:message key="home.aboutcompany" var="about"/>
+
 </fmt:bundle>
 
 <my:genericpage pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 960px; margin: auto;">
         <div class="col-lg-9" style="padding-left: 0">
-            <div class="">
-                <p align="center" style="font-size: 18px"><b>${titleabout}</b></p>
-                <p align="justify">${about}</p>
-                <hr>
-            </div>
-            <p>Featured</p>
+            <p>Catalog</p>
             <div class="row">
-                <c:forEach items="${featuredList}" var="product">
+                <%--@elvariable id="products" type="java.util.List"--%>
+                <%--@elvariable id="products" type="com.epam.alexandrli.paintballshop.entity.product"--%>
+                <c:forEach items="${products}" var="product">
                     <div class="col-lg-4">
                         <my:product product="${product}"/>
                     </div>
