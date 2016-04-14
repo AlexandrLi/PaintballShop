@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `phone_number` VARCHAR(45) NULL,
   `gender_id`    INT         NOT NULL,
   `deleted`      TINYINT(1)  NOT NULL DEFAULT 0,
+  `cash`         DECIMAL(12) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   INDEX `fk_user_gender_idx` (`gender_id` ASC),
@@ -45,15 +46,8 @@ CREATE TABLE IF NOT EXISTS `address` (
   `street`           VARCHAR(45) NOT NULL,
   `building_number`  VARCHAR(45) NOT NULL,
   `apartment_number` VARCHAR(45) NOT NULL,
-  `user_id`          INT         NOT NULL,
   `deleted`          TINYINT(1)  NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`, `user_id`),
-  INDEX `fk_address_user_idx` (`user_id` ASC),
-  CONSTRAINT `fk_address_user`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
@@ -86,18 +80,37 @@ CREATE TABLE IF NOT EXISTS `characteristic` (
 
 # Table `order`
 CREATE TABLE IF NOT EXISTS `order` (
-  `id`          INT          NOT NULL AUTO_INCREMENT,
-  `created`     DATETIME     NOT NULL,
-  `user_id`     INT          NOT NULL,
-  `description` VARCHAR(255) NULL,
-  `deleted`     TINYINT(1)   NOT NULL DEFAULT 0,
+  `id`              INT          NOT NULL AUTO_INCREMENT,
+  `created`         DATETIME     NOT NULL,
+  `user_id`         INT          NOT NULL,
+  `description`     VARCHAR(255) NULL,
+  `deleted`         TINYINT(1)   NOT NULL DEFAULT 0,
+  `order_status_id` INT          NOT NULL,
   PRIMARY KEY (`id`, `user_id`),
   INDEX `fk_orders_users_idx` (`user_id` ASC),
+  INDEX `fk_order_order_status_idx` (`order_status_id` ASC),
   CONSTRAINT `fk_orders_users`
   FOREIGN KEY (`user_id`)
   REFERENCES `user` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_order_status`
+  FOREIGN KEY (`order_status_id`)
+  REFERENCES `order_status` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION
+)
+  ENGINE = InnoDB;
+
+# Table `order_status`
+CREATE TABLE IF NOT EXISTS `order_status` (
+  `id`      INT         NOT NULL AUTO_INCREMENT,
+  `name_ru` VARCHAR(45) NOT NULL,
+  `name_en` VARCHAR(45) NOT NULL,
+  `deleted` TINYINT(1)  NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name_ru` ASC),
+  UNIQUE INDEX `name_en_UNIQUE` (`name_en` ASC)
 )
   ENGINE = InnoDB;
 
@@ -181,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `storage_item` (
 CREATE TABLE IF NOT EXISTS `image` (
   `id`           INT         NOT NULL AUTO_INCREMENT,
   `name`         VARCHAR(45) NOT NULL,
-  `content`      BLOB        NOT NULL,
+  `content`      LONGBLOB    NOT NULL,
   `product_id`   INT         NOT NULL,
   `modified`     DATETIME    NOT NULL,
   `content_type` VARCHAR(45) NOT NULL,
@@ -231,15 +244,15 @@ INSERT INTO gender (name_ru, name_en) VALUES ('Женщина', 'Female');
 
 INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id)
 VALUES ('muzikant1990@gmail.com', 'qwerty', 'admin', 'Alexandr', 'Li', '+77051794745', 2);
-INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id)
-VALUES ('muzikant_1990@mail.ru', '123456', 'user', 'Александр', 'Ли', '+77001794745', 2);
+INSERT INTO user (email, password, role, first_name, last_name, phone_number, gender_id, cash)
+VALUES ('muzikant_1990@mail.ru', '123456', 'user', 'Александр', 'Ли', '+77001794745', 2, 800000);
 
-INSERT INTO address (country, city, street, building_number, apartment_number, user_id)
-VALUES ('Kazakhstan', 'Karaganda', 'Alihanov', '34/2', '37', 1);
-INSERT INTO address (country, city, street, building_number, apartment_number, user_id)
-VALUES ('Kazakhstan', 'Karaganda', 'Ermekov', '81', '47', 1);
-INSERT INTO address (country, city, street, building_number, apartment_number, user_id)
-VALUES ('Kazakhstan', 'Almaty', 'Abai', '53', '11', 2);
+INSERT INTO address (country, city, street, building_number, apartment_number)
+VALUES ('Kazakhstan', 'Karaganda', 'Alihanov', '34/2', '37');
+INSERT INTO address (country, city, street, building_number, apartment_number)
+VALUES ('Kazakhstan', 'Karaganda', 'Ermekov', '81', '47');
+INSERT INTO address (country, city, street, building_number, apartment_number)
+VALUES ('Kazakhstan', 'Almaty', 'Abai', '53', '11');
 
 INSERT INTO product_type (name_ru, name_en) VALUES ('Маркеры', 'Markers');
 INSERT INTO product_type (name_ru, name_en) VALUES ('Фидеры', 'Hoppers');
@@ -333,8 +346,14 @@ INSERT INTO storage_item (amount, storage_id, product_id) VALUES (11, 1, 7);
 INSERT INTO storage_item (amount, storage_id, product_id) VALUES (0, 1, 8);
 INSERT INTO storage_item (amount, storage_id, product_id) VALUES (9, 1, 9);
 
-INSERT INTO `order` (created, user_id, description) VALUES (NOW(), 2, 'I want to buy this!');
-INSERT INTO `order` (created, user_id, description) VALUES (NOW(), 2, 'This is exactly what I am searching for!');
+INSERT INTO order_status (name_ru, name_en) VALUES ('Не обработан', 'Not processed');
+INSERT INTO order_status (name_ru, name_en) VALUES ('В обработке', 'Processing');
+INSERT INTO order_status (name_ru, name_en) VALUES ('Доставлен', 'Delivered');
+INSERT INTO order_status (name_ru, name_en) VALUES ('Закрыт', 'Closed');
+
+INSERT INTO `order` (created, user_id, description, order_status_id) VALUES (NOW(), 2, 'I want to buy this!', 1);
+INSERT INTO `order` (created, user_id, description, order_status_id)
+VALUES (NOW(), 2, 'This is exactly what I am searching for!', 2);
 
 INSERT INTO order_item (amount, order_id, product_id) VALUES (1, 1, 1);
 INSERT INTO order_item (amount, order_id, product_id) VALUES (1, 1, 4);
@@ -342,3 +361,4 @@ INSERT INTO order_item (amount, order_id, product_id) VALUES (1, 1, 7);
 INSERT INTO order_item (amount, order_id, product_id) VALUES (2, 2, 2);
 INSERT INTO order_item (amount, order_id, product_id) VALUES (2, 2, 5);
 INSERT INTO order_item (amount, order_id, product_id) VALUES (2, 2, 8);
+
