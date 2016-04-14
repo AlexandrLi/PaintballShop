@@ -4,7 +4,6 @@ import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,14 +119,6 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Couldn't update Object in db", e);
-        }
-    }
-
-    public void updateColumnByPK(String columnName, BigDecimal columnValue, Integer id) throws DaoException {
-        try (Statement st = connection.createStatement()) {
-            st.execute("UPDATE " + getTableName() + " SET " + columnName + "=" + columnValue + WHERE_ID + id);
-        } catch (SQLException e) {
-            throw new DaoException("Couldn't find object by current id", e);
         }
     }
 
