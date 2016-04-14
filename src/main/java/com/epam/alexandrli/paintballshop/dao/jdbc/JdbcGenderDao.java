@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class JdbcGenderDao extends AbstractJdbcDao<Gender> {
 
-    public static final String INSERT_GENDER = "INSERT INTO gender(name_ru, name_en) VALUES (?,?)";
-    public static final String UPDATE_GENDER_BY_ID = "UPDATE gender SET name_ru=?, name_en=? WHERE id=?";
+    public static final String INSERT_GENDER = "INSERT INTO shopdb.gender(name_ru, name_en) VALUES (?,?)";
+    public static final String UPDATE_GENDER_BY_ID = "UPDATE shopdb.gender SET name_ru=?, name_en=? WHERE id=?";
 
     @Override
     protected Gender getObjectFromResultSet(ResultSet rs) throws SQLException {
@@ -18,6 +18,7 @@ public class JdbcGenderDao extends AbstractJdbcDao<Gender> {
         gender.setId(rs.getInt("id"));
         gender.setNameRu(rs.getString("name_ru"));
         gender.setNameEn(rs.getString("name_en"));
+        gender.setDeleted(rs.getBoolean("deleted"));
         return gender;
     }
 

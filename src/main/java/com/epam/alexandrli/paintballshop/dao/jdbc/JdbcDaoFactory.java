@@ -12,9 +12,14 @@ import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory {
     private Connection connection;
+    private DataSource pool;
 
     public JdbcDaoFactory() throws SQLException {
-        DataSource pool = ConnectionPool.getInstance();
+        pool = ConnectionPool.getInstance();
+        getConnection();
+    }
+
+    public void getConnection() throws SQLException {
         connection = pool.getConnection();
     }
 

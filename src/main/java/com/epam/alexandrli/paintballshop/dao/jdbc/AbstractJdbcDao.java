@@ -4,6 +4,7 @@ import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,16 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
         }
     }
 
+    public Integer findColumnByPK(String columnName, Integer id) throws DaoException {
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery("SELECT " + columnName + " FROM " + getTableName() + WHERE_ID + id)) {
+            rs.next();
+            return rs.getInt(columnName);
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't find object by current id", e);
+        }
+    }
+
     public List<T> findAll() throws DaoException {
         List<T> objects = new ArrayList<>();
         try (Statement st = connection.createStatement();
@@ -97,7 +108,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
 
     public void delete(Integer id) throws DaoException {
         try (Statement st = connection.createStatement()) {
-            st.execute("DELETE FROM " + getTableName() + WHERE_ID + id);
+            st.execute("UPDATE " + getTableName() + " SET deleted=1" + WHERE_ID + id);
         } catch (SQLException e) {
             throw new DaoException("Couldn't delete object by id", e);
         }
@@ -109,6 +120,14 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Couldn't update Object in db", e);
+        }
+    }
+
+    public void updateColumnByPK(String columnName, BigDecimal columnValue, Integer id) throws DaoException {
+        try (Statement st = connection.createStatement()) {
+            st.execute("UPDATE " + getTableName() + " SET " + columnName + "=" + columnValue + WHERE_ID + id);
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't find object by current id", e);
         }
     }
 
@@ -137,7 +156,6 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
         }
         return resultQuery.substring(0, resultQuery.length() - 5);
     }
-
 }
 
 

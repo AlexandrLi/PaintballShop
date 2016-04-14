@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class JdbcStorageDao extends AbstractJdbcDao<Storage> {
 
-    public static final String INSERT_STORAGE = "INSERT storage(name, description_ru, description_en) VALUES (?,?,?)";
-    public static final String UPDATE_STORAGE_BY_ID = "UPDATE storage SET name=?, description_ru=?, description_en=? WHERE id=?";
+    public static final String INSERT_STORAGE = "INSERT INTO shopdb.storage(name, description_ru, description_en) VALUES (?,?,?)";
+    public static final String UPDATE_STORAGE_BY_ID = "UPDATE shopdb.storage SET name=?, description_ru=?, description_en=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {
@@ -28,12 +28,12 @@ public class JdbcStorageDao extends AbstractJdbcDao<Storage> {
         storage.setName(rs.getString("name"));
         storage.setDescriptionRu(rs.getString("description_ru"));
         storage.setDescriptionEn(rs.getString("description_en"));
+        storage.setDeleted(rs.getBoolean("deleted"));
         return storage;
     }
 
     @Override
     protected void setVariablesForPreparedStatementExceptId(Storage storage, PreparedStatement ps) throws SQLException {
-
         ps.setString(1, storage.getName());
         ps.setString(2, storage.getDescriptionRu());
         ps.setString(3, storage.getDescriptionEn());

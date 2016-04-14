@@ -1,6 +1,7 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.entity.Product;
+import com.epam.alexandrli.paintballshop.entity.ProductType;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
@@ -10,8 +11,8 @@ import java.sql.SQLException;
 
 public class JdbcProductDao extends AbstractJdbcDao<Product> {
 
-    public static final String INSERT_PRODUCT_ITEM = "INSERT product(name, price, description_ru, description_en, product_type_id) VALUES (?,?,?,?,?)";
-    public static final String UPDATE_PRODUCT_BY_ID = "UPDATE product SET name=?, price=?, description_ru=?,description_en=? WHERE id=?";
+    public static final String INSERT_PRODUCT_ITEM = "INSERT INTO shopdb.product(name, price, description_ru, description_en, product_type_id) VALUES (?,?,?,?,?)";
+    public static final String UPDATE_PRODUCT_BY_ID = "UPDATE shopdb.product SET name=?, price=?, description_ru=?,description_en=?, product_type_id=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {
@@ -31,6 +32,9 @@ public class JdbcProductDao extends AbstractJdbcDao<Product> {
         product.setPrice(Money.of(CurrencyUnit.getInstance("KZT"), rs.getBigDecimal("price")));
         product.setDescriptionRu(rs.getString("description_ru"));
         product.setDescriptionEn(rs.getString("description_en"));
+        ProductType type = new ProductType(rs.getInt("product_type_id"));
+        product.setType(type);
+        product.setDeleted(rs.getBoolean("deleted"));
         return product;
     }
 

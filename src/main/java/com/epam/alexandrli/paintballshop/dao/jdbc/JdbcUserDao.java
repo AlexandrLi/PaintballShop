@@ -1,7 +1,10 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.entity.Address;
 import com.epam.alexandrli.paintballshop.entity.Gender;
 import com.epam.alexandrli.paintballshop.entity.User;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +12,8 @@ import java.sql.SQLException;
 
 public class JdbcUserDao extends AbstractJdbcDao<User> {
 
-    public static final String INSERT_USER = "INSERT INTO user(email, password, role, first_name, last_name, phone_number, gender_id) VALUES (?,?,?,?,?,?,?)";
-    public static final String UPDATE_USER_BY_ID = "UPDATE user SET email=?, password=?, role=?, first_name=?, last_name=?, gender_id=?, phone_number=? WHERE id=?";
+    public static final String INSERT_USER = "INSERT INTO shopdb.user(email, password, role, first_name, last_name, phone_number, gender_id, cash, address_id) VALUES (?,?,?,?,?,?,?,?,?)";
+    public static final String UPDATE_USER_BY_ID = "UPDATE shopdb.user SET email=?, password=?, role=?, first_name=?, last_name=?, phone_number=?, gender_id=?, cash=?, address_id=? WHERE id=?";
 
     @Override
     protected User getObjectFromResultSet(ResultSet rs) throws SQLException {
@@ -25,6 +28,10 @@ public class JdbcUserDao extends AbstractJdbcDao<User> {
         Gender userGender = new Gender();
         userGender.setId(rs.getInt("gender_id"));
         user.setGender(userGender);
+        user.setCash(Money.of(CurrencyUnit.getInstance("KZT"), rs.getBigDecimal("cash")));
+        Address address = new Address(rs.getInt("address_id"));
+        user.setAddress(address);
+        user.setDeleted(rs.getBoolean("deleted"));
         return user;
     }
 
@@ -42,6 +49,8 @@ public class JdbcUserDao extends AbstractJdbcDao<User> {
         ps.setString(5, user.getLastName());
         ps.setString(6, user.getPhoneNumber());
         ps.setInt(7, user.getGender().getId());
+        ps.setBigDecimal(8, user.getCash().getAmount());
+        ps.setInt(9, user.getAddress().getId());
     }
 
     @Override

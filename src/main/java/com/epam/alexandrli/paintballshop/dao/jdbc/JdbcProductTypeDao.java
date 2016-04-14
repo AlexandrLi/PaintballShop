@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class JdbcProductTypeDao extends AbstractJdbcDao<ProductType> {
 
-    public static final String INSERT_PRODUCT_TYPE = "INSERT INTO product_type(name_ru, name_en) VALUES (?,?)";
-    public static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE product_type SET name_ru=?,name_en=? WHERE id=?";
+    public static final String INSERT_PRODUCT_TYPE = "INSERT INTO shopdb.product_type(name_ru, name_en) VALUES (?,?)";
+    public static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE shopdb.product_type SET name_ru=?,name_en=? WHERE id=?";
 
     @Override
     protected ProductType getObjectFromResultSet(ResultSet rs) throws SQLException {
@@ -18,6 +18,7 @@ public class JdbcProductTypeDao extends AbstractJdbcDao<ProductType> {
         productType.setId(rs.getInt("id"));
         productType.setNameRu(rs.getString("name_ru"));
         productType.setNameEn(rs.getString("name_en"));
+        productType.setDeleted(rs.getBoolean("deleted"));
         return productType;
     }
 

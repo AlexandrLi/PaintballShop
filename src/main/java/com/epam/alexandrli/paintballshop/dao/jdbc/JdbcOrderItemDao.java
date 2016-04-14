@@ -1,6 +1,8 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.entity.Order;
 import com.epam.alexandrli.paintballshop.entity.OrderItem;
+import com.epam.alexandrli.paintballshop.entity.Product;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +10,8 @@ import java.sql.SQLException;
 
 public class JdbcOrderItemDao extends AbstractJdbcDao<OrderItem> {
 
-    public static final String INSERT_ORDER_ITEM = "INSERT order_item(amount, order_id, product_id) VALUES (?,?,?)";
-    public static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE order_item SET amount=? WHERE id=?";
+    public static final String INSERT_ORDER_ITEM = "INSERT INTO shopdb.order_item(amount, order_id, product_id) VALUES (?,?,?)";
+    public static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE shopdb.order_item SET amount=?, order_id=?, product_id=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {
@@ -26,6 +28,11 @@ public class JdbcOrderItemDao extends AbstractJdbcDao<OrderItem> {
         OrderItem orderItem = new OrderItem();
         orderItem.setId(rs.getInt("id"));
         orderItem.setAmount(rs.getInt("amount"));
+        Order order = new Order(rs.getInt("order_id"));
+        orderItem.setOrder(order);
+        Product product = new Product(rs.getInt("product_id"));
+        orderItem.setProduct(product);
+        orderItem.setDeleted(rs.getBoolean("deleted"));
         return orderItem;
     }
 
