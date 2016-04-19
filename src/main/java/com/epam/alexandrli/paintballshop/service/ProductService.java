@@ -3,7 +3,6 @@ package com.epam.alexandrli.paintballshop.service;
 import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.DaoFactory;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
-import com.epam.alexandrli.paintballshop.dao.jdbc.JdbcDaoFactory;
 import com.epam.alexandrli.paintballshop.entity.CharacteristicItem;
 import com.epam.alexandrli.paintballshop.entity.Image;
 import com.epam.alexandrli.paintballshop.entity.Product;
@@ -16,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.JDBC;
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.getDaoFactory;
 
 public class ProductService {
     public static final Comparator<Product> ID_ORDER = new IdComparator();
@@ -34,7 +36,7 @@ public class ProductService {
 
     public Product getProductById(String id) throws ServiceException {
         Product product;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             product = productDao.findByPK(Integer.parseInt(id));
         } catch (DaoException e) {
@@ -45,7 +47,7 @@ public class ProductService {
 
     public List<Product> getFeaturedProducts() throws ServiceException {
         List<Product> featured;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             List<Product> products = productDao.findAll();
             featured = products.subList(products.size() - 9, products.size());
@@ -57,7 +59,7 @@ public class ProductService {
 
     public Image getProductPreviewImage(String id) throws ServiceException {
         List<Image> images;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Image> imageDao = jdbcDaoFactory.getDao(Image.class);
             images = imageDao.findAllByParams(Collections.singletonMap("product_id", id));
         } catch (DaoException e) {
@@ -68,7 +70,7 @@ public class ProductService {
 
     public List<Product> getAllProductsByType(String typeId) throws ServiceException {
         List<Product> products;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             products = productDao.findAllByParams(Collections.singletonMap("product_type_id", typeId));
         } catch (DaoException e) {
@@ -79,7 +81,7 @@ public class ProductService {
 
     public Product getFilledProduct(String id) throws ServiceException {
         Product product;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             GenericDao<ProductType> productTypeDao = jdbcDaoFactory.getDao(ProductType.class);
             GenericDao<Image> imageDao = jdbcDaoFactory.getDao(Image.class);
@@ -100,7 +102,7 @@ public class ProductService {
 
     public List<ProductType> getAllProductTypes() throws ServiceException {
         List<ProductType> productTypes;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<ProductType> productTypeDao = jdbcDaoFactory.getDao(ProductType.class);
             productTypes = productTypeDao.findAll();
         } catch (DaoException e) {

@@ -3,11 +3,12 @@ package com.epam.alexandrli.paintballshop.service;
 import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.DaoFactory;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
-import com.epam.alexandrli.paintballshop.dao.jdbc.JdbcDaoFactory;
 import com.epam.alexandrli.paintballshop.entity.*;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.*;
 
 public class ShopService {
 
@@ -16,7 +17,7 @@ public class ShopService {
 
     public Order getOrder(Integer id) throws ServiceException {
         Order order;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
             GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
@@ -38,7 +39,7 @@ public class ShopService {
 
     public List<Gender> getAllGenders() throws ServiceException {
         List<Gender> genders;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Gender> genderDao = jdbcDaoFactory.getDao(Gender.class);
             genders = genderDao.findAll();
         } catch (DaoException e) {
@@ -52,7 +53,7 @@ public class ShopService {
         if (cartUser.getCash().isLessThan(cart.getPrice())) {
             throw new ServiceException("Not enough money");
         }
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
             GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
             GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);

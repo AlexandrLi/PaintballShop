@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.JDBC;
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.getDaoFactory;
+
 public class UserService {
 
     public UserService() {
@@ -48,7 +51,7 @@ public class UserService {
 
     public User getUserById(Integer id) throws ServiceException {
         User user;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
             GenericDao<Gender> genderDao = jdbcDaoFactory.getDao(Gender.class);
             GenericDao<Address> addressDao = jdbcDaoFactory.getDao(Address.class);
@@ -62,7 +65,7 @@ public class UserService {
     }
 
     public User updateUserProfile(User user) throws ServiceException {
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
             userDao.update(user);
         } catch (DaoException e) {
@@ -72,7 +75,7 @@ public class UserService {
     }
 
     public User transferCash(User user, String cashAmount) throws ServiceException {
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
             Money totalCash = user.getCash().plus(Money.parse("KZT " + cashAmount));
             user.setCash(totalCash);
@@ -85,7 +88,7 @@ public class UserService {
 
     public List<Order> getUserOrders(Integer id) throws ServiceException {
         List<Order> orders;
-        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
             GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
             GenericDao<OrderItem> orderItemDao = jdbcDaoFactory.getDao(OrderItem.class);
