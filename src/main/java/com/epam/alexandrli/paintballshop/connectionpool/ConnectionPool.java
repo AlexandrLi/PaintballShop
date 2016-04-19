@@ -24,12 +24,12 @@ public class ConnectionPool implements DataSource {
     private BlockingQueue<PooledConnection> freeConnections;
     private BlockingQueue<PooledConnection> usedConnections;
 
-    private ConnectionPool() {
-        Properties properties = null;
+    private ConnectionPool() throws ConnectionPoolException {
+        Properties properties;
         try {
             properties = PropertyManager.getProperties("database.properties");
         } catch (PropertyManagerException e) {
-            e.printStackTrace();
+            throw new ConnectionPoolException("Could not load properties", e);
         }
         if (properties != null) {
             this.driver = properties.getProperty("driver");
@@ -38,25 +38,25 @@ public class ConnectionPool implements DataSource {
             this.password = properties.getProperty("password");
             this.connectionsLimit = Integer.parseInt(properties.getProperty("connections.limit"));
         }
-        initConnections(connectionsLimit);
+        initConnections();
     }
 
     public static ConnectionPool getInstance() {
         return InstanceHolder.instance;
     }
 
-    public void initConnections(int count) throws ConnectionPoolException {
+    public void initConnections() throws ConnectionPoolException {
         if (freeConnections == null) {
             freeConnections = new ArrayBlockingQueue<>(connectionsLimit);
         }
         try {
             Class.forName(driver);
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < connectionsLimit; i++) {
                 Connection pooledConnection = getPooledConnection();
                 freeConnections.put((PooledConnection) pooledConnection);
             }
         } catch (ClassNotFoundException | InterruptedException e) {
-            throw new ConnectionPoolException("Couldn't init connection", e);
+            throw new ConnectionPoolException("Could not init connection", e);
         }
         logger.debug("Connections has been initialized. Connection count - {}", freeConnections.size());
     }
@@ -67,12 +67,12 @@ public class ConnectionPool implements DataSource {
             Connection connection = DriverManager.getConnection(url, username, password);
             pooledConnection = new PooledConnection(connection);
         } catch (SQLException e) {
-            throw new ConnectionPoolException("Couldn't get PooledConnection", e);
+            throw new ConnectionPoolException("Could not get PooledConnection", e);
         }
         return pooledConnection;
     }
 
-    public Connection getConnection() throws ConnectionPoolException {
+    public Connection getConnection() throws SQLException {
         if (usedConnections == null) {
             usedConnections = new ArrayBlockingQueue<>(connectionsLimit);
         }
@@ -82,7 +82,7 @@ public class ConnectionPool implements DataSource {
             usedConnections.put(pooledConnection);
             logger.debug("connection used. freeCon: {} usedCon: {}", freeConnections.size(), usedConnections.size());
         } catch (InterruptedException e) {
-            throw new ConnectionPoolException("Couldn't get connection", e);
+            throw new SQLException("Could not get connection", e);
         }
         return pooledConnection;
     }
@@ -102,7 +102,7 @@ public class ConnectionPool implements DataSource {
             try {
                 connection.getConnection().close();
             } catch (SQLException e) {
-                throw new ConnectionPoolException("Couldn't close connection", e);
+                throw new ConnectionPoolException("Could not close connection", e);
             }
         }
     }
@@ -198,14 +198,10 @@ public class ConnectionPool implements DataSource {
             try {
                 setAutoCommit(true);
                 usedConnections.remove(this);
-                if (isClosed()) {
-                    initConnections(1);
-                } else {
-                    freeConnections.put(this);
-                }
+                freeConnections.put(this);
                 logger.debug("connection released. freeCon: {} usedCon: {}", freeConnections.size(), usedConnections.size());
             } catch (SQLException | InterruptedException e) {
-                throw new ConnectionPoolException("Couldn't release current connection", e);
+                throw new SQLException("Could not release current connection", e);
             }
         }
 
