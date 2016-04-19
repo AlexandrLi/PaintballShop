@@ -5,14 +5,14 @@ import com.epam.alexandrli.paintballshop.entity.OrderItem;
 import com.epam.alexandrli.paintballshop.entity.Product;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ProductService;
+import com.epam.alexandrli.paintballshop.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 public class AddToCartAction implements Action {
     @Override
-    public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         User currentUser = (User) req.getSession(false).getAttribute("user");
         if (currentUser == null) {
             return new ActionResult("login");
@@ -29,10 +29,10 @@ public class AddToCartAction implements Action {
             Product product = productService.getProductById(req.getParameter("product"));
             orderItem.setProduct(product);
             cart.addProduct(orderItem);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            throw new ActionException("Could not add product to cart", e);
         }
         req.getSession(false).setAttribute("cart", cart);
-        return new ActionResult(req.getHeader("referer"),true);
+        return new ActionResult(req.getHeader("referer"), true);
     }
 }

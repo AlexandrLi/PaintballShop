@@ -2,12 +2,12 @@ package com.epam.alexandrli.paintballshop.action;
 
 import com.epam.alexandrli.paintballshop.entity.Gender;
 import com.epam.alexandrli.paintballshop.entity.User;
+import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
 import com.epam.alexandrli.paintballshop.service.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 import static com.epam.alexandrli.paintballshop.service.Validator.*;
 
@@ -16,13 +16,9 @@ public class EditProfileAction implements Action {
     private boolean invalid;
 
     @Override
-    public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        UserService userService = null;
-        try {
-            userService = new UserService();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
+        UserService userService;
+        userService = new UserService();
         User currentUser = (User) req.getSession(false).getAttribute("user");
         String password = req.getParameter("password");
         if (validator.validate(password, PASSWORD_REGEX)) {
@@ -62,8 +58,8 @@ public class EditProfileAction implements Action {
             User updatedUser = userService.updateUserProfile(currentUser);
             req.getSession(false).setAttribute("user", updatedUser);
             req.getSession(false).removeAttribute("genders");
-        } catch (SQLException e) {
-            // TODO: 06.04.2016 handle exception
+        } catch (ServiceException e) {
+            throw new ActionException("Could not update profile", e);
         }
         return new ActionResult("userprofile", true);
     }
