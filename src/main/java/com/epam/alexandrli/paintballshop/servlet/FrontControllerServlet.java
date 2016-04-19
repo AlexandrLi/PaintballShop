@@ -1,6 +1,7 @@
 package com.epam.alexandrli.paintballshop.servlet;
 
 import com.epam.alexandrli.paintballshop.action.Action;
+import com.epam.alexandrli.paintballshop.action.ActionException;
 import com.epam.alexandrli.paintballshop.action.ActionFactory;
 import com.epam.alexandrli.paintballshop.action.ActionResult;
 
@@ -28,7 +29,12 @@ public class FrontControllerServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
             return;
         }
-        ActionResult result = action.execute(req, resp);
+        ActionResult result;
+        try {
+            result = action.execute(req, resp);
+        } catch (ActionException e) {
+            throw new ServletException("Could not perform action", e);
+        }
         checkActionResult(result, req, resp);
     }
 
