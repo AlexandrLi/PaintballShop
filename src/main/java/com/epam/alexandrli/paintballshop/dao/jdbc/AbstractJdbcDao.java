@@ -3,6 +3,8 @@ package com.epam.alexandrli.paintballshop.dao.jdbc;
 import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.Map;
 public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDao<T> {
     public static final String SELECT_FROM = "SELECT * FROM ";
     public static final String WHERE_ID = " WHERE id = ";
+    private static final Logger logger = LoggerFactory.getLogger(AbstractJdbcDao.class);
     Connection connection;
 
     public AbstractJdbcDao() {
@@ -31,14 +34,19 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
 
     protected abstract String getQueryToUpdateById();
 
-    protected abstract T getObjectFromResultSet(ResultSet rs) throws SQLException;
+    protected abstract T getObjectFromResultSet(ResultSet rs) throws DaoException;
 
-    protected abstract void setVariablesForPreparedStatementExceptId(T t, PreparedStatement ps) throws SQLException;
+    protected abstract void setVariablesForPreparedStatementExceptId(T t, PreparedStatement ps) throws DaoException;
 
-    private void setVariablesForPreparedStatement(T t, PreparedStatement ps) throws SQLException {
+    private void setVariablesForPreparedStatement(T t, PreparedStatement ps) throws DaoException {
         setVariablesForPreparedStatementExceptId(t, ps);
-        int lastParameterIndex = ps.getParameterMetaData().getParameterCount();
-        ps.setInt(lastParameterIndex, t.getId());
+        int lastParameterIndex;
+        try {
+            lastParameterIndex = ps.getParameterMetaData().getParameterCount();
+            ps.setInt(lastParameterIndex, t.getId());
+        } catch (SQLException e) {
+            throw new DaoException("Could not set variables for prepared statement", e);
+        }
     }
 
 
@@ -50,7 +58,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             rs.next();
             t.setId(rs.getInt(1));
         } catch (SQLException e) {
-            throw new DaoException("Couldn't insert Object to db", e);
+            throw new DaoException("Could not insert Object to db", e);
         }
         return t;
     }
@@ -61,7 +69,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             rs.next();
             return getObjectFromResultSet(rs);
         } catch (SQLException e) {
-            throw new DaoException("Couldn't find object by current id", e);
+            throw new DaoException("Could not find object by current id", e);
         }
     }
 
@@ -71,10 +79,11 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             rs.next();
             return rs.getInt(columnName);
         } catch (SQLException e) {
-            throw new DaoException("Couldn't find object by current id", e);
+            throw new DaoException("Could not find object by current id", e);
         }
     }
 
+    @SuppressWarnings("SqlResolve")
     public List<T> findAll() throws DaoException {
         List<T> objects = new ArrayList<>();
         try (Statement st = connection.createStatement();
@@ -83,7 +92,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
                 objects.add(getObjectFromResultSet(rs));
             }
         } catch (SQLException e) {
-            throw new DaoException("Couldn't find object by current id", e);
+            throw new DaoException("Could not find object by current id", e);
         }
         return objects;
     }
@@ -100,16 +109,17 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
                 objects.add(getObjectFromResultSet(rs));
             }
         } catch (SQLException e) {
-            throw new DaoException("Couldn't find object by current id", e);
+            throw new DaoException("Could not find object by current id", e);
         }
         return objects;
     }
 
+    @SuppressWarnings("SqlResolve")
     public void delete(Integer id) throws DaoException {
         try (Statement st = connection.createStatement()) {
             st.execute("UPDATE " + getTableName() + " SET deleted=1" + WHERE_ID + id);
         } catch (SQLException e) {
-            throw new DaoException("Couldn't delete object by id", e);
+            throw new DaoException("Could not delete object by id", e);
         }
     }
 
@@ -118,7 +128,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             setVariablesForPreparedStatement(t, ps);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Couldn't update Object in db", e);
+            throw new DaoException("Could not update Object in db", e);
         }
     }
 
@@ -130,7 +140,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
                 objects.add(getObjectFromResultSet(rs));
             }
         } catch (SQLException e) {
-            throw new DaoException("Couldn't find object with this params", e);
+            throw new DaoException("Could not find object with this params", e);
         }
         return objects;
     }

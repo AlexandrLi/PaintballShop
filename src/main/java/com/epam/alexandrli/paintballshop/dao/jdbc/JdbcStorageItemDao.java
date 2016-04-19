@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Product;
 import com.epam.alexandrli.paintballshop.entity.StorageItem;
 
@@ -23,21 +24,29 @@ public class JdbcStorageItemDao extends AbstractJdbcDao<StorageItem> {
     }
 
     @Override
-    protected StorageItem getObjectFromResultSet(ResultSet rs) throws SQLException {
+    protected StorageItem getObjectFromResultSet(ResultSet rs) throws DaoException {
         StorageItem storageItem = new StorageItem();
-        storageItem.setId(rs.getInt("id"));
-        storageItem.setAmount(rs.getInt("amount"));
-        Product product = new Product(rs.getInt("product_id"));
-        storageItem.setProduct(product);
-        storageItem.setDeleted(rs.getBoolean("deleted"));
+        try {
+            storageItem.setId(rs.getInt("id"));
+            storageItem.setAmount(rs.getInt("amount"));
+            Product product = new Product(rs.getInt("product_id"));
+            storageItem.setProduct(product);
+            storageItem.setDeleted(rs.getBoolean("deleted"));
+        } catch (SQLException e) {
+            throw new DaoException("Could not get object from result set", e);
+        }
         return storageItem;
     }
 
     @Override
-    protected void setVariablesForPreparedStatementExceptId(StorageItem storageItem, PreparedStatement ps) throws SQLException {
-        ps.setInt(1, storageItem.getAmount());
-        ps.setInt(2, storageItem.getStorage().getId());
-        ps.setInt(3, storageItem.getProduct().getId());
+    protected void setVariablesForPreparedStatementExceptId(StorageItem storageItem, PreparedStatement ps) throws DaoException {
+        try {
+            ps.setInt(1, storageItem.getAmount());
+            ps.setInt(2, storageItem.getStorage().getId());
+            ps.setInt(3, storageItem.getProduct().getId());
+        } catch (SQLException e) {
+            throw new DaoException("Could not set variables for prepared statement", e);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Address;
 
 import java.sql.PreparedStatement;
@@ -22,25 +23,33 @@ public class JdbcAddressDao extends AbstractJdbcDao<Address> {
     }
 
     @Override
-    protected Address getObjectFromResultSet(ResultSet rs) throws SQLException {
+    protected Address getObjectFromResultSet(ResultSet rs) throws DaoException {
         Address address = new Address();
-        address.setId(rs.getInt("id"));
-        address.setCountry(rs.getString("country"));
-        address.setCity(rs.getString("city"));
-        address.setStreet(rs.getString("street"));
-        address.setBuildingNumber(rs.getString("building_number"));
-        address.setApartmentNumber(rs.getString("apartment_number"));
-        address.setDeleted(rs.getBoolean("deleted"));
+        try {
+            address.setId(rs.getInt("id"));
+            address.setCountry(rs.getString("country"));
+            address.setCity(rs.getString("city"));
+            address.setStreet(rs.getString("street"));
+            address.setBuildingNumber(rs.getString("building_number"));
+            address.setApartmentNumber(rs.getString("apartment_number"));
+            address.setDeleted(rs.getBoolean("deleted"));
+        } catch (SQLException e) {
+            throw new DaoException("Could not get object from result set", e);
+        }
         return address;
     }
 
     @Override
-    protected void setVariablesForPreparedStatementExceptId(Address address, PreparedStatement ps) throws SQLException {
-        ps.setString(1, address.getCountry());
-        ps.setString(2, address.getCity());
-        ps.setString(3, address.getStreet());
-        ps.setString(4, address.getBuildingNumber());
-        ps.setString(5, address.getApartmentNumber());
+    protected void setVariablesForPreparedStatementExceptId(Address address, PreparedStatement ps) throws DaoException {
+        try {
+            ps.setString(1, address.getCountry());
+            ps.setString(2, address.getCity());
+            ps.setString(3, address.getStreet());
+            ps.setString(4, address.getBuildingNumber());
+            ps.setString(5, address.getApartmentNumber());
+        } catch (SQLException e) {
+            throw new DaoException("Could not set variables for prepared statement", e);
+        }
     }
 
     @Override

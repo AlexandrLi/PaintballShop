@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Characteristic;
 import com.epam.alexandrli.paintballshop.entity.CharacteristicItem;
 import com.epam.alexandrli.paintballshop.entity.Product;
@@ -24,23 +25,31 @@ public class JdbcCharacteristicItemDao extends AbstractJdbcDao<CharacteristicIte
     }
 
     @Override
-    protected CharacteristicItem getObjectFromResultSet(ResultSet rs) throws SQLException {
+    protected CharacteristicItem getObjectFromResultSet(ResultSet rs) throws DaoException {
         CharacteristicItem characteristicItem = new CharacteristicItem();
-        characteristicItem.setId(rs.getInt("id"));
-        characteristicItem.setValue(rs.getString("value"));
-        Characteristic characteristic = new Characteristic(rs.getInt("characteristic_id"));
-        characteristicItem.setCharacteristic(characteristic);
-        Product product = new Product(rs.getInt("product_id"));
-        characteristicItem.setProduct(product);
-        characteristicItem.setDeleted(rs.getBoolean("deleted"));
+        try {
+            characteristicItem.setId(rs.getInt("id"));
+            characteristicItem.setValue(rs.getString("value"));
+            Characteristic characteristic = new Characteristic(rs.getInt("characteristic_id"));
+            characteristicItem.setCharacteristic(characteristic);
+            Product product = new Product(rs.getInt("product_id"));
+            characteristicItem.setProduct(product);
+            characteristicItem.setDeleted(rs.getBoolean("deleted"));
+        } catch (SQLException e) {
+            throw new DaoException("Could not get object from result set", e);
+        }
         return characteristicItem;
     }
 
     @Override
-    protected void setVariablesForPreparedStatementExceptId(CharacteristicItem characteristicItem, PreparedStatement ps) throws SQLException {
-        ps.setString(1, characteristicItem.getValue());
-        ps.setInt(2, characteristicItem.getCharacteristic().getId());
-        ps.setInt(3, characteristicItem.getProduct().getId());
+    protected void setVariablesForPreparedStatementExceptId(CharacteristicItem characteristicItem, PreparedStatement ps) throws DaoException {
+        try {
+            ps.setString(1, characteristicItem.getValue());
+            ps.setInt(2, characteristicItem.getCharacteristic().getId());
+            ps.setInt(3, characteristicItem.getProduct().getId());
+        } catch (SQLException e) {
+            throw new DaoException("Could not set variables for prepared statement", e);
+        }
     }
 
     @Override

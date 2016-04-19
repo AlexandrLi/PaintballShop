@@ -14,20 +14,20 @@ public class JdbcDaoFactory extends DaoFactory {
     private Connection connection;
     private DataSource pool;
 
-    public JdbcDaoFactory() throws SQLException {
-        pool = ConnectionPool.getInstance();
-        getConnection();
-    }
-
-    public void getConnection() throws SQLException {
-        connection = pool.getConnection();
+    public JdbcDaoFactory() throws DaoException {
+        this.pool = ConnectionPool.getInstance();
+        try {
+            this.connection = pool.getConnection();
+        } catch (SQLException e) {
+            throw new DaoException("Could not get connection", e);
+        }
     }
 
     public void close() throws DaoException {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new DaoException("Couldn't close factory", e);
+            throw new DaoException("Could not close factory", e);
         }
     }
 
@@ -50,7 +50,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            throw new DaoException("Couldn't setAutoCommit to false", e);
+            throw new DaoException("Could not setAutoCommit to false", e);
         }
     }
 
@@ -58,7 +58,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             connection.commit();
         } catch (SQLException e) {
-            throw new DaoException("Couldn't commit transaction", e);
+            throw new DaoException("Could not commit transaction", e);
         }
     }
 
@@ -66,7 +66,7 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            throw new DaoException("Couldn't rollback changes", e);
+            throw new DaoException("Could not rollback changes", e);
         }
     }
 }

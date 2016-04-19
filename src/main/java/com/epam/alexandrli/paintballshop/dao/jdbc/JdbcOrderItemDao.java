@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Order;
 import com.epam.alexandrli.paintballshop.entity.OrderItem;
 import com.epam.alexandrli.paintballshop.entity.Product;
@@ -24,23 +25,31 @@ public class JdbcOrderItemDao extends AbstractJdbcDao<OrderItem> {
     }
 
     @Override
-    protected OrderItem getObjectFromResultSet(ResultSet rs) throws SQLException {
+    protected OrderItem getObjectFromResultSet(ResultSet rs) throws DaoException {
         OrderItem orderItem = new OrderItem();
-        orderItem.setId(rs.getInt("id"));
-        orderItem.setAmount(rs.getInt("amount"));
-        Order order = new Order(rs.getInt("order_id"));
-        orderItem.setOrder(order);
-        Product product = new Product(rs.getInt("product_id"));
-        orderItem.setProduct(product);
-        orderItem.setDeleted(rs.getBoolean("deleted"));
+        try {
+            orderItem.setId(rs.getInt("id"));
+            orderItem.setAmount(rs.getInt("amount"));
+            Order order = new Order(rs.getInt("order_id"));
+            orderItem.setOrder(order);
+            Product product = new Product(rs.getInt("product_id"));
+            orderItem.setProduct(product);
+            orderItem.setDeleted(rs.getBoolean("deleted"));
+        } catch (SQLException e) {
+            throw new DaoException("Could not get object from result set", e);
+        }
         return orderItem;
     }
 
     @Override
-    protected void setVariablesForPreparedStatementExceptId(OrderItem orderItem, PreparedStatement ps) throws SQLException {
-        ps.setInt(1, orderItem.getAmount());
-        ps.setInt(2, orderItem.getOrder().getId());
-        ps.setInt(3, orderItem.getProduct().getId());
+    protected void setVariablesForPreparedStatementExceptId(OrderItem orderItem, PreparedStatement ps) throws DaoException {
+        try {
+            ps.setInt(1, orderItem.getAmount());
+            ps.setInt(2, orderItem.getOrder().getId());
+            ps.setInt(3, orderItem.getProduct().getId());
+        } catch (SQLException e) {
+            throw new DaoException("Could not set variables for prepared statement", e);
+        }
     }
 
     @Override

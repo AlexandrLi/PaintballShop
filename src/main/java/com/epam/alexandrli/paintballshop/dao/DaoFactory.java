@@ -3,12 +3,10 @@ package com.epam.alexandrli.paintballshop.dao;
 import com.epam.alexandrli.paintballshop.dao.jdbc.JdbcDaoFactory;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
 
-import java.sql.SQLException;
-
 public abstract class DaoFactory implements AutoCloseable {
     public static final int JDBC = 0;
 
-    public static DaoFactory getDAOFactory(int factoryType) throws SQLException {
+    public static DaoFactory getDaoFactory(int factoryType) throws DaoException {
         switch (factoryType) {
             case JDBC:
                 return new JdbcDaoFactory();
@@ -17,11 +15,9 @@ public abstract class DaoFactory implements AutoCloseable {
         }
     }
 
-    public abstract <T extends BaseEntity> GenericDao<T> getDao(Class<T> clazz);
+    public abstract <T extends BaseEntity> GenericDao<T> getDao(Class<T> clazz) throws DaoException;
 
     public abstract void close() throws DaoException;
-
-    public abstract void getConnection() throws SQLException;
 
     public abstract void beginTransaction() throws DaoException;
 

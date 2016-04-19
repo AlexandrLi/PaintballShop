@@ -1,5 +1,6 @@
 package com.epam.alexandrli.paintballshop.dao.jdbc;
 
+import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Image;
 import com.epam.alexandrli.paintballshop.entity.Product;
 import org.joda.time.DateTime;
@@ -15,16 +16,20 @@ public class JdbcImageDao extends AbstractJdbcDao<Image> {
     public static final String UPDATE_IMAGE_BY_ID = "UPDATE shopdb.image SET name=?, content=?, product_id=?, modified=?, content_type=? WHERE id=?";
 
     @Override
-    protected Image getObjectFromResultSet(ResultSet rs) throws SQLException {
+    protected Image getObjectFromResultSet(ResultSet rs) throws DaoException {
         Image image = new Image();
-        image.setId(rs.getInt("id"));
-        image.setName(rs.getString("name"));
-        image.setContent(rs.getBinaryStream("content"));
-        Product product = new Product(rs.getInt("product_id"));
-        image.setProduct(product);
-        image.setModified(new DateTime(rs.getTimestamp("modified")));
-        image.setContentType(rs.getString("content_type"));
-        image.setDeleted(rs.getBoolean("deleted"));
+        try {
+            image.setId(rs.getInt("id"));
+            image.setName(rs.getString("name"));
+            image.setContent(rs.getBinaryStream("content"));
+            Product product = new Product(rs.getInt("product_id"));
+            image.setProduct(product);
+            image.setModified(new DateTime(rs.getTimestamp("modified")));
+            image.setContentType(rs.getString("content_type"));
+            image.setDeleted(rs.getBoolean("deleted"));
+        } catch (SQLException e) {
+            throw new DaoException("Could not get object from result set", e);
+        }
         return image;
     }
 
@@ -34,12 +39,16 @@ public class JdbcImageDao extends AbstractJdbcDao<Image> {
     }
 
     @Override
-    protected void setVariablesForPreparedStatementExceptId(Image image, PreparedStatement ps) throws SQLException {
-        ps.setString(1, image.getName());
-        ps.setBlob(2, image.getContent());
-        ps.setInt(3, image.getProduct().getId());
-        ps.setTimestamp(4, new Timestamp(image.getModified().getMillis()));
-        ps.setString(5, image.getContentType());
+    protected void setVariablesForPreparedStatementExceptId(Image image, PreparedStatement ps) throws DaoException {
+        try {
+            ps.setString(1, image.getName());
+            ps.setBlob(2, image.getContent());
+            ps.setInt(3, image.getProduct().getId());
+            ps.setTimestamp(4, new Timestamp(image.getModified().getMillis()));
+            ps.setString(5, image.getContentType());
+        } catch (SQLException e) {
+            throw new DaoException("Could not set variables for prepared statement", e);
+        }
     }
 
     @Override
