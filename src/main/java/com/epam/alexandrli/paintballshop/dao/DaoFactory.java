@@ -11,7 +11,7 @@ public abstract class DaoFactory implements AutoCloseable {
             case JDBC:
                 return new JdbcDaoFactory();
             default:
-                return null;
+                return new JdbcDaoFactory();
         }
     }
 
