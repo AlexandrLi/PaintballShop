@@ -1,7 +1,6 @@
 package com.epam.alexandrli.paintballshop.action;
 
 import com.epam.alexandrli.paintballshop.entity.Address;
-import com.epam.alexandrli.paintballshop.entity.Gender;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
@@ -13,14 +12,12 @@ public class ShowProfilePageAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         Address address;
-        Gender gender;
         User user = (User) req.getSession(false).getAttribute("loggedUser");
         try {
             UserService userService = new UserService();
             address = userService.getUserAddress(user);
-            gender = userService.getUserGender(user);
+            user.setGender(userService.getUserGender(user));
             req.setAttribute("address", address);
-            req.setAttribute("gender", gender);
         } catch (ServiceException e) {
             throw new ActionException("Could not show profile page", e);
         }
