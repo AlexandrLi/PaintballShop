@@ -1,6 +1,5 @@
 package com.epam.alexandrli.paintballshop.action;
 
-import com.epam.alexandrli.paintballshop.entity.Gender;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.alexandrli.paintballshop.service.Validator.*;
 
-public class EditProfileAction implements Action {
+public class EditUserDataAction implements Action {
     private Validator validator = new Validator();
     private boolean invalid;
 
@@ -19,48 +18,46 @@ public class EditProfileAction implements Action {
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         UserService userService;
         userService = new UserService();
-        User currentUser = (User) req.getSession(false).getAttribute("user");
+        User currentUser = (User) req.getSession(false).getAttribute("loggedUser");
         String password = req.getParameter("password");
-        if (validator.validate(password, PASSWORD_REGEX)) {
+        if (validator.validate(password, PASSWORD)) {
             currentUser.setPassword(password);
         } else {
             req.setAttribute("passwordError", "Must have at least 6 characters");
             invalid = true;
         }
         String firstName = req.getParameter("firstName");
-        if (validator.validate(firstName, NAME_REGEX)) {
+        if (validator.validate(firstName, NOT_EMPTY_TEXT)) {
             currentUser.setFirstName(firstName);
         } else {
-            req.setAttribute("firstNameError", "Must start from any letter");
+            req.setAttribute("firstNameError", "Must not be empty");
             invalid = true;
         }
         String lastName = req.getParameter("lastName");
-        if (validator.validate(lastName, NAME_REGEX)) {
+        if (validator.validate(lastName, NOT_EMPTY_TEXT)) {
             currentUser.setLastName(lastName);
         } else {
-            req.setAttribute("lastNameError", "Must start from any letter");
+            req.setAttribute("lastNameError", "Must not be empty");
             invalid = true;
         }
         String phoneNumber = req.getParameter("phoneNumber");
-        if (validator.validate(phoneNumber, PHONE_NUMBER_REGEX)) {
+        if (validator.validate(phoneNumber, PHONE_NUMBER)) {
             currentUser.setPhoneNumber(phoneNumber);
         } else {
             req.setAttribute("phoneNumberError", "Must start from + and contain from 6 to 14 digits ");
             invalid = true;
         }
         if (invalid) {
-            return new ActionResult("userprofile");
+            return new ActionResult("edit-user-data");
         }
-        Gender gender = new Gender();
-        gender.setId(Integer.valueOf(req.getParameter("gender")));
-        currentUser.setGender(gender);
+        currentUser.getGender().setId(Integer.valueOf(req.getParameter("gender")));
         try {
             User updatedUser = userService.updateUserProfile(currentUser);
-            req.getSession(false).setAttribute("user", updatedUser);
+            req.getSession(false).setAttribute("loggedUser", updatedUser);
             req.getSession(false).removeAttribute("genders");
         } catch (ServiceException e) {
             throw new ActionException("Could not update profile", e);
         }
-        return new ActionResult("userprofile", true);
+        return new ActionResult("user/profile", true);
     }
 }

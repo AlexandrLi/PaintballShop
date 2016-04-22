@@ -24,7 +24,7 @@ public class LoginAction implements Action {
             throw new ActionException("Could not login", e);
         }
         if (user != null) {
-            req.getSession(false).setAttribute("user", user);
+            req.getSession(false).setAttribute("loggedUser", user);
             return home;
         } else {
             req.setAttribute("loginError", "Invalid Login or Password");

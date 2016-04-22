@@ -8,7 +8,7 @@ public class LogoutAction implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        req.getSession(false).removeAttribute("user");
+        req.getSession(false).removeAttribute("loggedUser");
         return home;
     }
 }

@@ -11,6 +11,6 @@ public class AddCartDescriptionAction implements Action {
         Order cart = (Order) req.getSession(false).getAttribute("cart");
         cart.setDescription(req.getParameter("description"));
         req.getSession(false).setAttribute("cart", cart);
-        return new ActionResult("userorders", true);
+        return new ActionResult("user/orders", true);
     }
 }

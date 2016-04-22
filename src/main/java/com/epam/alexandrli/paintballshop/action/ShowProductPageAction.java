@@ -18,6 +18,6 @@ public class ShowProductPageAction implements Action {
             throw new ActionException("Could not get product", e);
         }
         req.setAttribute("product", product);
-        return new ActionResult("productpage");
+        return new ActionResult("product-page");
     }
 }

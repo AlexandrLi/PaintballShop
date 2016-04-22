@@ -20,8 +20,8 @@ public class PlaceOrderAction implements Action {
         } catch (ServiceException e) {
             throw new ActionException("Could not place order", e);
         }
-        req.getSession(false).setAttribute("user", user);
+        req.getSession(false).setAttribute("loggedUser", user);
         req.getSession(false).removeAttribute("cart");
-        return new ActionResult("userorders", true);
+        return new ActionResult("user-orders", true);
     }
 }

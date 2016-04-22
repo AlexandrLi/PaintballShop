@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddToCartAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
-        User currentUser = (User) req.getSession(false).getAttribute("user");
+        User currentUser = (User) req.getSession(false).getAttribute("loggedUser");
         if (currentUser == null) {
             return new ActionResult("login");
         }

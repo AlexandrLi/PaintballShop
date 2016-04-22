@@ -20,6 +20,6 @@ public class ShowCatalogPageAction implements Action {
             throw new ActionException("Could not show catalog page", e);
         }
         req.setAttribute("products", products);
-        return new ActionResult("typecatalog");
+        return new ActionResult("type-catalog");
     }
 }
