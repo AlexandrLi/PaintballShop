@@ -26,7 +26,7 @@ public class DescriptionedEntity extends BaseEntity {
     }
 
     public String getDescription(Locale locale) {
-        if (locale.getLanguage().equals("ru")) {
+        if (locale != null && locale.getLanguage().equals("ru")) {
             return descriptionRu;
         }
         return descriptionEn;

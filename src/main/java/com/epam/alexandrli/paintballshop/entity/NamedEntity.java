@@ -26,7 +26,7 @@ public class NamedEntity extends BaseEntity {
     }
 
     public String getName(Locale locale) {
-        if (locale.getLanguage().equals("ru")) {
+        if (locale != null && locale.getLanguage().equals("ru")) {
             return nameRu;
         }
         return nameEn;
