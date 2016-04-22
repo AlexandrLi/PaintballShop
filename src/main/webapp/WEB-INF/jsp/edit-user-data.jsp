@@ -25,7 +25,7 @@
                 <div class="form-group input-group">
                     <label for="password">${password}</label>
                     <input type="password" class="form-control" id="password" name="password"
-                           value="${user.password}">
+                           value="${loggedUser.password}">
                     <c:if test="${not empty passwordError}">
                         <p class="text-danger" style="height: 10px;font-size: 12px;">${passwordError}</p>
                     </c:if>
@@ -33,7 +33,7 @@
                 <div class="form-group input-group">
                     <label for="firstName">${firstname}</label>
                     <input type="text" class="form-control" id="firstName" name="firstName"
-                           value="${user.firstName}">
+                           value="${loggedUser.firstName}">
                     <c:if test="${not empty firstNameError}">
                         <p class=" text-danger" style="height: 10px;font-size: 12px;">${firstNameError}</p>
                     </c:if>
@@ -41,7 +41,7 @@
                 <div class="form-group input-group">
                     <label for="lastName">${lastname}</label>
                     <input type="text" class="form-control" id="lastName" name="lastName"
-                           value="${user.lastName}">
+                           value="${loggedUser.lastName}">
                     <c:if test="${not empty lastNameError}">
                         <p class=" text-danger" style="height: 10px;font-size: 12px;">${lastNameError}</p>
                     </c:if>
@@ -49,7 +49,7 @@
                 <div class="form-group input-group">
                     <label for="phoneNumber">${phonenumber}</label>
                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                           value="${user.phoneNumber}">
+                           value="${loggedUser.phoneNumber}">
                     <c:if test="${not empty phoneNumberError}">
                         <p class=" text-danger" style="height: 10px;font-size: 12px;">${phoneNumberError}</p>
                     </c:if>
@@ -61,7 +61,7 @@
                             <%--@elvariable id="user" type="com.epam.alexandrli.paintballshop.entity.User"--%>
                         <c:forEach items="${genders}" var="gender">
                             <option value="${gender.id}"<c:if
-                                    test="${user.gender.equals(gender)}"> selected </c:if>>${gender.getName(locale)}</option>
+                                    test="${loggedUser.gender.equals(gender)}"> selected </c:if>>${gender.getName(locale)}</option>
                         </c:forEach>
                     </select>
                 </div>

@@ -13,7 +13,7 @@ public class ShowEditUserAddressPageAction implements Action {
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         UserService userService = new UserService();
         try {
-            Address address = userService.getUserAddress((User) req.getSession(false).getAttribute("user"));
+            Address address = userService.getUserAddress((User) req.getSession(false).getAttribute("loggedUser"));
             req.getSession(false).setAttribute("address", address);
         } catch (ServiceException e) {
             throw new ActionException("Could not show user address edit page", e);
