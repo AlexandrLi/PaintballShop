@@ -99,11 +99,9 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
 
     public List<T> findAll(int pageNumber, int pageSize) throws DaoException {
         List<T> objects = new ArrayList<>();
-        int startRow = (pageNumber - 1) * pageSize;
-        int endRow = startRow + pageSize;
-        try (PreparedStatement st = connection.prepareStatement(SELECT_FROM + getTableName() + " LIMIT ?,?")) {
-            st.setInt(1, startRow);
-            st.setInt(2, endRow);
+        try (PreparedStatement st = connection.prepareStatement(SELECT_FROM + getTableName() + " LIMIT ? OFFSET ?")) {
+            st.setInt(1, pageSize);
+            st.setInt(2, (pageNumber - 1) * pageSize);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 objects.add(getObjectFromResultSet(rs));
@@ -120,6 +118,17 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
             st.execute("UPDATE " + getTableName() + " SET deleted=1" + WHERE_ID + id);
         } catch (SQLException e) {
             throw new DaoException("Could not delete object by id", e);
+        }
+    }
+
+    @SuppressWarnings("SqlResolve")
+    public int getNotDeletedCount() throws DaoException {
+        try (Statement st = connection.createStatement()) {
+            ResultSet rs = st.executeQuery("SELECT count(*) FROM " + getTableName() + " WHERE deleted=0");
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException("Could not get count", e);
         }
     }
 

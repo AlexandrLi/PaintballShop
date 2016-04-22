@@ -50,7 +50,7 @@ public class JdbcStorageDao extends AbstractJdbcDao<Storage> {
 
     @Override
     protected String getTableName() {
-        return "description";
+        return "storage";
     }
 
 }

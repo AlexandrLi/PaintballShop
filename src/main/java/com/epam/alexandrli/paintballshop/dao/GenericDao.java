@@ -23,4 +23,6 @@ public interface GenericDao<T extends BaseEntity> {
 
     void delete(Integer id) throws DaoException;
 
+    int getNotDeletedCount() throws DaoException;
+
 }

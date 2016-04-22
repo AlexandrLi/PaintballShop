@@ -49,6 +49,7 @@ public class JdbcDaoFactory extends DaoFactory {
     public void beginTransaction() throws DaoException {
         try {
             connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
         } catch (SQLException e) {
             throw new DaoException("Could not setAutoCommit to false", e);
         }

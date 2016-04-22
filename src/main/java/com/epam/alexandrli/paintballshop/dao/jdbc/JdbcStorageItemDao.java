@@ -2,6 +2,7 @@ package com.epam.alexandrli.paintballshop.dao.jdbc;
 
 import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.entity.Product;
+import com.epam.alexandrli.paintballshop.entity.Storage;
 import com.epam.alexandrli.paintballshop.entity.StorageItem;
 
 import java.sql.PreparedStatement;
@@ -29,6 +30,8 @@ public class JdbcStorageItemDao extends AbstractJdbcDao<StorageItem> {
         try {
             storageItem.setId(rs.getInt("id"));
             storageItem.setAmount(rs.getInt("amount"));
+            Storage storage = new Storage(rs.getInt("storage_id"));
+            storageItem.setStorage(storage);
             Product product = new Product(rs.getInt("product_id"));
             storageItem.setProduct(product);
             storageItem.setDeleted(rs.getBoolean("deleted"));
