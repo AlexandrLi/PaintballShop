@@ -3,13 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
 </fmt:bundle>
 <%--@elvariable id="product" type="com.epam.alexandrli.paintballshop.entity.Product"--%>
-<my:genericpage pagetitle="${pagetitle}">
+<my:generic-page pagetitle="${pagetitle}">
     <div class="row" style="width: 960px; margin: auto;">
-        <div class="col-lg-9" align="center">
+        <div class="col-lg-10" align="center">
             <h4 align="center"><b>${product.name}</b></h4>
             <div class="col-lg-9">
                 <img class="pull-left" style="height: 200px;" alt="image"
@@ -38,6 +37,6 @@
                 <p align="center">${product.getDescription(locale)}</p>
             </div>
         </div>
-        <my:usermenu user="${user}"/>
+        <my:user-menu user="${loggedUser}"/>
     </div>
-</my:genericpage>
+</my:generic-page>

@@ -5,11 +5,9 @@
 <%@attribute name="footer" fragment="true" %>
 <%@attribute name="pagetitle" required="true" %>
 
-<fmt:setLocale value="${locale}"/>
+<%--<fmt:setLocale value="${locale}"/>--%>
 <fmt:bundle basename="i18n">
     <fmt:message key="genericpage.navbar.products" var="products"/>
-    <fmt:message key="genericpage.navbar.contacts" var="contacts"/>
-    <fmt:message key="genericpage.navbar.about" var="about"/>
     <fmt:message key="genericpage.navbar.register" var="register"/>
     <fmt:message key="genericpage.navbar.locale" var="lang"/>
     <fmt:message key="genericpage.navbar.login" var="login"/>
@@ -30,10 +28,10 @@
 <body>
 <div id="pageheader">
     <div class="container" align="center">
-        <img style="width: 960px;margin-bottom: 20px" src="<c:url value="/images/logo.jpg"/>" class="img-responsive"
+        <img style="width: 1200px;margin-bottom: 20px" src="<c:url value="/images/logo.jpg"/>" class="img-responsive"
              alt="logo">
     </div>
-    <div align="center" style="width: 960px;margin: auto">
+    <div align="center" style="width: 1200px;margin: auto">
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -54,8 +52,6 @@
                             </c:forEach>
                         </ul>
                     </li>
-                    <li><a href="#contact">${contacts}</a></li>
-                    <li><a href="#about">${about}</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">${lang}<span class="caret"></span></a>
@@ -71,7 +67,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:choose>
-                        <c:when test="${not empty user}">
+                        <c:when test="${not empty loggedUser}">
                             <li><a href="<c:url value="/do/logout"/>"><span
                                     class="glyphicon glyphicon-log-out"></span>
                                     ${logout}</a>

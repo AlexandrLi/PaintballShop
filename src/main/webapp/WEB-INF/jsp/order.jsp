@@ -3,23 +3,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
-
+    <fmt:message key="userorders.pagetitle" var="pagetitle"/>
+    <fmt:message key="common.product" var="product"/>
+    <fmt:message key="common.amount" var="amount"/>
+    <fmt:message key="common.price" var="price"/>
+    <fmt:message key="common.total" var="total"/>
+    <fmt:message key="common.totalprice" var="total_price"/>
 </fmt:bundle>
 
-<my:genericpage pagetitle="${pagetitle}">
-    <div class="row row-offcanvas row-offcanvas-right" style="width: 960px; margin: auto;">
-        <div class="col-lg-9" align="center">
-            <p>Cart</p>
+<my:generic-page pagetitle="${pagetitle}">
+    <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
+        <div class="col-lg-10" align="center">
                 <%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Amount</th>
-                    <th>Price</th>
-                    <th>Total</th>
+                    <th>${product}</th>
+                    <th>${amount}</th>
+                    <th>${price}</th>
+                    <th>${total}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,8 +36,8 @@
                 </c:forEach>
                 </tbody>
             </table>
-            total price: ${order.price}
+            ${total_price}: ${order.price}
         </div>
-        <my:usermenu user="${user}"/>
+        <my:user-menu user="${loggedUser}"/>
     </div>
-</my:genericpage>
+</my:generic-page>

@@ -3,9 +3,8 @@
 <%@tag description="Product preview template" pageEncoding="UTF-8" %>
 <%@attribute name="product" required="true" type="com.epam.alexandrli.paintballshop.entity.Product" %>
 
-<fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
-    <fmt:message key="product.button.details" var="b_details"/>
+    <fmt:message key="common.button.details" var="b_details"/>
 </fmt:bundle>
 
 <div class="thumbnail">

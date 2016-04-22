@@ -3,12 +3,11 @@
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setLocale value="${locale}"/>
 <fmt:bundle basename="i18n">
     <fmt:message key="login.pagetitle" var="pagetitle"/>
     <fmt:message key="login.welcome" var="welcome"/>
-    <fmt:message key="login.email" var="email"/>
-    <fmt:message key="login.password" var="password"/>
+    <fmt:message key="common.email" var="email"/>
+    <fmt:message key="common.password" var="password"/>
     <fmt:message key="login.button.login" var="b_login"/>
     <fmt:message key="login.button.register" var="b_register"/>
     <fmt:message key="login.error" var="error"/>
@@ -16,7 +15,7 @@
 
 <c:url var="login_url" value="/do/login"/>
 <c:url var="register_url" value="/do/register"/>
-<my:genericpage pagetitle="${pagetitle}">
+<my:generic-page pagetitle="${pagetitle}">
     <div align="center">
         <div class="h3">${welcome}</div>
         <form role="form" action="${login_url}" method="post">
@@ -40,4 +39,4 @@
             </div>
         </form>
     </div>
-</my:genericpage>
+</my:generic-page>
