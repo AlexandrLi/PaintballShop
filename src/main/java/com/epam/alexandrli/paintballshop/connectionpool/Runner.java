@@ -3,6 +3,7 @@ package com.epam.alexandrli.paintballshop.connectionpool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class Runner {
     public static AtomicInteger counter = new AtomicInteger(0);
 
     public static void main(String[] args) throws ConnectionPoolException, InterruptedException, ClassNotFoundException, SQLException, ExecutionException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        DataSource connectionPool = ConnectionPool.getInstance();
         ExecutorService executorService = Executors.newFixedThreadPool(50);
         LocalTime timeIn = LocalTime.now();
         for (int i = 0; i < 100; i++) {
