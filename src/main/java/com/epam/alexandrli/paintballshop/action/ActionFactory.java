@@ -2,19 +2,11 @@ package com.epam.alexandrli.paintballshop.action;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 public class ActionFactory {
-    Properties properties;
     private Map<String, Action> actions;
 
     public ActionFactory() {
-//        PropertyManager propertyManager = new PropertyManager();
-//        try {
-//            properties = PropertyManager.getProperties("action.properties");
-//        } catch (PropertyManagerException e) {
-//            e.printStackTrace();
-//        }
         actions = new HashMap<>();
         actions.put("GET/home", new ShowHomePageAction());
         actions.put("GET/login", new ShowPageAction("login"));
@@ -46,19 +38,9 @@ public class ActionFactory {
         actions.put("GET/manage/storage", new ShowManageStoragePage());
         actions.put("GET/delete/user", new DeleteUserAction());
         actions.put("GET/delete/product", new DeleteProductAction());
-
     }
 
     public Action getAction(String actionName) {
-//        String actionClassName = properties.getProperty(actionName);
-//        Action action = null;
-//        try {
-//            String packageName = this.getClass().getPackage().getName();
-//            action = (Action) Class.forName(packageName + "." + actionClassName).newInstance();
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-//        return action;
         return actions.get(actionName);
     }
 }
