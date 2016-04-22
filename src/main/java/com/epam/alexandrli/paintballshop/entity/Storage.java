@@ -10,6 +10,10 @@ public class Storage extends DescriptionedEntity {
     public Storage() {
     }
 
+    public Storage(Integer id) {
+        setId(id);
+    }
+
     public List<StorageItem> getStorageItems() {
         return storageItems;
     }
