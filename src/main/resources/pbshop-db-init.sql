@@ -16,23 +16,24 @@ CREATE TABLE IF NOT EXISTS `gender` (
   ENGINE = InnoDB;
 
 # Table `user`
-CREATE TABLE IF NOT EXISTS `user` (
-  `id`           INT         NOT NULL AUTO_INCREMENT,
-  `email`        VARCHAR(80) NOT NULL,
-  `password`     VARCHAR(45) NOT NULL,
-  `role`         VARCHAR(45) NOT NULL,
-  `first_name`   VARCHAR(45) NULL,
-  `last_name`    VARCHAR(45) NULL,
-  `phone_number` VARCHAR(45) NULL,
-  `gender_id`    INT         NOT NULL,
-  `deleted`      TINYINT(1)  NOT NULL DEFAULT 0,
-  `cash`         DECIMAL(12) NOT NULL DEFAULT 0,
+CREATE TABLE `user` (
+  `id`           INT(11)        NOT NULL AUTO_INCREMENT,
+  `email`        VARCHAR(80)    NOT NULL,
+  `password`     VARCHAR(45)    NOT NULL,
+  `role`         VARCHAR(45)    NOT NULL,
+  `first_name`   VARCHAR(45)             DEFAULT NULL,
+  `last_name`    VARCHAR(45)             DEFAULT NULL,
+  `phone_number` VARCHAR(45)             DEFAULT NULL,
+  `gender_id`    INT(11)        NOT NULL,
+  `deleted`      TINYINT(1)     NOT NULL DEFAULT '0',
+  `cash`         DECIMAL(12, 0) NOT NULL DEFAULT '0',
+  `address_id`   INT(11)        NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  INDEX `fk_user_gender_idx` (`gender_id` ASC),
-  CONSTRAINT `fk_user_gender`
-  FOREIGN KEY (`gender_id`)
-  REFERENCES `gender` (`id`)
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `fk_user_gender_idx` (`gender_id`),
+  KEY `fk_user_address_idx` (`address_id`),
+  CONSTRAINT `fk_user_address` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`),
+  CONSTRAINT `fk_user_gender` FOREIGN KEY (`gender_id`) REFERENCES `gender` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
