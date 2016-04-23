@@ -12,7 +12,8 @@
     <fmt:message key="orders.customer" var="customer"/>
     <fmt:message key="common.description" var="description"/>
     <fmt:message key="common.status" var="status"/>
-    <fmt:message key="common.button.edit" var="b_edit"/>
+    <fmt:message key="common.button.details" var="b_details"/>
+    <fmt:message key="common.button.save" var="b_save"/>
     <fmt:message key="common.button.delete" var="b_delete"/>
 </fmt:bundle>
 
@@ -47,16 +48,30 @@
                     <tr>
                         <td>${order.formattedCreatedTime}</td>
                         <td>${order.user.firstName}</td>
-                        <td>${order.description}</td>
+                        <td> ${order.description}</td>
                         <td>${order.price}</td>
-                        <td>${order.status.getName(locale)}</td>
-                        <td><a class="btn btn-default"
-                               href="<c:url value="/do/edit/order?id=${order.id}"></c:url>"
-                        >${b_edit}</a>
-                            <a class="btn btn-default"
-                               href="<c:url value="/do/delete/order?id=${order.id}"></c:url>"
-                            >${b_delete}</a>
-                        </td>
+                        <form action="<c:url value="/do/edit/orderStatus"/>" method="post">
+                            <td>
+                                <div class="form-group input-group">
+                                    <input hidden name="orderId" value="${order.id}">
+                                    <select class="form-control" id="status" name="statusId">
+                                            <%--@elvariable id="statuses" type="java.util.List"--%>
+                                        <c:forEach items="${statuses}" var="status">
+                                            <option value="${status.id}"<c:if
+                                                    test="${order.status.equals(status)}"> selected </c:if>>${status.getName(locale)}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </td>
+                            <td style="width: 100px"><a class="btn btn-default"
+                                                        href="<c:url value="/do/order?id=${order.id}"></c:url>"
+                            >${b_details}</a>
+                                <button value="submit" class="btn btn-default">${b_save}</button>
+                                <a class="btn btn-default"
+                                   href="<c:url value="/do/delete/order?id=${order.id}"></c:url>"
+                                >${b_delete}</a>
+                            </td>
+                        </form>
                     </tr>
                 </c:forEach>
                 </tbody>

@@ -10,6 +10,7 @@
     <fmt:message key="common.amount" var="amount"/>
     <fmt:message key="common.button.edit" var="b_edit"/>
     <fmt:message key="common.button.delete" var="b_delete"/>
+    <fmt:message key="common.button.save" var="b_save"/>
 </fmt:bundle>
 
 <my:generic-page pagetitle="${pagetitle}">
@@ -41,14 +42,21 @@
                     <tr>
                         <td>${storageItem.storage.name}</td>
                         <td>${storageItem.product.name}</td>
-                        <td>${storageItem.amount}</td>
-                        <td><a class="btn btn-default"
-                               href="<c:url value="/do/edit/storageItem?id=${order.id}"></c:url>"
-                        >${b_edit}</a>
-                            <a class="btn btn-default"
-                               href="<c:url value="/do/delete/storageItem?id=${order.id}"></c:url>"
-                            >${b_delete}</a>
-                        </td>
+                        <form action="<c:url value="/do/edit/storage/itemAmount"/>" method="post">
+                            <td>
+                                <div class="form-group input-group">
+                                    <input hidden name="itemId" value="${storageItem.id}">
+                                    <input type="number" min="0" value="${storageItem.amount}" style="width: 70px"
+                                           name="amount">
+                                </div>
+                            </td>
+                            <td>
+                                <button value="submit" class="btn btn-default">${b_save}</button>
+                                <a class="btn btn-default"
+                                   href="<c:url value="/do/delete/storageItem?id=${storageItem.id}"></c:url>"
+                                >${b_delete}</a>
+                            </td>
+                        </form>
                     </tr>
                 </c:forEach>
                 </tbody>

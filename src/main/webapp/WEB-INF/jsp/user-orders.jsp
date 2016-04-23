@@ -89,7 +89,8 @@
                                       style="width: 400px;height: 100px;">${cart.description}</textarea>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-default">${b_save}</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">${b_close}</button>
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">${b_close}</button>
                                 </div>
                             </form>
                         </div>

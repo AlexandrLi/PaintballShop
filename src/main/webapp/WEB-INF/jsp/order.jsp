@@ -6,10 +6,11 @@
 <fmt:bundle basename="i18n">
     <fmt:message key="userorders.pagetitle" var="pagetitle"/>
     <fmt:message key="common.product" var="product"/>
-    <fmt:message key="common.amount" var="amount"/>
+    <fmt:message key="common.quantity" var="quantity"/>
     <fmt:message key="common.price" var="price"/>
     <fmt:message key="common.total" var="total"/>
     <fmt:message key="common.totalprice" var="total_price"/>
+    <fmt:message key="common.button.back" var="b_back"/>
 </fmt:bundle>
 
 <my:generic-page pagetitle="${pagetitle}">
@@ -20,7 +21,7 @@
                 <thead>
                 <tr>
                     <th>${product}</th>
-                    <th>${amount}</th>
+                    <th>${quantity}</th>
                     <th>${price}</th>
                     <th>${total}</th>
                 </tr>
@@ -36,7 +37,8 @@
                 </c:forEach>
                 </tbody>
             </table>
-            ${total_price}: ${order.price}
+            <p class="pull-right"><b>${total_price}: ${order.price}</b></p><span class="pull-left"><button
+                type="button" class="btn btn-default" onclick="history.back()">${b_back}</button></span>
         </div>
         <my:user-menu user="${loggedUser}"/>
     </div>

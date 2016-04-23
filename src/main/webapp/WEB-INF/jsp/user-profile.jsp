@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">KZT</div>
-                            <input type="number" class="form-control" id="exampleInputAmount" placeholder="Amount"
+                            <input type="number" class="form-control" placeholder="Amount"
                                    name="balance" value="0" min="0">
                             <div class="input-group-addon">.00</div>
                         </div>

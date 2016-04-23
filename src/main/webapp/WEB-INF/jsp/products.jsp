@@ -62,6 +62,8 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <a class="btn btn-default"
+               href="<c:url value="/do/add/product"></c:url>">Add Product</a>
         </div>
         <my:user-menu user="${loggedUser}"/>
     </div>
