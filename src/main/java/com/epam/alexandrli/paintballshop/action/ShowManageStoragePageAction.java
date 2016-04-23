@@ -1,6 +1,6 @@
 package com.epam.alexandrli.paintballshop.action;
 
-import com.epam.alexandrli.paintballshop.entity.Order;
+import com.epam.alexandrli.paintballshop.entity.StorageItem;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.ShopService;
 
@@ -8,35 +8,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowManageOrdersPage implements Action {
+public class ShowManageStoragePageAction implements Action {
     public static final int FIRST_PAGE = 1;
     public static final int PAGE_SIZE = 2;
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
-        List<Order> orders;
+        List<StorageItem> storageItems;
         String page = req.getParameter("page");
-        int ordersCount;
+        int storageItemsCount;
         try {
             if (page == null) {
                 page = String.valueOf(FIRST_PAGE);
             }
             ShopService shopService = new ShopService();
-            orders = shopService.getAllOrdersOnPage(Integer.parseInt(page), PAGE_SIZE);
-            ordersCount = shopService.getOrdersCount();
+            storageItems = shopService.getAllStorageItemsOnPage(Integer.parseInt(page), PAGE_SIZE);
+            storageItemsCount = shopService.getStorageItemsCount();
         } catch (ServiceException e) {
-            throw new ActionException("Could not show manage orders page", e);
+            throw new ActionException("Could not show manage storageItems page", e);
         }
         int pageCount;
-        if (ordersCount % PAGE_SIZE == 0) {
-            pageCount = ordersCount / PAGE_SIZE;
+        if (storageItemsCount % PAGE_SIZE == 0) {
+            pageCount = storageItemsCount / PAGE_SIZE;
         } else {
-            pageCount = ordersCount / PAGE_SIZE + 1;
+            pageCount = storageItemsCount / PAGE_SIZE + 1;
         }
-        req.setAttribute("orders", orders);
+        req.setAttribute("storageItems", storageItems);
         req.setAttribute("pagesCount", pageCount);
         req.setAttribute("page", page);
-        return new ActionResult("orders");
+        return new ActionResult("storage");
 
     }
 }
