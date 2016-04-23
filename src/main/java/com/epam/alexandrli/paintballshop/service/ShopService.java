@@ -9,7 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.epam.alexandrli.paintballshop.dao.DaoFactory.*;
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.JDBC;
+import static com.epam.alexandrli.paintballshop.dao.DaoFactory.getDaoFactory;
 
 public class ShopService {
 
@@ -43,10 +44,35 @@ public class ShopService {
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Gender> genderDao = jdbcDaoFactory.getDao(Gender.class);
             genders = genderDao.findAll();
+            genders = genders.stream().filter(gender -> !gender.isDeleted()).collect(Collectors.toList());
         } catch (DaoException e) {
             throw new ServiceException("Could not get gender list", e);
         }
         return genders;
+    }
+
+    public List<OrderStatus> getAllOrderStatuses() throws ServiceException {
+        List<OrderStatus> statuses;
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
+            statuses = orderStatusDao.findAll();
+            statuses = statuses.stream().filter(status -> !status.isDeleted()).collect(Collectors.toList());
+        } catch (DaoException e) {
+            throw new ServiceException("Could not get status list", e);
+        }
+        return statuses;
+    }
+
+    public List<ProductType> getAllProductTypes() throws ServiceException {
+        List<ProductType> types;
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<ProductType> productTypeDao = jdbcDaoFactory.getDao(ProductType.class);
+            types = productTypeDao.findAll();
+            types = types.stream().filter(productType -> !productType.isDeleted()).collect(Collectors.toList());
+        } catch (DaoException e) {
+            throw new ServiceException("Could not get product type list", e);
+        }
+        return types;
     }
 
     public User placeOrder(Order cart) throws ServiceException {
@@ -200,6 +226,46 @@ public class ShopService {
             productDao.delete(Integer.valueOf(id));
         } catch (DaoException e) {
             throw new ServiceException("Could not delete user", e);
+        }
+    }
+
+    public void deleteOrderById(String id) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
+            orderDao.delete(Integer.valueOf(id));
+        } catch (DaoException e) {
+            throw new ServiceException("Could not delete order", e);
+        }
+    }
+
+    public void updateOrderStatus(String orderId, String statusId) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
+            Order order = orderDao.findByPK(Integer.valueOf(orderId));
+            order.getStatus().setId(Integer.valueOf(statusId));
+            orderDao.update(order);
+        } catch (DaoException e) {
+            throw new ServiceException("Could not update order status", e);
+        }
+    }
+
+    public void deleteStorageItemById(String id) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<StorageItem> storageItemDao = jdbcDaoFactory.getDao(StorageItem.class);
+            storageItemDao.delete(Integer.valueOf(id));
+        } catch (DaoException e) {
+            throw new ServiceException("Could not delete storage item", e);
+        }
+    }
+
+    public void updateStorageItemAmount(String itemId, String amount) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<StorageItem> storageItemDao = jdbcDaoFactory.getDao(StorageItem.class);
+            StorageItem item = storageItemDao.findByPK(Integer.valueOf(itemId));
+            item.setAmount(Integer.parseInt(amount));
+            storageItemDao.update(item);
+        } catch (DaoException e) {
+            throw new ServiceException("Could not update storage item amount", e);
         }
     }
 }
