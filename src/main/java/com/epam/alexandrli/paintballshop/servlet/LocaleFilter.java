@@ -5,10 +5,11 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.util.Locale;
 
-@WebFilter(filterName = "1LocaleFilter", urlPatterns = "/do/*")
+@WebFilter(filterName = "LocaleFilter", urlPatterns = "/do/*")
 public class LocaleFilter implements Filter {
 
     @Override
@@ -22,7 +23,9 @@ public class LocaleFilter implements Filter {
             Cookie[] cookies = ((HttpServletRequest) req).getCookies();
             for (Cookie cookie : cookies) {
                 if ("locale".equals(cookie.getName())) {
-                    ((HttpServletRequest) req).getSession().setAttribute("locale", new Locale(cookie.getValue()));
+                    Locale locale = new Locale(cookie.getValue());
+                    ((HttpServletRequest) req).getSession().setAttribute("locale", locale);
+                    Config.set(((HttpServletRequest) req).getSession(), Config.FMT_LOCALE, locale);
                 }
             }
             if (((HttpServletRequest) req).getSession().getAttribute("locale") == null) {
