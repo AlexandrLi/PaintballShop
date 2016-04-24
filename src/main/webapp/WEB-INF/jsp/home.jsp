@@ -18,9 +18,18 @@
                 <p align="center" style="font-size: 18px"><b>${titleabout}</b></p>
                 <p align="justify">${about}</p>
                 <hr>
+                <nav>
+                    <ul class="pagination">
+                        <c:forEach begin="1" end="${pagesCount}" varStatus="loop">
+                            <li <c:if test="${page==loop.count}">class="active" </c:if>><a
+                                    href="<c:url value="/do/home?page=${loop.count}"></c:url>">${loop.count}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </nav>
             </div>
             <div class="row">
-                <c:forEach items="${featuredList}" var="product">
+                <c:forEach items="${products}" var="product">
                     <div class="col-lg-4">
                         <my:product product="${product}"/>
                     </div>

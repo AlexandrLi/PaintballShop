@@ -31,6 +31,7 @@
             <p align="center">${greetings} ${loggedUser.firstName}</p>
             <p align="center">${balance}: ${loggedUser.cash}</p>
             <a href="<c:url value="/do/user/profile"></c:url>" class="list-group-item">${myprofile}</a>
+            <a href="<c:url value="/do/user/orders"></c:url>" class="list-group-item">${myorders}</a>
             <a href="<c:url value="/do/manage/users"></c:url>" class="list-group-item">${manage_users}</a>
             <a href="<c:url value="/do/manage/products"></c:url>" class="list-group-item">${manage_products}</a>
             <a href="<c:url value="/do/manage/orders"></c:url>" class="list-group-item">${manage_orders}</a>
