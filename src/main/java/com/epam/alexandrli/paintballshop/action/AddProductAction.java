@@ -2,6 +2,7 @@ package com.epam.alexandrli.paintballshop.action;
 
 import com.epam.alexandrli.paintballshop.entity.Image;
 import com.epam.alexandrli.paintballshop.entity.Product;
+import com.epam.alexandrli.paintballshop.entity.ProductType;
 import com.epam.alexandrli.paintballshop.service.ProductService;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import org.joda.money.Money;
@@ -13,10 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
-public class EditProductAction implements Action {
+public class AddProductAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
-        String id = req.getParameter("id");
         String name = req.getParameter("name");
         String type = req.getParameter("type");
         String price = req.getParameter("price");
@@ -24,24 +24,22 @@ public class EditProductAction implements Action {
         String descriptionEn = req.getParameter("descriptionEn");
         ProductService productService = new ProductService();
         try {
-            Product product = productService.getProductById(id);
+            Product product = new Product();
             product.setName(name);
-            product.getType().setId(Integer.valueOf(type));
+            product.setType(new ProductType(Integer.valueOf(type)));
             product.setPrice(Money.parse("KZT " + price));
             product.setDescriptionRu(descriptionRu);
             product.setDescriptionEn(descriptionEn);
-            productService.updateProduct(product);
             Part imagePart = req.getPart("image");
-            if (imagePart.getSize() != 0) {
-                Image image = productService.getProductPreviewImage(id);
-                image.setName(name.replaceAll("\\s", "").toLowerCase());
-                image.setContentType(imagePart.getContentType());
-                image.setModified(DateTime.now());
-                image.setContent(imagePart.getInputStream());
-                productService.updateProductImage(image);
-            }
+            Image image = new Image();
+            image.setName(name.replaceAll("\\s", "").toLowerCase());
+            image.setModified(DateTime.now());
+            image.setContentType(imagePart.getContentType());
+            image.setContent(imagePart.getInputStream());
+            Product newProduct = productService.addProduct(product, image);
+            productService.addProductOnStorage(newProduct);
         } catch (ServiceException | IOException | ServletException e) {
-            throw new ActionException("Could not edit product", e);
+            throw new ActionException("Could not add product", e);
         }
         return new ActionResult("manage/products", true);
     }

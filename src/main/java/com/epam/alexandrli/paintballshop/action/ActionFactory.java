@@ -40,6 +40,7 @@ public class ActionFactory {
         actions.put("POST/edit/data", new EditUserDataAction());
         actions.put("POST/edit/address", new EditUserAddressAction());
         actions.put("POST/edit/product", new EditProductAction());
+        actions.put("POST/add/product", new AddProductAction());
         actions.put("POST/edit/orderStatus", new EditOrderStatusAction());
         actions.put("POST/edit/storage/itemAmount", new EditStorageItemAmountAction());
         actions.put("POST/refill/balance", new RefillBalanceAction());
