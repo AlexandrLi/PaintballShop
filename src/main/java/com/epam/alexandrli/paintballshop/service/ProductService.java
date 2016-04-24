@@ -67,6 +67,7 @@ public class ProductService {
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             products = productDao.findAllByParams(Collections.singletonMap("product_type_id", typeId));
+            products = products.stream().filter(product -> !product.isDeleted()).collect(Collectors.toList());
         } catch (DaoException e) {
             throw new ServiceException("Could not get products by type", e);
         }
@@ -135,4 +136,36 @@ public class ProductService {
         }
     }
 
+    public Product addProduct(Product product, Image productImage) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            try {
+                jdbcDaoFactory.beginTransaction();
+                GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
+                GenericDao<Image> imageDao = jdbcDaoFactory.getDao(Image.class);
+                Product insertedProduct = productDao.insert(product);
+                productImage.setProduct(insertedProduct);
+                imageDao.insert(productImage);
+                jdbcDaoFactory.commit();
+            } catch (DaoException e) {
+                jdbcDaoFactory.rollback();
+                throw new ServiceException("Could not add product", e);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException("Could not init jdbc factory", e);
+        }
+        return product;
+    }
+
+    public void addProductOnStorage(Product product) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<StorageItem> storageItemDao = jdbcDaoFactory.getDao(StorageItem.class);
+            StorageItem storageItem = new StorageItem();
+            storageItem.setProduct(product);
+            storageItem.setStorage(new Storage(1));
+            storageItem.setAmount(0);
+            storageItemDao.insert(storageItem);
+        } catch (DaoException e) {
+            throw new ServiceException("Could not add product", e);
+        }
+    }
 }
