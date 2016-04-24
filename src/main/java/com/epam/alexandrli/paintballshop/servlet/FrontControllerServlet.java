@@ -6,6 +6,7 @@ import com.epam.alexandrli.paintballshop.action.ActionFactory;
 import com.epam.alexandrli.paintballshop.action.ActionResult;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "FrontControllerServlet", urlPatterns = "/do/*")
+@MultipartConfig(maxFileSize = 5 * 1024 * 1024)
 public class FrontControllerServlet extends HttpServlet {
     private ActionFactory actionFactory;
 
