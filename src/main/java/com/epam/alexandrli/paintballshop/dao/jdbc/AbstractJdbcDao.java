@@ -99,7 +99,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
 
     public List<T> findAll(int pageNumber, int pageSize) throws DaoException {
         List<T> objects = new ArrayList<>();
-        try (PreparedStatement st = connection.prepareStatement(SELECT_FROM + getTableName() + " LIMIT ? OFFSET ?")) {
+        try (PreparedStatement st = connection.prepareStatement(SELECT_FROM + getTableName() + " WHERE deleted=0 LIMIT ? OFFSET ?")) {
             st.setInt(1, pageSize);
             st.setInt(2, (pageNumber - 1) * pageSize);
             ResultSet rs = st.executeQuery();
