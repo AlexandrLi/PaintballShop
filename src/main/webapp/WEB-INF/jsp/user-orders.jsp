@@ -8,7 +8,7 @@
     <fmt:message key="userorders.cart" var="cart_title"/>
     <fmt:message key="common.empty" var="empty_title"/>
     <fmt:message key="common.product" var="product"/>
-    <fmt:message key="common.amount" var="amount"/>
+    <fmt:message key="common.quantity" var="quantity"/>
     <fmt:message key="common.price" var="price"/>
     <fmt:message key="common.total" var="total"/>
     <fmt:message key="common.button.remove" var="remove"/>
@@ -40,7 +40,7 @@
                         <thead>
                         <tr>
                             <th>${product}</th>
-                            <th>${amount}</th>
+                            <th>${quantity}</th>
                             <th>${price}</th>
                             <th>${total}</th>
                             <th></th>
@@ -55,7 +55,7 @@
                                 <td>${item.price}</td>
                                 <td>
                                     <a class="btn btn-default"
-                                       href="<c:url value="/do/removeitem?item=${status.index}"></c:url>"
+                                       href="<c:url value="/do/cart/removeitem?item=${status.index}"></c:url>"
                                     >${remove}
                                     </a>
                                 </td>
@@ -68,8 +68,8 @@
                         </tbody>
                     </table>
                     <div align="center">
-                        <a class="btn btn-default" href="<c:url value="/do/placeorder"></c:url>">${b_placeorder}</a>
-                        <a class="btn btn-default" href="<c:url value="/do/clearcart"></c:url>">${b_clearcart}</a>
+                        <a class="btn btn-default" href="<c:url value="/do/cart/buy"></c:url>">${b_placeorder}</a>
+                        <a class="btn btn-default" href="<c:url value="/do/cart/clear"></c:url>">${b_clearcart}</a>
                         <button type="button" class="btn btn-default" data-toggle="modal"
                                 data-target="#Description">${b_add_description}
                         </button>
@@ -84,7 +84,7 @@
                             <h4 class="modal-title">${modal_title}</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="<c:url value="/do/addcartdescription"></c:url>" method="post">
+                            <form action="<c:url value="/do/cart/description"></c:url>" method="post">
                             <textarea name="description"
                                       style="width: 400px;height: 100px;">${cart.description}</textarea>
                                 <div class="modal-footer">
@@ -99,33 +99,40 @@
             </div>
             <hr>
             <p><b>${orders_title}</b></p>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>${created}</th>
-                    <th>${description}</th>
-                    <th>${price}</th>
-                    <th>${status}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                    <%--@elvariable id="orders" type="java.util.List"--%>
-                    <%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
-                <c:forEach items="${orders}" var="order">
-                    <tr>
-                        <td>${order.formattedCreatedTime}</td>
-                        <td>${order.description}</td>
-                        <td>${order.price}</td>
-                        <td>${order.status.getName(locale)}</td>
-                        <td><a class="btn btn-default"
-                               href="<c:url value="/do/order?id=${order.id}"></c:url>"
-                        >${b_details}
-                        </a></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            <c:choose>
+                <c:when test="${empty orders}">
+                    <p>${empty_title}</p>
+                </c:when>
+                <c:otherwise>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>${created}</th>
+                            <th>${description}</th>
+                            <th>${price}</th>
+                            <th>${status}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <%--@elvariable id="orders" type="java.util.List"--%>
+                            <%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+                        <c:forEach items="${orders}" var="order">
+                            <tr>
+                                <td>${order.formattedCreatedTime}</td>
+                                <td>${order.description}</td>
+                                <td>${order.price}</td>
+                                <td>${order.status.getName(locale)}</td>
+                                <td><a class="btn btn-default"
+                                       href="<c:url value="/do/order?id=${order.id}"></c:url>"
+                                >${b_details}
+                                </a></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:otherwise>
+            </c:choose>
         </div>
         <my:user-menu user="${loggedUser}"/>
     </div>

@@ -21,10 +21,11 @@
             </div>
             <div class="col-lg-6">
                 <p>${price}: ${product.price}</p>
-                <form action="<c:url value="/do/addtocart"></c:url>" method="post">
+                <form action="<c:url value="/do/cart/add"></c:url>" method="post">
                     <input type="hidden" name="product" value="${product.id}"/>
                     <div class="form-group input-group">
-                            ${quantity}: <input type="number" value="1" min="1" name="amount" style="width: 70px">
+                            ${quantity}: <input type="number" value="1" min="1" max="100" name="amount"
+                                                style="width: 70px">
                     </div>
                     <div class="form-group input-group">
                         <input type="submit" class="btn btn-default" value="${addtocart}">
@@ -32,8 +33,9 @@
                 </form>
             </div>
             <div class="col-lg-12">
-                <hr>
-                <h4>${characteristics_label}</h4>
+                <c:if test="${not empty product.characteristics}">
+                    <hr>
+                    <h4>${characteristics_label}</h4></c:if>
                 <c:forEach items="${product.characteristics}" var="characteristicItem">
                     <p>${characteristicItem.characteristic.getName(locale)}: ${characteristicItem.value}</p>
                 </c:forEach>

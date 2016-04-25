@@ -26,7 +26,7 @@
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-12" align="center">
             <div class="h3" style="margin-bottom: 20px">${form_title}</div>
-            <form role="form" action="${register_url}" method="post" style="width: 500px">
+            <form role="form" action="${register_url}" method="post" style="width: 460px">
                 <div class="col-lg-6" align="center">
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${email}" name="email">
@@ -62,18 +62,33 @@
                 <div class="col-lg-6">
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${country}" name="country">
+                        <c:if test="${not empty countryError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${countryError}</p>
+                        </c:if>
                     </div>
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${city}" name="city">
+                        <c:if test="${not empty cityError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${cityError}</p>
+                        </c:if>
                     </div>
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${street}" name="street">
+                        <c:if test="${not empty streetError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${streetError}</p>
+                        </c:if>
                     </div>
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${building}" name="buildingNumber">
+                        <c:if test="${not empty buildingError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${buildingError}</p>
+                        </c:if>
                     </div>
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${apartment}" name="apartmentNumber">
+                        <c:if test="${not empty apartmentError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${apartmentError}</p>
+                        </c:if>
                     </div>
                 </div>
                 <div class="col-lg-12">

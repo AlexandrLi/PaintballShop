@@ -37,7 +37,7 @@
                 <p><b>${phonenumber}:</b> ${loggedUser.phoneNumber}</p>
                 <p><b>${gender_title}:</b> ${loggedUser.gender.getName(locale)}</p>
                 <p><b>${role}:</b> ${loggedUser.role}</p>
-                <p><a href="<c:url value="/do/edit/data"></c:url>" class="btn btn-default">${edit}</a></p>
+                <p><a href="<c:url value="/do/user/profile/data"></c:url>" class="btn btn-default">${edit}</a></p>
             </div>
             <div class="col-lg-4">
                     <%--@elvariable id="address" type="com.epam.alexandrli.paintballshop.entity.Address"--%>
@@ -48,7 +48,7 @@
                 <p><b>${street}:</b> ${address.street}</p>
                 <p><b>${building}:</b> ${address.buildingNumber}</p>
                 <p><b>${apartment}:</b> ${address.apartmentNumber}</p>
-                <p><a style="margin-top: 28px" href="<c:url value="/do/edit/address"></c:url>"
+                <p><a style="margin-top: 28px" href="<c:url value="/do/user/profile/address"></c:url>"
                       class="btn btn-default">${edit}</a></p>
             </div>
             <div class="col-lg-4">
@@ -60,7 +60,7 @@
                         <div class="input-group">
                             <div class="input-group-addon">KZT</div>
                             <input type="number" class="form-control" placeholder="Amount"
-                                   name="balance" value="0" min="0">
+                                   name="balance" value="0" min="0" max="1000000">
                             <div class="input-group-addon">.00</div>
                         </div>
                     </div>
