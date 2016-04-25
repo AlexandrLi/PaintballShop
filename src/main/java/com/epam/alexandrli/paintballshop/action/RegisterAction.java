@@ -98,13 +98,14 @@ public class RegisterAction implements Action {
             invalid = true;
         }
         if (invalid) {
+            invalid = false;
             return new ActionResult("register");
         }
         Gender gender = new Gender();
         gender.setId(Integer.valueOf(req.getParameter("gender")));
         user.setGender(gender);
         try {
-            User registeredUser = userService.registerUser(user,address);
+            User registeredUser = userService.registerUser(user, address);
             req.getSession(false).setAttribute("loggedUser", registeredUser);
             req.getSession(false).removeAttribute("genders");
         } catch (ServiceException e) {

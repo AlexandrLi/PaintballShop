@@ -92,6 +92,7 @@ public class EditUserAction implements Action {
                 invalid = true;
             }
             if (invalid) {
+                invalid = false;
                 return new ActionResult("edit-user");
             }
             user.getGender().setId(Integer.valueOf(req.getParameter("gender")));

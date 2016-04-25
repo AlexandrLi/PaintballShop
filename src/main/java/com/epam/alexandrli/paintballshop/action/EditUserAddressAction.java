@@ -56,6 +56,7 @@ public class EditUserAddressAction implements Action {
             invalid = true;
         }
         if (invalid) {
+            invalid = false;
             return new ActionResult("edit-user-address");
         }
         try {

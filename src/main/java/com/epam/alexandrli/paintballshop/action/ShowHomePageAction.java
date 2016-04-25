@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ShowHomePageAction implements Action {
     public static final int FIRST_PAGE = 1;
-    public static final int PAGE_SIZE = 4;
+    public static final int PAGE_SIZE = 3;
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {

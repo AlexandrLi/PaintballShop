@@ -14,9 +14,6 @@ public class AddToCartAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         User currentUser = (User) req.getSession(false).getAttribute("loggedUser");
-        if (currentUser == null) {
-            return new ActionResult("login");
-        }
         Order cart = (Order) req.getSession(false).getAttribute("cart");
         if (cart == null) {
             cart = new Order();

@@ -14,7 +14,6 @@ public class SelectLocaleAction implements Action {
         Cookie cookie = new Cookie("locale", language);
         cookie.setMaxAge(24 * 60 * 60);
         resp.addCookie(cookie);
-        String referer = req.getHeader("referer");
-        return new ActionResult(referer, true);
+        return new ActionResult(req.getHeader("referer"), true);
     }
 }

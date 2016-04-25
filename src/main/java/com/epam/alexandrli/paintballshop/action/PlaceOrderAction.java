@@ -22,6 +22,6 @@ public class PlaceOrderAction implements Action {
         }
         req.getSession(false).setAttribute("loggedUser", user);
         req.getSession(false).removeAttribute("cart");
-        return new ActionResult("user-orders", true);
+        return new ActionResult("user/orders", true);
     }
 }

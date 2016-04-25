@@ -8,23 +8,24 @@ public class ActionFactory {
 
     public ActionFactory() {
         actions = new HashMap<>();
-        actions.put("GET/home", new ShowHomePageAction());
+        actions.put("GET/locale", new SelectLocaleAction());
         actions.put("GET/login", new ShowPageAction("login"));
-        actions.put("GET/edit/data", new ShowEditUserDataPageAction());
-        actions.put("GET/edit/address", new ShowEditUserAddressPageAction());
+        actions.put("GET/forbidden", new ShowPageAction("forbidden"));
+        actions.put("GET/register", new ShowRegisterPageAction());
+        actions.put("GET/home", new ShowHomePageAction());
+        actions.put("GET/catalog", new ShowCatalogPageAction());
+        actions.put("GET/product", new ShowProductPageAction());
+        actions.put("GET/user/profile/data", new ShowEditUserDataPageAction());
+        actions.put("GET/user/profile/address", new ShowEditUserAddressPageAction());
         actions.put("GET/edit/user", new ShowEditUserPageAction());
         actions.put("GET/edit/product", new ShowEditProductPageAction());
         actions.put("GET/user/orders", new ShowUserOrdersPageAction());
         actions.put("GET/logout", new LogoutAction());
-        actions.put("GET/register", new ShowRegisterPageAction());
-        actions.put("GET/locale", new SelectLocaleAction());
         actions.put("GET/user/profile", new ShowProfilePageAction());
-        actions.put("GET/catalog", new ShowCatalogPageAction());
-        actions.put("GET/product", new ShowProductPageAction());
         actions.put("GET/order", new ShowOrderPageAction());
-        actions.put("GET/removeitem", new RemoveItemAction());
-        actions.put("GET/clearcart", new ClearCartAction());
-        actions.put("GET/placeorder", new PlaceOrderAction());
+        actions.put("GET/cart/removeitem", new RemoveItemAction());
+        actions.put("GET/cart/clear", new ClearCartAction());
+        actions.put("GET/cart/buy", new PlaceOrderAction());
         actions.put("GET/manage/users", new ShowManageUsersPageAction());
         actions.put("GET/manage/products", new ShowManageProductsPageAction());
         actions.put("GET/manage/orders", new ShowManageOrdersPageAction());
@@ -44,8 +45,8 @@ public class ActionFactory {
         actions.put("POST/edit/orderStatus", new EditOrderStatusAction());
         actions.put("POST/edit/storage/itemAmount", new EditStorageItemAmountAction());
         actions.put("POST/refill/balance", new RefillBalanceAction());
-        actions.put("POST/addtocart", new AddToCartAction());
-        actions.put("POST/addcartdescription", new AddCartDescriptionAction());
+        actions.put("POST/cart/add", new AddToCartAction());
+        actions.put("POST/cart/description", new AddCartDescriptionAction());
     }
 
     public Action getAction(String actionName) {
