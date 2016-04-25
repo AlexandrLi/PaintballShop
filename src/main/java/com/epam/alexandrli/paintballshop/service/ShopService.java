@@ -105,7 +105,6 @@ public class ShopService {
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
             GenericDao<Gender> genderDao = jdbcDaoFactory.getDao(Gender.class);
             users = userDao.findAll(pageNumber, pageSize);
-            users = users.stream().filter(user -> !user.isDeleted()).collect(Collectors.toList());
             for (User user : users) {
                 user.setGender(genderDao.findByPK(user.getGender().getId()));
             }
@@ -121,7 +120,6 @@ public class ShopService {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             GenericDao<ProductType> productTypeDao = jdbcDaoFactory.getDao(ProductType.class);
             products = productDao.findAll(pageNumber, pageSize);
-            products = products.stream().filter(product -> !product.isDeleted()).collect(Collectors.toList());
             for (Product product : products) {
                 product.setType(productTypeDao.findByPK(product.getType().getId()));
             }
@@ -138,7 +136,6 @@ public class ShopService {
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             GenericDao<Storage> storageDao = jdbcDaoFactory.getDao(Storage.class);
             storageItems = storageItemDao.findAll(pageNumber, pageSize);
-            storageItems = storageItems.stream().filter(storageItem -> !storageItem.isDeleted()).collect(Collectors.toList());
             for (StorageItem storageItem : storageItems) {
                 storageItem.setProduct(productDao.findByPK(storageItem.getProduct().getId()));
                 storageItem.setStorage(storageDao.findByPK(storageItem.getStorage().getId()));
@@ -158,7 +155,6 @@ public class ShopService {
             GenericDao<OrderItem> orderItemDao = jdbcDaoFactory.getDao(OrderItem.class);
             GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
             orders = orderDao.findAll(pageNumber, pageSize);
-            orders = orders.stream().filter(order -> !order.isDeleted()).collect(Collectors.toList());
             for (Order order : orders) {
                 order.setUser(userDao.findByPK(order.getUser().getId()));
                 order.setStatus(orderStatusDao.findByPK(order.getStatus().getId()));

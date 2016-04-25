@@ -4,12 +4,10 @@ import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.DaoFactory;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.entity.*;
-import org.joda.money.Money;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.epam.alexandrli.paintballshop.dao.DaoFactory.JDBC;
@@ -18,14 +16,6 @@ import static com.epam.alexandrli.paintballshop.dao.DaoFactory.getDaoFactory;
 public class ProductService {
 
     public ProductService() {
-    }
-
-    public static Predicate<Product> isInPriceRange(Money lowPrice, Money topPrice) {
-        return predicate -> predicate.getPrice().minus(lowPrice).isPositiveOrZero() && predicate.getPrice().minus(topPrice).isNegativeOrZero();
-    }
-
-    public static List<Product> filterProducts(List<Product> products, Predicate<Product> predicate) {
-        return products.stream().filter(predicate).collect(Collectors.toList());
     }
 
     public Product getProductById(String id) throws ServiceException {
