@@ -11,6 +11,7 @@ public class ActionFactory {
         actions.put("GET/locale", new SelectLocaleAction());
         actions.put("GET/login", new ShowPageAction("login"));
         actions.put("GET/forbidden", new ShowPageAction("forbidden"));
+        actions.put("GET/cart", new ShowPageAction("cart"));
         actions.put("GET/register", new ShowRegisterPageAction());
         actions.put("GET/home", new ShowHomePageAction());
         actions.put("GET/catalog", new ShowCatalogPageAction());
@@ -23,9 +24,9 @@ public class ActionFactory {
         actions.put("GET/logout", new LogoutAction());
         actions.put("GET/user/profile", new ShowProfilePageAction());
         actions.put("GET/order", new ShowOrderPageAction());
-        actions.put("GET/cart/removeitem", new RemoveItemAction());
+        actions.put("GET/cart/deleteitem", new RemoveItemAction());
         actions.put("GET/cart/clear", new ClearCartAction());
-        actions.put("GET/cart/buy", new PlaceOrderAction());
+        actions.put("GET/cart/buy", new BuyCartAction());
         actions.put("GET/manage/users", new ShowManageUsersPageAction());
         actions.put("GET/manage/products", new ShowManageProductsPageAction());
         actions.put("GET/manage/orders", new ShowManageOrdersPageAction());
@@ -47,6 +48,8 @@ public class ActionFactory {
         actions.put("POST/refill/balance", new RefillBalanceAction());
         actions.put("POST/cart/add", new AddToCartAction());
         actions.put("POST/cart/description", new AddCartDescriptionAction());
+        actions.put("POST/cart/recount", new RecountCartAction());
+        actions.put("POST/set/pagesize", new SetPageSizeAction());
     }
 
     public Action getAction(String actionName) {

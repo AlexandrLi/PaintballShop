@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LoginAction implements Action {
-    private ActionResult home = new ActionResult("home", true);
-    private ActionResult loginAgain = new ActionResult("login");
-
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
@@ -25,10 +22,10 @@ public class LoginAction implements Action {
         }
         if (user != null) {
             req.getSession(false).setAttribute("loggedUser", user);
-            return home;
+            return new ActionResult("home",true);
         } else {
             req.setAttribute("loginError", "Invalid Login or Password");
-            return loginAgain;
+            return new ActionResult("login");
         }
     }
 }

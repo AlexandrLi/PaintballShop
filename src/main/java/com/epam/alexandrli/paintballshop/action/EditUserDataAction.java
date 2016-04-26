@@ -20,36 +20,21 @@ public class EditUserDataAction implements Action {
         userService = new UserService();
         User currentUser = (User) req.getSession(false).getAttribute("loggedUser");
         String password = req.getParameter("password");
-        if (validator.validate(password, PASSWORD)) {
-            currentUser.setPassword(password);
-        } else {
-            req.setAttribute("passwordError", "Must have at least 6 characters");
-            invalid = true;
-        }
         String firstName = req.getParameter("firstName");
-        if (validator.validate(firstName, NOT_EMPTY_TEXT)) {
-            currentUser.setFirstName(firstName);
-        } else {
-            req.setAttribute("firstNameError", "Must not be empty");
-            invalid = true;
-        }
         String lastName = req.getParameter("lastName");
-        if (validator.validate(lastName, NOT_EMPTY_TEXT)) {
-            currentUser.setLastName(lastName);
-        } else {
-            req.setAttribute("lastNameError", "Must not be empty");
-            invalid = true;
-        }
         String phoneNumber = req.getParameter("phoneNumber");
-        if (validator.validate(phoneNumber, PHONE_NUMBER)) {
-            currentUser.setPhoneNumber(phoneNumber);
-        } else {
-            req.setAttribute("phoneNumberError", "Must start from + and contain from 6 to 14 digits ");
-            invalid = true;
-        }
+        checkParameter(password, "password", PASSWORD, req);
+        checkParameter(firstName, "firstName", NOT_EMPTY_TEXT, req);
+        checkParameter(lastName, "lastName", NOT_EMPTY_TEXT, req);
+        checkParameter(phoneNumber, "phoneNumber", PHONE_NUMBER, req);
         if (invalid) {
+            invalid = false;
             return new ActionResult("edit-user-data");
         }
+        currentUser.setPassword(password);
+        currentUser.setFirstName(firstName);
+        currentUser.setLastName(lastName);
+        currentUser.setPhoneNumber(phoneNumber);
         currentUser.getGender().setId(Integer.valueOf(req.getParameter("gender")));
         try {
             User updatedUser = userService.updateUserProfile(currentUser);
@@ -59,5 +44,12 @@ public class EditUserDataAction implements Action {
             throw new ActionException("Could not update profile", e);
         }
         return new ActionResult("user/profile", true);
+    }
+
+    private void checkParameter(String parameterValue, String parameterName, String regex, HttpServletRequest req) {
+        if (!validator.validate(parameterValue, regex)) {
+            req.setAttribute(parameterName + "Error", "true");
+            invalid = true;
+        }
     }
 }

@@ -21,44 +21,24 @@ public class EditUserAddressAction implements Action {
         User currentUser = (User) req.getSession(false).getAttribute("loggedUser");
         Address currentUserAddress = currentUser.getAddress();
         String country = req.getParameter("country");
-        if (validator.validate(country, NOT_EMPTY_TEXT)) {
-            currentUserAddress.setCountry(country);
-        } else {
-            req.setAttribute("countryError", "Must be not empty");
-            invalid = true;
-        }
         String city = req.getParameter("city");
-        if (validator.validate(city, NOT_EMPTY_TEXT)) {
-            currentUserAddress.setCity(city);
-        } else {
-            req.setAttribute("cityError", "Must be not empty");
-            invalid = true;
-        }
         String street = req.getParameter("street");
-        if (validator.validate(street, NOT_EMPTY_TEXT)) {
-            currentUserAddress.setStreet(street);
-        } else {
-            req.setAttribute("streetError", "Must be not empty");
-            invalid = true;
-        }
         String buildingNumber = req.getParameter("buildingNumber");
-        if (validator.validate(buildingNumber, NOT_EMPTY_NUMBER)) {
-            currentUserAddress.setBuildingNumber(buildingNumber);
-        } else {
-            req.setAttribute("buildingError", "Must be not empty");
-            invalid = true;
-        }
         String apartmentNumber = req.getParameter("apartmentNumber");
-        if (validator.validate(apartmentNumber, NOT_EMPTY_NUMBER)) {
-            currentUserAddress.setApartmentNumber(apartmentNumber);
-        } else {
-            req.setAttribute("apartmentError", "Must be not empty");
-            invalid = true;
-        }
+        checkParameter(country, "country", NOT_EMPTY_TEXT, req);
+        checkParameter(city, "city", NOT_EMPTY_TEXT, req);
+        checkParameter(street, "street", NOT_EMPTY_TEXT, req);
+        checkParameter(buildingNumber, "buildingNumber", NOT_EMPTY_NUMBER, req);
+        checkParameter(apartmentNumber, "apartmentNumber", NOT_EMPTY_NUMBER, req);
         if (invalid) {
             invalid = false;
             return new ActionResult("edit-user-address");
         }
+        currentUserAddress.setCountry(country);
+        currentUserAddress.setCity(city);
+        currentUserAddress.setStreet(street);
+        currentUserAddress.setBuildingNumber(buildingNumber);
+        currentUserAddress.setApartmentNumber(apartmentNumber);
         try {
             UserService userService = new UserService();
             Address updatedAddress = userService.updateUserAddress(currentUserAddress);
@@ -68,5 +48,12 @@ public class EditUserAddressAction implements Action {
             throw new ActionException("Could not update profile", e);
         }
         return new ActionResult("user/profile", true);
+    }
+
+    private void checkParameter(String parameterValue, String parameterName, String regex, HttpServletRequest req) {
+        if (!validator.validate(parameterValue, regex)) {
+            req.setAttribute(parameterName + "Error", "true");
+            invalid = true;
+        }
     }
 }
