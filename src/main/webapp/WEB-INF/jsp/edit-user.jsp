@@ -18,6 +18,10 @@
     <fmt:message key="common.admin_role" var="admin_role"/>
     <fmt:message key="common.user_role" var="user_role"/>
     <fmt:message key="common.role" var="role"/>
+    <fmt:message key="error.email" var="email_error_message"/>
+    <fmt:message key="error.password" var="password_error_message"/>
+    <fmt:message key="error.invalid" var="invalid_error_message"/>
+    <fmt:message key="error.phoneNumber" var="phoneNumber_error_message"/>
     <fmt:message key="common.button.save" var="b_save"/>
     <fmt:message key="common.button.cancel" var="b_cancel"/>
 </fmt:bundle>
@@ -33,8 +37,8 @@
                         <label for="email">${email}</label>
                         <input type="email" class="form-control" id="email" name="email"
                                value="${user.email}">
-                        <c:if test="${not empty passwordError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${passwordError}</p>
+                        <c:if test="${not empty emailError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${email_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -42,7 +46,7 @@
                         <input type="password" class="form-control" id="password" name="password"
                                value="${user.password}">
                         <c:if test="${not empty passwordError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${passwordError}</p>
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${password_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -50,7 +54,7 @@
                         <input type="text" class="form-control" id="firstName" name="firstName"
                                value="${user.firstName}">
                         <c:if test="${not empty firstNameError}">
-                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${firstNameError}</p>
+                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -58,7 +62,7 @@
                         <input type="text" class="form-control" id="lastName" name="lastName"
                                value="${user.lastName}">
                         <c:if test="${not empty lastNameError}">
-                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${lastNameError}</p>
+                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -66,7 +70,7 @@
                         <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                value="${user.phoneNumber}">
                         <c:if test="${not empty phoneNumberError}">
-                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${phoneNumberError}</p>
+                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${phoneNumber_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -88,7 +92,7 @@
                         <input type="text" class="form-control" id="country" name="country"
                                value="${address.country}">
                         <c:if test="${not empty countryError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${countryError}</p>
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -96,7 +100,7 @@
                         <input type="text" class="form-control" id="city" name="city"
                                value="${address.city}">
                         <c:if test="${not empty cityError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${cityError}</p>
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -104,23 +108,23 @@
                         <input type="text" class="form-control" id="street" name="street"
                                value="${address.street}">
                         <c:if test="${not empty streetError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${streetError}</p>
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
                         <label for="buildingNumber">${building}</label>
                         <input type="text" class="form-control" id="buildingNumber" name="buildingNumber"
                                value="${address.buildingNumber}">
-                        <c:if test="${not empty buildingError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${buildingError}</p>
+                        <c:if test="${not empty buildingNumberError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
                         <label for="apartmentNumber">${apartment}</label>
                         <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber"
                                value="${address.apartmentNumber}">
-                        <c:if test="${not empty apartmentError}">
-                            <p class="text-danger" style="height: 10px;font-size: 12px;">${apartmentError}</p>
+                        <c:if test="${not empty apartmentNumberError}">
+                            <p class="text-danger" style="height: 10px;font-size: 12px;">${invalid_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
