@@ -24,6 +24,7 @@ public class SecurityFilter implements Filter {
         guestAccessList.add("/register");
         guestAccessList.add("/login");
         guestAccessList.add("/locale");
+        guestAccessList.add("/set/pagesize");
         userAccessList = new ArrayList<>(guestAccessList);
 
     }
@@ -37,23 +38,23 @@ public class SecurityFilter implements Filter {
         User user = (User) request.getSession(false).getAttribute("loggedUser");
         String pathInfo = request.getPathInfo();
         if (user == null) {
-            if (!guestAccessList.contains(pathInfo)) {
+            if (!guestAccessList.contains(pathInfo) && !pathInfo.startsWith("/cart") || pathInfo.endsWith("buy")) {
                 response.sendRedirect(request.getContextPath() + "/do/login");
                 return;
             }
+        } else if (pathInfo.startsWith("/login")) {
+            response.sendError(403, "Already logged in");
+            return;
         } else if (user.getRole().equals(User.Role.user)) {
             if (pathInfo.startsWith("/manage") || pathInfo.startsWith("/add") || pathInfo.startsWith("/delete") || pathInfo.startsWith("edit")) {
-                response.sendError(403,"Access denied");
-//                response.sendRedirect(request.getContextPath() + "/do/forbidden");
+                response.sendError(403, "Access denied");
                 return;
             }
         }
         chain.doFilter(request, response);
     }
 
-
     @Override
     public void destroy() {
-
     }
 }
