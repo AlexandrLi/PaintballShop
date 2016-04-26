@@ -8,6 +8,8 @@
 <%--<fmt:setLocale value="${locale}"/>--%>
 <fmt:bundle basename="i18n">
     <fmt:message key="genericpage.navbar.products" var="products"/>
+    <fmt:message key="userorders.cart" var="cart_label"/>
+    <fmt:message key="common.empty" var="empty_label"/>
     <fmt:message key="genericpage.navbar.register" var="register"/>
     <fmt:message key="genericpage.navbar.locale" var="lang"/>
     <fmt:message key="genericpage.navbar.login" var="login"/>
@@ -65,7 +67,16 @@
                         </ul>
                     </li>
                 </ul>
+                <%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="<c:url value="/do/cart"/>"><span class="glyphicon glyphicon-shopping-cart"></span>
+                            <c:choose>
+                                <c:when test="${empty cart.orderItems || cart.orderItems.size()==0}">(${empty_label})</c:when>
+                                <c:otherwise>(${cart.orderItems.size()})</c:otherwise>
+                            </c:choose>
+                        </a>
+                    </li>
                     <c:choose>
                         <c:when test="${not empty loggedUser}">
                             <li><a href="<c:url value="/do/logout"/>"><span
