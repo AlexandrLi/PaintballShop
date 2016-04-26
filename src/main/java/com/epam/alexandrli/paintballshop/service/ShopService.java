@@ -75,7 +75,7 @@ public class ShopService {
         return types;
     }
 
-    public User placeOrder(Order cart) throws ServiceException {
+    public User buyCart(Order cart) throws ServiceException {
         User cartUser = cart.getUser();
         if (cartUser.getCash().isLessThan(cart.getPrice())) {
             throw new ServiceException("Not enough money");

@@ -20,6 +20,16 @@ public class UserService {
     public UserService() {
     }
 
+    public boolean checkEmail(String email) throws ServiceException {
+        try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
+            GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
+            List<User> usersWithCurrentEmail = userDao.findAllByParams(Collections.singletonMap("email", email));
+            return usersWithCurrentEmail.isEmpty();
+        } catch (DaoException e) {
+            throw new ServiceException("Could not check email", e);
+        }
+    }
+
     public User registerUser(User user, Address address) throws ServiceException {
         User registeredUser;
         try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
