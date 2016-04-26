@@ -21,6 +21,8 @@
     <fmt:message key="common.apartment" var="apartment"/>
     <fmt:message key="common.refillbalance.title" var="refillbalance_title"/>
     <fmt:message key="userprofile.button.refill" var="refill"/>
+    <fmt:message key="common.notEnough" var="notEnough"/>
+    <fmt:message key="error.balance" var="balance_error_message"/>
     <fmt:message key="common.button.edit" var="edit"/>
 </fmt:bundle>
 
@@ -64,6 +66,12 @@
                             <div class="input-group-addon">.00</div>
                         </div>
                     </div>
+                    <c:if test="${not empty balanceError}">
+                        <p class="text-danger"
+                           style="height: 10px;font-size: 12px;">${balance_error_message}</p>
+                        <p class="text-danger"
+                           style="height: 10px;font-size: 12px;">${notEnough}: ${balanceNeeded}</p>
+                    </c:if>
                     <button type="submit" class="btn btn-default">${refill}</button>
                 </form>
             </div>
