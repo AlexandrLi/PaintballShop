@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "FrontControllerServlet", urlPatterns = "/do/*")
-@MultipartConfig(maxFileSize = 5 * 1024 * 1024)
+@MultipartConfig(maxFileSize = 20 * 1024 * 1024)
 public class FrontControllerServlet extends HttpServlet {
     private ActionFactory actionFactory;
 
@@ -37,6 +37,9 @@ public class FrontControllerServlet extends HttpServlet {
         } catch (ActionException e) {
             throw new ServletException("Could not perform action", e);
         }
+        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        resp.setHeader("Pragma", "No-cache");
+        resp.setDateHeader("Expires", 0);
         checkActionResult(result, req, resp);
     }
 
