@@ -12,22 +12,16 @@
     <fmt:message key="common.description.en" var="description_en"/>
     <fmt:message key="common.button.edit" var="b_edit"/>
     <fmt:message key="common.button.delete" var="b_delete"/>
+    <fmt:message key="common.button.addProduct" var="b_add"/>
 </fmt:bundle>
 
-<%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="products" type="java.util.List"--%>
+<%--@elvariable id="product" type="com.epam.alexandrli.paintballshop.entity.Product"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
-            <nav>
-                <ul class="pagination">
-                    <c:forEach begin="1" end="${pagesCount}" varStatus="loop">
-                        <li <c:if test="${page==loop.count}">class="active" </c:if>><a
-                                href="<c:url value="/do/manage/products?page=${loop.count}"></c:url>">${loop.count}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </nav>
-            <hr>
+            <my:pagination url="/do/manage/products" pagesCount="${pagesCount}"/>
             <table class="table table-bordered" style="font-size: 14px">
                 <thead>
                 <tr>
@@ -41,21 +35,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <%--@elvariable id="products" type="java.util.List"--%>
-                    <%--@elvariable id="product" type="com.epam.alexandrli.paintballshop.entity.Product"--%>
                 <c:forEach items="${products}" var="product">
+                    <fmt:formatNumber var="formattedPrice" type="currency" currencyCode="KZT" maxFractionDigits="0"
+                                      value="${product.price.amount}"/>
                     <tr>
                         <td>${product.id}</td>
                         <td>${product.type.getName(locale)}</td>
                         <td>${product.name}</td>
-                        <td>${product.price}</td>
+                        <td>${formattedPrice}</td>
                         <td>${product.descriptionRu}</td>
                         <td>${product.descriptionEn}</td>
                         <td><a class="btn btn-default"
-                               href="<c:url value="/do/edit/product?id=${product.id}"></c:url>"
+                               href="<c:url value="/do/edit/product?id=${product.id}"/>"
                         >${b_edit}</a>
                             <a class="btn btn-default"
-                               href="<c:url value="/do/delete/product?id=${product.id}"></c:url>"
+                               href="<c:url value="/do/delete/product?id=${product.id}"/>"
                             >${b_delete}</a>
                         </td>
                     </tr>
@@ -63,7 +57,7 @@
                 </tbody>
             </table>
             <a class="btn btn-default"
-               href="<c:url value="/do/add/product"></c:url>">Add Product</a>
+               href="<c:url value="/do/add/product"/>">${b_add}</a>
         </div>
         <my:user-menu user="${loggedUser}"/>
     </div>

@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--<fmt:setLocale value="${locale}"/>--%>
 <fmt:bundle basename="i18n">
     <fmt:message key="home.pagetitle" var="pagetitle"/>
     <fmt:message key="common.forbidden" var="forbidden"/>
@@ -12,8 +11,8 @@
     <fmt:message key="error.message" var="message"/>
 </fmt:bundle>
 
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
-
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
             <img style="width: 700px;margin-bottom: 20px" src="<c:url value="/images/${statusCode}.jpg"/>"

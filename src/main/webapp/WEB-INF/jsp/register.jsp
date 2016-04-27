@@ -17,7 +17,7 @@
     <fmt:message key="common.building" var="building_label"/>
     <fmt:message key="common.apartment" var="apartment_label"/>
     <fmt:message key="common.gender.title" var="gender_title"/>
-    <fmt:message key="error.email" var="email_error_message"/>
+    <fmt:message key="error.emailUsed" var="email_used_message"/>
     <fmt:message key="error.password" var="password_error_message"/>
     <fmt:message key="error.invalid" var="invalid_error_message"/>
     <fmt:message key="error.phoneNumber" var="phoneNumber_error_message"/>
@@ -25,6 +25,8 @@
     <fmt:message key="register.button.cancel" var="b_cancel"/>
 </fmt:bundle>
 
+<%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
+<%--@elvariable id="genders" type="java.util.List"--%>
 <c:url var="register_url" value="/do/register"/>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
@@ -35,8 +37,11 @@
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="${email_label}" name="email"
                                value="${email}">
-                        <c:if test="${not empty emailError}">
-                            <p class="text-danger" style="height: 20px;font-size: 12px;">${email_error_message}</p>
+                        <c:if test="${emailError.equals('true')}">
+                            <p class="text-danger" style="height: 20px;font-size: 12px;">${invalid_error_message}</p>
+                        </c:if>
+                        <c:if test="${emailError.equals('used')}">
+                            <p class="text-danger" style="height: 20px;font-size: 12px;">${email_used_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
@@ -110,7 +115,6 @@
                     <div class="form-group input-group" style="width: 120px">
                         <label for="gender">${gender_title}</label>
                         <select class="form-control" id="gender" name="gender">
-                                <%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
                             <c:forEach items="${genders}" var="genderItem">
                                 <option value="${genderItem.id}" <c:if
                                         test="${genderItem.id==gender}"> selected </c:if>>${genderItem.getName(locale)}</option>

@@ -13,10 +13,11 @@
     <fmt:message key="common.button.back" var="b_back"/>
 </fmt:bundle>
 
+<%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
-                <%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -28,10 +29,12 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${order.orderItems}" var="item">
+                    <fmt:formatNumber var="formattedPrice" type="currency" currencyCode="KZT" maxFractionDigits="0"
+                                      value="${item.product.price.amount}"/>
                     <tr>
                         <td>${item.product.name}</td>
                         <td>${item.amount}</td>
-                        <td>${item.product.price}</td>
+                        <td>${formattedPrice}</td>
                         <td>${item.price}</td>
                     </tr>
                 </c:forEach>

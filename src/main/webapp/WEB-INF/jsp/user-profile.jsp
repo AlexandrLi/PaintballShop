@@ -22,15 +22,17 @@
     <fmt:message key="common.refillbalance.title" var="refillbalance_title"/>
     <fmt:message key="userprofile.button.refill" var="refill"/>
     <fmt:message key="common.notEnough" var="notEnough"/>
-    <fmt:message key="error.balance" var="balance_error_message"/>
+    <fmt:message key="error.money.notEnough" var="balance_notEnough_message"/>
+    <fmt:message key="error.money" var="balance_error_message"/>
     <fmt:message key="common.button.edit" var="edit"/>
 </fmt:bundle>
 
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
+<%--@elvariable id="address" type="com.epam.alexandrli.paintballshop.entity.Address"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10">
             <div class="col-lg-4">
-                    <%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
                 <p><b>${personaldata_title}</b></p>
                 <hr>
                 <p><b>${firstname}:</b> ${loggedUser.firstName}</p>
@@ -39,10 +41,9 @@
                 <p><b>${phonenumber}:</b> ${loggedUser.phoneNumber}</p>
                 <p><b>${gender_title}:</b> ${loggedUser.gender.getName(locale)}</p>
                 <p><b>${role}:</b> ${loggedUser.role}</p>
-                <p><a href="<c:url value="/do/user/profile/data"></c:url>" class="btn btn-default">${edit}</a></p>
+                <p><a href="<c:url value="/do/user/profile/data"/>" class="btn btn-default">${edit}</a></p>
             </div>
             <div class="col-lg-4">
-                    <%--@elvariable id="address" type="com.epam.alexandrli.paintballshop.entity.Address"--%>
                 <p><b>${address_title}</b></p>
                 <hr>
                 <p><b>${country}:</b> ${address.country}</p>
@@ -50,28 +51,31 @@
                 <p><b>${street}:</b> ${address.street}</p>
                 <p><b>${building}:</b> ${address.buildingNumber}</p>
                 <p><b>${apartment}:</b> ${address.apartmentNumber}</p>
-                <p><a style="margin-top: 28px" href="<c:url value="/do/user/profile/address"></c:url>"
+                <p><a style="margin-top: 28px" href="<c:url value="/do/user/profile/address"/>"
                       class="btn btn-default">${edit}</a></p>
             </div>
             <div class="col-lg-4">
                 <p><b>${refillbalance_title}</b></p>
                 <hr>
-                <form class="form-horizontal" style="width: 200px" action="<c:url value="/do/refill/balance"></c:url>"
+                <form class="form-horizontal" style="width: 200px" action="<c:url value="/do/refill/balance"/>"
                       method="post">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">KZT</div>
                             <input type="number" class="form-control" placeholder="Amount"
-                                   name="balance" value="0" min="0" max="1000000">
-                            <div class="input-group-addon">.00</div>
+                                   name="balance" value="1">
                         </div>
+                        <c:if test="${balanceError.equals('true')}">
+                            <p class="text-danger"
+                               style="height: 10px;font-size: 12px;">${balance_error_message}</p>
+                        </c:if>
+                        <c:if test="${balanceError.equals('notEnough')}">
+                            <p class="text-danger"
+                               style="height: 10px;font-size: 12px;">${balance_notEnough_message}</p>
+                            <p class="text-danger"
+                               style="height: 10px;font-size: 12px;">${notEnough}: ${balanceNeeded}</p>
+                        </c:if>
                     </div>
-                    <c:if test="${not empty balanceError}">
-                        <p class="text-danger"
-                           style="height: 10px;font-size: 12px;">${balance_error_message}</p>
-                        <p class="text-danger"
-                           style="height: 10px;font-size: 12px;">${notEnough}: ${balanceNeeded}</p>
-                    </c:if>
                     <button type="submit" class="btn btn-default">${refill}</button>
                 </form>
             </div>

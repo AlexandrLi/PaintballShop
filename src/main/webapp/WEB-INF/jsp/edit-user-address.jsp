@@ -6,7 +6,6 @@
 <fmt:bundle basename="i18n">
     <fmt:message key="userprofile.pagetitle" var="pagetitle"/>
     <fmt:message key="userprofile.form.title" var="form_title"/>
-    <fmt:message key="common.address.title" var="address_title"/>
     <fmt:message key="common.country" var="country"/>
     <fmt:message key="common.city" var="city"/>
     <fmt:message key="common.street" var="street"/>
@@ -17,12 +16,11 @@
     <fmt:message key="common.button.cancel" var="b_cancel"/>
 </fmt:bundle>
 
+<%--@elvariable id="address" type="com.epam.alexandrli.paintballshop.entity.Address"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
-            <div>
-                <div class="h3">${address_title}</div>
-            </div>
             <form style="width:200px" role="form" action="<c:url value="/do/edit/address"/>" method="post">
                 <div class="form-group input-group">
                     <label for="country">${country}</label>
@@ -65,7 +63,7 @@
                     </c:if>
                 </div>
                 <button value="submit" class="btn btn-default">${b_save}</button>
-                <a href="<c:url value="/do/user/profile"></c:url>" class="btn btn-default">${b_cancel}</a>
+                <a href="<c:url value="/do/user/profile"/>" class="btn btn-default">${b_cancel}</a>
             </form>
         </div>
         <my:user-menu user="${loggedUser}"/>

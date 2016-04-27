@@ -21,6 +21,7 @@
     <fmt:message key="common.created" var="created"/>
     <fmt:message key="common.description" var="description"/>
     <fmt:message key="common.status" var="status"/>
+    <fmt:message key="error.amount" var="amount_error_message"/>
     <fmt:message key="common.button.details" var="b_details"/>
     <fmt:message key="common.button.recountPrice" var="b_recount"/>
     <fmt:message key="common.button.save" var="b_save"/>
@@ -28,6 +29,7 @@
 </fmt:bundle>
 
 <%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="errorMap" type="java.util.Map"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
@@ -51,14 +53,25 @@
                             <c:forEach items="${cart.orderItems}" var="item" varStatus="itemRow">
                                 <tr>
                                     <td>${item.product.name}</td>
-                                    <td><input type="number" min="1" max="1000" value="${item.amount}"
+                                    <td><input type="number" min="1" max="9999" value="${item.amount}"
                                                style="width: 100px"
-                                               name="item${itemRow.index}"></td>
-                                    <td>${item.product.price}</td>
-                                    <td>${item.price}</td>
+                                               name="item${itemRow.index}" onchange="this.form.submit()">
+                                        <c:if test="${errorMap.get(itemRow.index).equals('true')}">
+                                            <p class="text-danger"
+                                               style="height: 20px;font-size: 12px;">${amount_error_message}</p>
+                                        </c:if>
+                                    </td>
+                                    <fmt:formatNumber var="formattedProductPrice" type="currency" currencyCode="KZT"
+                                                      maxFractionDigits="0"
+                                                      value="${item.product.price.amount}"/>
+                                    <td>${formattedProductPrice}</td>
+                                    <fmt:formatNumber var="formattedItemPrice" type="currency" currencyCode="KZT"
+                                                      maxFractionDigits="0"
+                                                      value="${item.price.amount}"/>
+                                    <td>${formattedItemPrice}</td>
                                     <td>
                                         <a class="btn btn-default"
-                                           href="<c:url value="/do/cart/deleteitem?item=${itemRow.index}"></c:url>"
+                                           href="<c:url value="/do/cart/deleteitem?item=${itemRow.index}"/>"
                                         >${delete}
                                         </a>
                                     </td>
@@ -66,17 +79,17 @@
                             </c:forEach>
                             <tr>
                                 <td colspan="3" align="right">${total_price}:</td>
-                                <td><b>${cart.price}</b></td>
-                                <td>
-                                    <button class="btn btn-default" type="submit">${b_recount}</button>
-                                </td>
+                                    <fmt:formatNumber var="formattedCartPrice" type="currency" currencyCode="KZT"
+                                                      maxFractionDigits="0"
+                                                      value="${cart.price.amount}"/>
+                                <td><b>${formattedCartPrice}</b></td>
                         </form>
                         </tr>
                         </tbody>
                     </table>
                     <div align="center">
-                        <a class="btn btn-default" href="<c:url value="/do/cart/buy"></c:url>">${b_placeorder}</a>
-                        <a class="btn btn-default" href="<c:url value="/do/cart/clear"></c:url>">${b_clearcart}</a>
+                        <a class="btn btn-default" href="<c:url value="/do/cart/buy"/>">${b_placeorder}</a>
+                        <a class="btn btn-default" href="<c:url value="/do/cart/clear"/>">${b_clearcart}</a>
                         <button type="button" class="btn btn-default" data-toggle="modal"
                                 data-target="#Description">${b_add_description}
                         </button>
@@ -85,13 +98,12 @@
             </c:choose>
             <div class="modal fade" id="Description" role="dialog">
                 <div class="modal-dialog" style="margin:100px">
-                    <!-- Modal content-->
                     <div class="modal-content" style="width: 440px">
                         <div class="modal-header">
                             <h4 class="modal-title">${modal_title}</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="<c:url value="/do/cart/description"></c:url>" method="post">
+                            <form action="<c:url value="/do/cart/description"/>" method="post">
                             <textarea name="description"
                                       style="width: 400px;height: 100px;">${cart.description}</textarea>
                                 <div class="modal-footer">

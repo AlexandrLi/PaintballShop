@@ -5,7 +5,6 @@
 <%@attribute name="footer" fragment="true" %>
 <%@attribute name="pagetitle" required="true" %>
 
-<%--<fmt:setLocale value="${locale}"/>--%>
 <fmt:bundle basename="i18n">
     <fmt:message key="genericpage.navbar.products" var="products"/>
     <fmt:message key="userorders.cart" var="cart_label"/>
@@ -27,6 +26,11 @@
     <script src="<c:url value="/js/jquery-2.2.2.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 </head>
+
+<%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="productTypes" type="java.util.List"--%>
+<%--@elvariable id="type" type="com.epam.alexandrli.paintballshop.entity.ProductType"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <body>
 <div id="pageheader">
     <div class="container" align="center">
@@ -45,11 +49,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">${products}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <%--@elvariable id="productTypes" type="java.util.List"--%>
-                            <%--@elvariable id="type" type="com.epam.alexandrli.paintballshop.entity.ProductType"--%>
                             <c:forEach items="${productTypes}" var="type">
                                 <li>
-                                    <a href="<c:url value="/do/catalog?type=${type.id}"></c:url>">${type.getName(locale)}</a>
+                                    <a href="<c:url value="/do/catalog?type=${type.id}"/>">${type.getName(locale)}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -58,16 +60,15 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">${lang}<span class="caret"></span></a>
                         <ul class="dropdown-menu" style="min-width: 60px">
-                            <li><a href="<c:url value="/do/locale?locale=ru"></c:url>" class="language"><img
+                            <li><a href="<c:url value="/do/locale?locale=ru"/>" class="language"><img
                                     style="height: 18px"
                                     src="<c:url value="/images/ru.png"/>" alt="Ru"/> Ru</a></li>
-                            <li><a href="<c:url value="/do/locale?locale=en"></c:url>" class="language"><img
+                            <li><a href="<c:url value="/do/locale?locale=en"/>" class="language"><img
                                     style="height: 18px"
                                     src="<c:url value="/images/us.png"/>" alt="En"/> En</a></li>
                         </ul>
                     </li>
                 </ul>
-                <%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="<c:url value="/do/cart"/>"><span class="glyphicon glyphicon-shopping-cart"></span>

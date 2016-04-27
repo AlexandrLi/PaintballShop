@@ -18,12 +18,12 @@
     <fmt:message key="common.button.cancel" var="b_cancel"/>
 </fmt:bundle>
 
+<%--@elvariable id="genders" type="java.util.List"--%>
+<%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
-            <div>
-                <div class="h3">${personaldata_title}</div>
-            </div>
             <form style="width:200px" role="form" action="<c:url value="/do/edit/data"/>" method="post">
                 <div class="form-group input-group">
                     <label for="password">${password}</label>
@@ -60,8 +60,6 @@
                 <div class="form-group input-group">
                     <label for="gender">${gender_title}:</label>
                     <select class="form-control" id="gender" name="gender">
-                            <%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
-                            <%--@elvariable id="user" type="com.epam.alexandrli.paintballshop.entity.User"--%>
                         <c:forEach items="${genders}" var="gender">
                             <option value="${gender.id}"<c:if
                                     test="${loggedUser.gender.equals(gender)}"> selected </c:if>>${gender.getName(locale)}</option>
@@ -69,7 +67,7 @@
                     </select>
                 </div>
                 <button value="submit" class="btn btn-default">${b_save}</button>
-                <a href="<c:url value="/do/user/profile"></c:url>" class="btn btn-default">${b_cancel}</a>
+                <a href="<c:url value="/do/user/profile"/>" class="btn btn-default">${b_cancel}</a>
             </form>
         </div>
         <my:user-menu user="${loggedUser}"/>

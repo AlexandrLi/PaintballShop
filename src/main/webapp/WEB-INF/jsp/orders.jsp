@@ -17,19 +17,14 @@
     <fmt:message key="common.button.delete" var="b_delete"/>
 </fmt:bundle>
 
+<%--@elvariable id="orders" type="java.util.List"--%>
+<%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="statuses" type="java.util.List"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
-            <nav>
-                <ul class="pagination">
-                    <c:forEach begin="1" end="${pagesCount}" varStatus="loop">
-                        <li <c:if test="${page==loop.count}">class="active" </c:if>><a
-                                href="<c:url value="/do/manage/orders?page=${loop.count}"></c:url>">${loop.count}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </nav>
-            <hr>
+            <my:pagination url="/do/manage/orders" pagesCount="${pagesCount}"/>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -42,36 +37,36 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <%--@elvariable id="orders" type="java.util.List"--%>
-                    <%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
                 <c:forEach items="${orders}" var="order">
                     <tr>
                         <td>${order.formattedCreatedTime}</td>
                         <td>${order.user.firstName}</td>
                         <td> ${order.description}</td>
-                        <td>${order.price}</td>
-                        <form action="<c:url value="/do/edit/orderStatus"/>" method="post">
-                            <td>
-                                <div class="form-group input-group">
+                        <fmt:formatNumber var="formattedPrice" type="currency" currencyCode="KZT"
+                                          maxFractionDigits="0"
+                                          value="${order.price.amount}"/>
+                        <td>${formattedPrice}</td>
+                        <td>
+                            <div class="form-group input-group">
+                                <form action="<c:url value="/do/edit/orderStatus"/>" method="post">
                                     <input hidden name="orderId" value="${order.id}">
-                                    <select class="form-control" id="status" name="statusId">
-                                            <%--@elvariable id="statuses" type="java.util.List"--%>
-                                        <c:forEach items="${statuses}" var="status">
-                                            <option value="${status.id}"<c:if
-                                                    test="${order.status.equals(status)}"> selected </c:if>>${status.getName(locale)}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </td>
-                            <td style="width: 100px"><a class="btn btn-default"
-                                                        href="<c:url value="/do/order?id=${order.id}"></c:url>"
-                            >${b_details}</a>
-                                <button value="submit" class="btn btn-default">${b_save}</button>
-                                <a class="btn btn-default"
-                                   href="<c:url value="/do/delete/order?id=${order.id}"></c:url>"
-                                >${b_delete}</a>
-                            </td>
-                        </form>
+                                    <select class="form-control" id="status" name="statusId"
+                                            onchange="this.form.submit()">
+                                </form>
+                                <c:forEach items="${statuses}" var="status">
+                                    <option value="${status.id}"<c:if
+                                            test="${order.status.equals(status)}"> selected </c:if>>${status.getName(locale)}</option>
+                                </c:forEach>
+                                </select>
+                            </div>
+                        </td>
+                        <td style="width: 100px"><a class="btn btn-default"
+                                                    href="<c:url value="/do/order?id=${order.id}"/>"
+                        >${b_details}</a>
+                            <a class="btn btn-default"
+                               href="<c:url value="/do/delete/order?id=${order.id}"/>"
+                            >${b_delete}</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

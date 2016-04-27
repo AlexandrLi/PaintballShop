@@ -4,6 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:bundle basename="i18n">
+    <fmt:message key="editUser.pagetitle" var="pagetitle"/>
     <fmt:message key="common.email" var="email"/>
     <fmt:message key="common.password" var="password"/>
     <fmt:message key="common.firstname" var="firstname"/>
@@ -26,11 +27,15 @@
     <fmt:message key="common.button.cancel" var="b_cancel"/>
 </fmt:bundle>
 
+<%--@elvariable id="genders" type="java.util.List"--%>
+<%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
+<%--@elvariable id="address" type="com.epam.alexandrli.paintballshop.entity.Address"--%>
+<%--@elvariable id="user" type="com.epam.alexandrli.paintballshop.entity.User"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
-            <div class="h3" style="margin-bottom: 20px">${form_title}</div>
-            <form role="form" action="<c:url value="/do/edit/user"></c:url>" method="post" style="width: 500px">
+            <form role="form" action="<c:url value="/do/edit/user"/>" method="post" style="width: 500px">
                 <div class="col-lg-6" align="center">
                     <input hidden name="userId" value="${user.id}">
                     <div class="form-group input-group">
@@ -70,14 +75,13 @@
                         <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                value="${user.phoneNumber}">
                         <c:if test="${not empty phoneNumberError}">
-                            <p class=" text-danger" style="height: 10px;font-size: 12px;">${phoneNumber_error_message}</p>
+                            <p class=" text-danger"
+                               style="height: 10px;font-size: 12px;">${phoneNumber_error_message}</p>
                         </c:if>
                     </div>
                     <div class="form-group input-group">
                         <label for="gender">${gender_title}:</label>
                         <select class="form-control" id="gender" name="gender">
-                                <%--@elvariable id="gender" type="com.epam.alexandrli.paintballshop.entity.Gender"--%>
-                                <%--@elvariable id="user" type="com.epam.alexandrli.paintballshop.entity.User"--%>
                             <c:forEach items="${genders}" var="gender">
                                 <option value="${gender.id}"<c:if
                                         test="${user.gender.equals(gender)}"> selected </c:if>>${gender.getName(locale)}</option>
@@ -139,7 +143,7 @@
                 </div>
                 <div class="col-lg-12">
                     <button value="submit" class="btn btn-default" style="width: 120px">${b_save}</button>
-                    <a href="<c:url value="/do/manage/users"></c:url>" class="btn btn-default">${b_cancel}</a>
+                    <a href="<c:url value="/do/manage/users"/>" class="btn btn-default">${b_cancel}</a>
                 </div>
             </form>
         </div>

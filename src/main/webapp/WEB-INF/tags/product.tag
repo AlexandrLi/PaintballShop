@@ -11,7 +11,9 @@
     <img style="height: 200px;" alt="image" src="<c:url value="/img/${product.id}"/>"/>
     <h4 align="center"><b>${product.name}</b></h4>
     <p align="justify" style="height: 150px">${product.getDescription(locale)}</p>
-    <p align="right"><span class="pull-left" style="color: red;font-size: 14px; margin-top: 8px">${product.price}</span><a
-            class="btn btn-default" href="<c:url value="/do/product?id=${product.id}"></c:url> " role="button"
+    <fmt:formatNumber var="formattedPrice" type="currency" currencyCode="KZT" maxFractionDigits="0"
+                      value="${product.price.amount}"/>
+    <p align="right"><span class="pull-left" style="color: red;font-size: 14px; margin-top: 8px">${formattedPrice}</span><a
+            class="btn btn-default" href="<c:url value="/do/product?id=${product.id}"/> " role="button"
             style="font-size: 12px">${b_details}</a></p>
 </div>

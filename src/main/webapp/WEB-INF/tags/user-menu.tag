@@ -19,9 +19,11 @@
     <div class="col-lg-2 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
             <p align="center">${greetings} ${loggedUser.firstName}</p>
-            <p align="center">${balance}: ${loggedUser.cash}</p>
-            <a href="<c:url value="/do/user/profile"></c:url>" class="list-group-item">${myprofile}</a>
-            <a href="<c:url value="/do/user/orders"></c:url>" class="list-group-item">${myorders}</a>
+            <fmt:formatNumber var="formattedBalance" type="currency" currencyCode="KZT" maxFractionDigits="0"
+                              value="${loggedUser.cash.amount}"/>
+            <p align="center">${balance}: ${formattedBalance}</p>
+            <a href="<c:url value="/do/user/profile"/>" class="list-group-item">${myprofile}</a>
+            <a href="<c:url value="/do/user/orders"/>" class="list-group-item">${myorders}</a>
         </div>
     </div>
 </c:if>
@@ -29,13 +31,15 @@
     <div class="col-lg-2 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
             <p align="center">${greetings} ${loggedUser.firstName}</p>
-            <p align="center">${balance}: ${loggedUser.cash}</p>
-            <a href="<c:url value="/do/user/profile"></c:url>" class="list-group-item">${myprofile}</a>
-            <a href="<c:url value="/do/user/orders"></c:url>" class="list-group-item">${myorders}</a>
-            <a href="<c:url value="/do/manage/users"></c:url>" class="list-group-item">${manage_users}</a>
-            <a href="<c:url value="/do/manage/products"></c:url>" class="list-group-item">${manage_products}</a>
-            <a href="<c:url value="/do/manage/orders"></c:url>" class="list-group-item">${manage_orders}</a>
-            <a href="<c:url value="/do/manage/storage"></c:url>" class="list-group-item">${manage_storages}</a>
+            <fmt:formatNumber var="formattedBalance" type="currency" currencyCode="KZT" maxFractionDigits="0"
+                              value="${loggedUser.cash.amount}"/>
+            <p align="center">${balance}: ${formattedBalance}</p>
+            <a href="<c:url value="/do/user/profile"/>" class="list-group-item">${myprofile}</a>
+            <a href="<c:url value="/do/user/orders"/>" class="list-group-item">${myorders}</a>
+            <a href="<c:url value="/do/manage/users"/>" class="list-group-item">${manage_users}</a>
+            <a href="<c:url value="/do/manage/products"/>" class="list-group-item">${manage_products}</a>
+            <a href="<c:url value="/do/manage/orders"/>" class="list-group-item">${manage_orders}</a>
+            <a href="<c:url value="/do/manage/storage"/>" class="list-group-item">${manage_storages}</a>
         </div>
     </div>
 </c:if>

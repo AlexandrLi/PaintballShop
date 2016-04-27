@@ -26,10 +26,13 @@
     <fmt:message key="common.button.close" var="b_close"/>
 </fmt:bundle>
 
-<%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="orders" type="java.util.List"--%>
+<%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
+<%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <my:generic-page pagetitle="${pagetitle}">
     <div class="row row-offcanvas row-offcanvas-right" style="width: 1200px; margin: auto;">
         <div class="col-lg-10" align="center">
+            <my:pagination url="/do/user/orders" pagesCount="${pagesCount}"/>
             <c:choose>
                 <c:when test="${empty orders}">
                     <p>${empty_title}</p>
@@ -46,16 +49,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <%--@elvariable id="orders" type="java.util.List"--%>
-                            <%--@elvariable id="order" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
                         <c:forEach items="${orders}" var="order">
+                            <fmt:formatNumber var="formattedPrice" type="currency" currencyCode="KZT"
+                                              maxFractionDigits="0"
+                                              value="${order.price.amount}"/>
                             <tr>
                                 <td>${order.formattedCreatedTime}</td>
                                 <td>${order.description}</td>
-                                <td>${order.price}</td>
+                                <td>${formattedPrice}</td>
                                 <td>${order.status.getName(locale)}</td>
                                 <td><a class="btn btn-default"
-                                       href="<c:url value="/do/order?id=${order.id}"></c:url>"
+                                       href="<c:url value="/do/order?id=${order.id}"/>"
                                 >${b_details}
                                 </a></td>
                             </tr>
