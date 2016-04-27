@@ -76,25 +76,30 @@ public class ShopService {
     }
 
     public User buyCart(Order cart) throws ServiceException {
-        User cartUser = cart.getUser();
-        if (cartUser.getCash().isLessThan(cart.getPrice())) {
-            throw new ServiceException("Not enough money");
-        }
+        User cartUser;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
-            GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
-            GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
-            GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
-            GenericDao<OrderItem> orderItemDao = jdbcDaoFactory.getDao(OrderItem.class);
-            cartUser.spendCash(cart.getPrice());
-            userDao.update(cartUser);
-            cart.setStatus(orderStatusDao.findByPK(1));
-            Order newOrder = orderDao.insert(cart);
-            for (OrderItem orderItem : cart.getOrderItems()) {
-                orderItem.setOrder(newOrder);
-                orderItemDao.insert(orderItem);
+            try {
+                jdbcDaoFactory.beginTransaction();
+                GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
+                GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
+                GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
+                GenericDao<OrderItem> orderItemDao = jdbcDaoFactory.getDao(OrderItem.class);
+                cartUser = userDao.findByPK(cart.getUser().getId());
+                cartUser.spendCash(cart.getPrice());
+                userDao.update(cartUser);
+                cart.setStatus(orderStatusDao.findByPK(1));
+                Order newOrder = orderDao.insert(cart);
+                for (OrderItem orderItem : cart.getOrderItems()) {
+                    orderItem.setOrder(newOrder);
+                    orderItemDao.insert(orderItem);
+                }
+                jdbcDaoFactory.commit();
+            } catch (DaoException e) {
+                jdbcDaoFactory.rollback();
+                throw new ServiceException("Could not place order", e);
             }
         } catch (DaoException e) {
-            throw new ServiceException("Could not place order", e);
+            throw new ServiceException("Could not init factory", e);
         }
         return cartUser;
     }
