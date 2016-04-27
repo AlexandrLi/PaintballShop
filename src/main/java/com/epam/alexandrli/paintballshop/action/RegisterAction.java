@@ -26,14 +26,15 @@ public class RegisterAction implements Action {
         String email = req.getParameter("email");
         try {
             if (!userService.checkEmail(email)) {
-                req.setAttribute("emailError", "true");
+                req.setAttribute("emailError", "used");
                 invalid = true;
+            } else {
+                checkParameter(email, "email", EMAIL, req);
             }
 
         } catch (ServiceException e) {
             throw new ActionException("Could not register user", e);
         }
-        checkParameter(email, "email", EMAIL, req);
         String password = req.getParameter("password");
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");

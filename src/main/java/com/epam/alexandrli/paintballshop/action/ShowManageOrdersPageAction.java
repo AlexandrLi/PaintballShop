@@ -10,36 +10,41 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ShowManageOrdersPageAction implements Action {
-    public static final int FIRST_PAGE = 1;
-    public static final int PAGE_SIZE = 2;
+    public final String FIRST_PAGE = "1";
+    public final String DEFAULT_PAGE_SIZE = "3";
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         List<Order> orders;
         List<OrderStatus> statuses;
         String page = req.getParameter("page");
+        if (page == null) {
+            page = FIRST_PAGE;
+        }
+        String pageSize = DEFAULT_PAGE_SIZE;
+        if (req.getParameter("pageSize") != null) {
+            pageSize = req.getParameter("pageSize");
+        }
         int ordersCount;
         try {
-            if (page == null) {
-                page = String.valueOf(FIRST_PAGE);
-            }
             ShopService shopService = new ShopService();
-            orders = shopService.getAllOrdersOnPage(Integer.parseInt(page), PAGE_SIZE);
+            orders = shopService.getAllOrdersOnPage(Integer.parseInt(page), Integer.parseInt(pageSize));
             ordersCount = shopService.getOrdersCount();
             statuses = shopService.getAllOrderStatuses();
         } catch (ServiceException e) {
             throw new ActionException("Could not show manage orders page", e);
         }
         int pageCount;
-        if (ordersCount % PAGE_SIZE == 0) {
-            pageCount = ordersCount / PAGE_SIZE;
+        if (ordersCount % Integer.parseInt(pageSize) == 0) {
+            pageCount = ordersCount / Integer.parseInt(pageSize);
         } else {
-            pageCount = ordersCount / PAGE_SIZE + 1;
+            pageCount = ordersCount / Integer.parseInt(pageSize) + 1;
         }
         req.setAttribute("orders", orders);
         req.setAttribute("statuses", statuses);
         req.setAttribute("pagesCount", pageCount);
         req.setAttribute("page", page);
+        req.setAttribute("pageSize", pageSize);
         return new ActionResult("orders");
 
     }

@@ -15,14 +15,14 @@ public class BuyCartAction implements Action {
         User currentUser = (User) req.getSession(false).getAttribute("loggedUser");
         cart.setUser(currentUser);
         if (currentUser.getCash().isLessThan(cart.getPrice())) {
-            req.setAttribute("flash.balanceError", "true");
+            req.setAttribute("flash.balanceError", "notEnough");
             req.setAttribute("flash.balanceNeeded", cart.getPrice().minus(currentUser.getCash()));
             return new ActionResult("user/profile", true);
         }
         try {
             ShopService shopService = new ShopService();
             User user = shopService.buyCart(cart);
-            req.getSession(false).setAttribute("loggedUser", user);
+            req.getSession().setAttribute("loggedUser", user);
             req.getSession(false).removeAttribute("cart");
             return new ActionResult("user/orders", true);
         } catch (ServiceException e) {

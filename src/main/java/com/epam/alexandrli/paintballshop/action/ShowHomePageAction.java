@@ -5,7 +5,6 @@ import com.epam.alexandrli.paintballshop.entity.ProductType;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.ShopService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -23,11 +22,8 @@ public class ShowHomePageAction implements Action {
             page = FIRST_PAGE;
         }
         String pageSize = DEFAULT_PAGE_SIZE;
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("pageSize")) {
-                pageSize = cookie.getValue();
-            }
+        if (req.getParameter("pageSize") != null) {
+            pageSize = req.getParameter("pageSize");
         }
         int productsCount;
         try {
@@ -48,6 +44,7 @@ public class ShowHomePageAction implements Action {
         req.getSession().setAttribute("productTypes", productTypes);
         req.setAttribute("pagesCount", pageCount);
         req.setAttribute("page", page);
+        req.setAttribute("pageSize", pageSize);
         return new ActionResult("home");
     }
 }

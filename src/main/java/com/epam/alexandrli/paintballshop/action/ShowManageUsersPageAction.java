@@ -9,34 +9,38 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ShowManageUsersPageAction implements Action {
-
-    public static final int FIRST_PAGE = 1;
-    public static final int PAGE_SIZE = 2;
+    public final String FIRST_PAGE = "1";
+    public final String DEFAULT_PAGE_SIZE = "3";
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         ShopService shopService = new ShopService();
         List<User> users;
         String page = req.getParameter("page");
+        if (page == null) {
+            page = FIRST_PAGE;
+        }
+        String pageSize = DEFAULT_PAGE_SIZE;
+        if (req.getParameter("pageSize") != null) {
+            pageSize = req.getParameter("pageSize");
+        }
         int usersCount;
         try {
-            if (page == null) {
-                page = String.valueOf(FIRST_PAGE);
-            }
-            users = shopService.getAllUsersOnPage(Integer.parseInt(page), PAGE_SIZE);
+            users = shopService.getAllUsersOnPage(Integer.parseInt(page), Integer.parseInt(pageSize));
             usersCount = shopService.getUsersCount();
         } catch (ServiceException e) {
             throw new ActionException("Could not show manage users page", e);
         }
         int pageCount;
-        if (usersCount % PAGE_SIZE == 0) {
-            pageCount = usersCount / PAGE_SIZE;
+        if (usersCount % Integer.parseInt(pageSize) == 0) {
+            pageCount = usersCount / Integer.parseInt(pageSize);
         } else {
-            pageCount = usersCount / PAGE_SIZE + 1;
+            pageCount = usersCount / Integer.parseInt(pageSize) + 1;
         }
         req.setAttribute("users", users);
         req.setAttribute("pagesCount", pageCount);
         req.setAttribute("page", page);
+        req.setAttribute("pageSize", pageSize);
         return new ActionResult("users");
     }
 
