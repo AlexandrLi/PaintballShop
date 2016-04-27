@@ -40,11 +40,11 @@ public class UserService {
                 Address registeredAddress = addressDao.insert(address);
                 user.setAddress(registeredAddress);
                 registeredUser = userDao.insert(user);
+                jdbcDaoFactory.commit();
             } catch (DaoException e) {
                 jdbcDaoFactory.rollback();
                 throw new ServiceException("Could not register user", e);
             }
-            jdbcDaoFactory.commit();
         } catch (DaoException e) {
             throw new ServiceException("Could not init factory", e);
         }
@@ -110,14 +110,23 @@ public class UserService {
         return user;
     }
 
-    public User refillBalance(User user, String cashAmount) throws ServiceException {
+    public User refillBalance(Integer userId, String cashAmount) throws ServiceException {
+        User user;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
-            GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
-            Money totalCash = user.getCash().plus(Money.parse("KZT " + cashAmount));
-            user.setCash(totalCash);
-            userDao.update(user);
+            try {
+                jdbcDaoFactory.beginTransaction();
+                GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
+                user = userDao.findByPK(userId);
+                Money totalCash = user.getCash().plus(Money.parse("KZT " + cashAmount));
+                user.setCash(totalCash);
+                userDao.update(user);
+                jdbcDaoFactory.commit();
+            } catch (DaoException e) {
+                jdbcDaoFactory.rollback();
+                throw new ServiceException("Could not transfer cash", e);
+            }
         } catch (DaoException e) {
-            throw new ServiceException("Could not transfer cash", e);
+            throw new ServiceException("Could not init factory", e);
         }
         return user;
     }
