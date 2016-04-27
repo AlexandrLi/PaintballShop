@@ -25,8 +25,7 @@ public class ErrorHandlerServlet extends HttpServlet {
             logger.debug("Exception. Status code: {}. Request URI: {}. Current user: {}.", statusCode, requestUri, req.getSession(false).getAttribute("user"));
         } else {
             Exception exception = (Exception) req.getAttribute("javax.servlet.error.exception");
-            req.setAttribute("errorMessage", exception.getMessage());
-            logger.debug("Exception. Status code: {}. Request URI: {}. Message: {}.", statusCode, requestUri, exception.fillInStackTrace());
+            logger.debug("Exception. Status code: {}. Request URI: {}. Exception: {}.", statusCode, requestUri, exception);
         }
         req.getRequestDispatcher("/WEB-INF/jsp/error-page.jsp").forward(req, resp);
     }
