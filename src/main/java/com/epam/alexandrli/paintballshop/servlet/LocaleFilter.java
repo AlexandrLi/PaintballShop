@@ -19,20 +19,25 @@ public class LocaleFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
-        if (req instanceof HttpServletRequest && resp instanceof HttpServletResponse) {
-            Cookie[] cookies = ((HttpServletRequest) req).getCookies();
+        doFilter((HttpServletRequest) req, (HttpServletResponse) resp, filterChain);
+    }
+
+    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("locale".equals(cookie.getName())) {
                     Locale locale = new Locale(cookie.getValue());
-                    ((HttpServletRequest) req).getSession().setAttribute("locale", locale);
-                    Config.set(((HttpServletRequest) req).getSession(), Config.FMT_LOCALE, locale);
+                    request.getSession().setAttribute("locale", locale);
+                    Config.set(request.getSession(), Config.FMT_LOCALE, locale);
+                }
+
+                if (request.getSession(false).getAttribute("locale") == null) {
+                    request.getSession().setAttribute("locale", request.getLocale());
                 }
             }
-            if (((HttpServletRequest) req).getSession().getAttribute("locale") == null) {
-                ((HttpServletRequest) req).getSession().setAttribute("locale", req.getLocale());
-            }
         }
-        filterChain.doFilter(req, resp);
+        chain.doFilter(request, response);
     }
 
     @Override
