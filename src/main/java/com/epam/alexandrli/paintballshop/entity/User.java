@@ -99,6 +99,20 @@ public class User extends BaseEntity {
         this.cash = this.cash.minus(cashAmount);
     }
 
+    @Override
+    public String toString() {
+        return "User{" + super.toString() +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", genderId=" + gender.getId() +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", cash=" + cash.getAmount() +
+                '}';
+    }
+
     public enum Role {
         user, admin
     }

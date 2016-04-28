@@ -78,6 +78,16 @@ public class Order extends BaseEntity implements Priceable {
     }
 
     @Override
+    public String toString() {
+        return "Order{" + super.toString() +
+                "created=" + created +
+                ", userId=" + user.getId() +
+                ", description='" + description + '\'' +
+                ", statusId=" + status.getId() +
+                '}';
+    }
+
+    @Override
     public Money getPrice() {
         Money totalPrice = Money.zero(CurrencyUnit.getInstance("KZT"));
         for (OrderItem orderItem : orderItems) {

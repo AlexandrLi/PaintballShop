@@ -24,6 +24,15 @@ public class CharacteristicItem extends BaseEntity {
         this.characteristic = characteristic;
     }
 
+    @Override
+    public String toString() {
+        return "CharacteristicItem{" + super.toString() +
+                "productId=" + product.getId() +
+                ", characteristicId=" + characteristic.getId() +
+                ", value='" + value + '\'' +
+                '}';
+    }
+
     public String getValue() {
         return value;
     }

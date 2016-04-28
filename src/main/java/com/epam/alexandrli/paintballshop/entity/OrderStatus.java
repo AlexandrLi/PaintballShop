@@ -8,4 +8,9 @@ public class OrderStatus extends NamedEntity {
     public OrderStatus(Integer id) {
         setId(id);
     }
+
+    @Override
+    public String toString() {
+        return "OrderStatus{" + super.toString() + "}";
+    }
 }

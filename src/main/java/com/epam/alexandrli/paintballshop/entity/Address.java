@@ -53,4 +53,15 @@ public class Address extends BaseEntity {
     public void setApartmentNumber(String apartmentNumber) {
         this.apartmentNumber = apartmentNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" + super.toString() +
+                "country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", buildingNumber='" + buildingNumber + '\'' +
+                ", apartmentNumber='" + apartmentNumber + '\'' +
+                '}';
+    }
 }

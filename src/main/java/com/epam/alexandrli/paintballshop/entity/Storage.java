@@ -30,6 +30,13 @@ public class Storage extends DescriptionedEntity {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Storage{" + super.toString() +
+                "name='" + name + '\'' +
+                '}';
+    }
+
     public boolean addProduct(StorageItem storageItem) {
         return storageItems.add(storageItem);
     }

@@ -1,11 +1,20 @@
 package com.epam.alexandrli.paintballshop.entity;
 
 public class StorageItem extends BaseEntity {
-    private int amount;
-    private Product product;
     private Storage storage;
+    private Product product;
+    private int amount;
 
     public StorageItem() {
+    }
+
+    @Override
+    public String toString() {
+        return "StorageItem{" + super.toString() +
+                "storageId=" + storage.getId() +
+                ", productId=" + product.getId() +
+                ", amount=" + amount +
+                '}';
     }
 
     public int getAmount() {

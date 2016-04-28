@@ -25,13 +25,18 @@ public abstract class BaseEntity {
     }
 
     @Override
+    public String toString() {
+        return "id='" + id + '\'' + ", ";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         BaseEntity that = (BaseEntity) o;
         if (this.id == null || that.id == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Entity id is null");
         }
         return id.equals(that.id);
 

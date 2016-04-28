@@ -5,12 +5,15 @@ import com.epam.alexandrli.paintballshop.dao.DaoException;
 import com.epam.alexandrli.paintballshop.dao.DaoFactory;
 import com.epam.alexandrli.paintballshop.dao.GenericDao;
 import com.epam.alexandrli.paintballshop.entity.BaseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory {
+    public static final Logger logger = LoggerFactory.getLogger(JdbcDaoFactory.class);
     private Connection connection;
     private DataSource pool;
 
@@ -18,6 +21,7 @@ public class JdbcDaoFactory extends DaoFactory {
         this.pool = ConnectionPool.getInstance();
         try {
             this.connection = pool.getConnection();
+            logger.debug("JdbcDaoFactory has been initialized");
         } catch (SQLException e) {
             throw new DaoException("Could not get connection", e);
         }
@@ -26,6 +30,7 @@ public class JdbcDaoFactory extends DaoFactory {
     public void close() throws DaoException {
         try {
             connection.close();
+            logger.debug("JdbcDaoFactory closed");
         } catch (SQLException e) {
             throw new DaoException("Could not close factory", e);
         }
@@ -46,28 +51,31 @@ public class JdbcDaoFactory extends DaoFactory {
         return daoObject;
     }
 
-    public void beginTransaction() throws DaoException {
+    public void startTransaction() throws DaoException {
         try {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            logger.debug("Transaction starts. Transaction level - {}", Connection.TRANSACTION_SERIALIZABLE);
         } catch (SQLException e) {
-            throw new DaoException("Could not setAutoCommit to false", e);
+            throw new DaoException("Could not start transaction", e);
         }
     }
 
-    public void commit() throws DaoException {
+    public void commitTransaction() throws DaoException {
         try {
             connection.commit();
+            logger.debug("Commit transaction changes");
         } catch (SQLException e) {
-            throw new DaoException("Could not commit transaction", e);
+            throw new DaoException("Could not commit transaction transaction", e);
         }
     }
 
-    public void rollback() throws DaoException {
+    public void rollbackTransaction() throws DaoException {
         try {
             connection.rollback();
+            logger.debug("Rollback transaction changes");
         } catch (SQLException e) {
-            throw new DaoException("Could not rollback changes", e);
+            throw new DaoException("Could not rollback transaction changes", e);
         }
     }
 }

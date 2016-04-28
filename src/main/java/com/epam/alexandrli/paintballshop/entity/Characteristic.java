@@ -18,4 +18,10 @@ public class Characteristic extends NamedEntity {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "Characteristic{" + super.toString() +
+                "typeId=" + type.getId() +
+                '}';
+    }
 }

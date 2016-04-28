@@ -25,6 +25,12 @@ public class NamedEntity extends BaseEntity {
         this.nameEn = nameEn;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "nameRu='" + nameRu + '\'' +
+                ", nameEn='" + nameEn + '\'' + ", ";
+    }
+
     public String getName(Locale locale) {
         if (locale != null && locale.getLanguage().equals("ru")) {
             return nameRu;

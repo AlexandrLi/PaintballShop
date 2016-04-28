@@ -15,6 +15,16 @@ public class Image extends BaseEntity {
 
     }
 
+    @Override
+    public String toString() {
+        return "Image{" + super.toString() +
+                "name='" + name + '\'' +
+                ", modified=" + modified +
+                ", productId=" + product.getId() +
+                ", contentType='" + contentType + '\'' +
+                '}';
+    }
+
     public Product getProduct() {
         return product;
     }

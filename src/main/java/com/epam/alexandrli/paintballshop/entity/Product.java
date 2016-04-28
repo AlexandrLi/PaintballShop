@@ -24,6 +24,15 @@ public class Product extends DescriptionedEntity {
         this.characteristics.add(characteristicItem);
     }
 
+    @Override
+    public String toString() {
+        return "Product{" + super.toString() +
+                "name='" + name + '\'' +
+                ", price=" + price.getAmount() +
+                ", typeId=" + type.getId() +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

@@ -14,6 +14,11 @@ public class ProductType extends NamedEntity {
         setId(id);
     }
 
+    @Override
+    public String toString() {
+        return "ProductType{" + super.toString() + '}';
+    }
+
     public Set<Characteristic> getCharacteristics() {
         return characteristics;
     }
