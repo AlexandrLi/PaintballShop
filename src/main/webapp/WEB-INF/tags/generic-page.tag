@@ -25,11 +25,13 @@
     <script src="<c:url value="/js/jquery-1.12.2.min.js"/>"></script>
     <script src="<c:url value="/js/jquery-2.2.2.min.js"/>"></script>
     <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+    <link rel='shortcut icon' type='image/x-icon' href="<c:url value="/images/favicon.ico"/>"/>
 </head>
 
 <%--@elvariable id="cart" type="com.epam.alexandrli.paintballshop.entity.Order"--%>
 <%--@elvariable id="productTypes" type="java.util.List"--%>
 <%--@elvariable id="type" type="com.epam.alexandrli.paintballshop.entity.ProductType"--%>
+<%--@elvariable id="locale" type="java.util.Locale"--%>
 <%--@elvariable id="loggedUser" type="com.epam.alexandrli.paintballshop.entity.User"--%>
 <body>
 <div id="pageheader">
