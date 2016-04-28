@@ -15,8 +15,6 @@ public interface GenericDao<T extends BaseEntity> {
 
     List<T> findAll() throws DaoException;
 
-    Integer findColumnByPK(String columnName, Integer id) throws DaoException;
-
     List<T> findAll(int pageNumber, int pageSize) throws DaoException;
 
     void update(T t) throws DaoException;
