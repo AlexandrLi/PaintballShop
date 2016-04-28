@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 public class ConnectionPool implements DataSource {
     private static final Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
@@ -21,6 +22,7 @@ public class ConnectionPool implements DataSource {
     private String username;
     private String password;
     private int connectionsLimit;
+    private int timeout;
     private BlockingQueue<PooledConnection> freeConnections;
     private BlockingQueue<PooledConnection> usedConnections;
 
@@ -37,12 +39,17 @@ public class ConnectionPool implements DataSource {
             this.username = properties.getProperty("username");
             this.password = properties.getProperty("password");
             this.connectionsLimit = Integer.parseInt(properties.getProperty("connections.limit"));
+            this.timeout = Integer.parseInt(properties.getProperty("get.connection.timeout"));
         }
         initConnections();
     }
 
     public static DataSource getInstance() {
         return InstanceHolder.instance;
+    }
+
+    public int getConnectionsLimit() {
+        return connectionsLimit;
     }
 
     public void initConnections() throws ConnectionPoolException {
@@ -78,7 +85,10 @@ public class ConnectionPool implements DataSource {
         }
         PooledConnection pooledConnection;
         try {
-            pooledConnection = freeConnections.take();
+            pooledConnection = freeConnections.poll(timeout, TimeUnit.SECONDS);
+            if (pooledConnection == null) {
+                throw new SQLException("No free connections in pool");
+            }
             usedConnections.put(pooledConnection);
             logger.debug("connection used. freeCon: {} usedCon: {}", freeConnections.size(), usedConnections.size());
         } catch (InterruptedException e) {
@@ -95,6 +105,7 @@ public class ConnectionPool implements DataSource {
     public void shutdown() throws ConnectionPoolException {
         closeAllConnectionsInQueue(freeConnections);
         closeAllConnectionsInQueue(usedConnections);
+        logger.debug("Connection pool shutdown");
     }
 
     private void closeAllConnectionsInQueue(BlockingQueue<PooledConnection> connections) throws ConnectionPoolException {
