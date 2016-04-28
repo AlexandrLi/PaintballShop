@@ -238,6 +238,8 @@ SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 
+SET @@GLOBAL.wait_timeout=86400;
+
 # Init default data
 INSERT INTO gender (name_ru, name_en) VALUES ('Не указано', 'None');
 INSERT INTO gender (name_ru, name_en) VALUES ('Мужчина', 'Male');
