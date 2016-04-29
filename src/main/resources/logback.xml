@@ -2,9 +2,14 @@
 
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <encoder>
             <pattern>
-                %date %-5level [%thread] %logger{128} - %msg%n
+                %date{dd-MM-yy HH:mm:ss.SS} %-5level [%thread] %logger{1} - %m%n
             </pattern>
         </encoder>
     </appender>
@@ -13,7 +18,7 @@
         <file>${catalina.home}/logs/PaintballShop.log</file>
         <encoder>
             <pattern>
-                %date %-5level [%thread] %logger{128} - %msg%n
+                %date{dd-MM-yy HH:mm:ss.SS} %-5level [%thread] %logger{1} - %m%n
             </pattern>
         </encoder>
     </appender>
