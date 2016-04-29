@@ -102,10 +102,10 @@ public class ConnectionPool implements DataSource {
         throw new UnsupportedOperationException("Unsupported operation");
     }
 
-    public void shutdown() throws ConnectionPoolException {
+    public void close() throws ConnectionPoolException {
         closeAllConnectionsInQueue(freeConnections);
         closeAllConnectionsInQueue(usedConnections);
-        logger.debug("Connection pool shutdown");
+        logger.debug("Connection pool closed");
     }
 
     private void closeAllConnectionsInQueue(BlockingQueue<PooledConnection> connections) throws ConnectionPoolException {
