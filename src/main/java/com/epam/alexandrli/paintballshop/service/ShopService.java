@@ -79,7 +79,7 @@ public class ShopService {
         User cartUser;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             try {
-                jdbcDaoFactory.beginTransaction();
+                jdbcDaoFactory.startTransaction();
                 GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
                 GenericDao<OrderStatus> orderStatusDao = jdbcDaoFactory.getDao(OrderStatus.class);
                 GenericDao<Order> orderDao = jdbcDaoFactory.getDao(Order.class);
@@ -93,9 +93,9 @@ public class ShopService {
                     orderItem.setOrder(newOrder);
                     orderItemDao.insert(orderItem);
                 }
-                jdbcDaoFactory.commit();
+                jdbcDaoFactory.commitTransaction();
             } catch (DaoException e) {
-                jdbcDaoFactory.rollback();
+                jdbcDaoFactory.rollbackTransaction();
                 throw new ServiceException("Could not place order", e);
             }
         } catch (DaoException e) {

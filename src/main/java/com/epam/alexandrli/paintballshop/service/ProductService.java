@@ -68,7 +68,7 @@ public class ProductService {
         Product product;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             try {
-                jdbcDaoFactory.beginTransaction();
+                jdbcDaoFactory.startTransaction();
                 GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
                 GenericDao<ProductType> productTypeDao = jdbcDaoFactory.getDao(ProductType.class);
                 GenericDao<Image> imageDao = jdbcDaoFactory.getDao(Image.class);
@@ -86,9 +86,9 @@ public class ProductService {
                 }
                 characteristics = characteristics.stream().filter(item -> !item.isDeleted()).collect(Collectors.toList());
                 product.setCharacteristics(characteristics);
-                jdbcDaoFactory.commit();
+                jdbcDaoFactory.commitTransaction();
             } catch (DaoException e) {
-                jdbcDaoFactory.rollback();
+                jdbcDaoFactory.rollbackTransaction();
                 throw new ServiceException("Could not get filled product", e);
             }
         } catch (DaoException e) {
@@ -129,15 +129,15 @@ public class ProductService {
     public Product addProduct(Product product, Image productImage) throws ServiceException {
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             try {
-                jdbcDaoFactory.beginTransaction();
+                jdbcDaoFactory.startTransaction();
                 GenericDao<Product> productDao = jdbcDaoFactory.getDao(Product.class);
                 GenericDao<Image> imageDao = jdbcDaoFactory.getDao(Image.class);
                 Product insertedProduct = productDao.insert(product);
                 productImage.setProduct(insertedProduct);
                 imageDao.insert(productImage);
-                jdbcDaoFactory.commit();
+                jdbcDaoFactory.commitTransaction();
             } catch (DaoException e) {
-                jdbcDaoFactory.rollback();
+                jdbcDaoFactory.rollbackTransaction();
                 throw new ServiceException("Could not add product", e);
             }
         } catch (DaoException e) {

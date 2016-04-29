@@ -34,15 +34,15 @@ public class UserService {
         User registeredUser;
         try (DaoFactory jdbcDaoFactory = new JdbcDaoFactory()) {
             try {
-                jdbcDaoFactory.beginTransaction();
+                jdbcDaoFactory.startTransaction();
                 GenericDao<Address> addressDao = jdbcDaoFactory.getDao(Address.class);
                 GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
                 Address registeredAddress = addressDao.insert(address);
                 user.setAddress(registeredAddress);
                 registeredUser = userDao.insert(user);
-                jdbcDaoFactory.commit();
+                jdbcDaoFactory.commitTransaction();
             } catch (DaoException e) {
-                jdbcDaoFactory.rollback();
+                jdbcDaoFactory.rollbackTransaction();
                 throw new ServiceException("Could not register user", e);
             }
         } catch (DaoException e) {
@@ -114,15 +114,15 @@ public class UserService {
         User user;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             try {
-                jdbcDaoFactory.beginTransaction();
+                jdbcDaoFactory.startTransaction();
                 GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);
                 user = userDao.findByPK(userId);
                 Money totalCash = user.getCash().plus(Money.parse("KZT " + cashAmount));
                 user.setCash(totalCash);
                 userDao.update(user);
-                jdbcDaoFactory.commit();
+                jdbcDaoFactory.commitTransaction();
             } catch (DaoException e) {
-                jdbcDaoFactory.rollback();
+                jdbcDaoFactory.rollbackTransaction();
                 throw new ServiceException("Could not transfer cash", e);
             }
         } catch (DaoException e) {
