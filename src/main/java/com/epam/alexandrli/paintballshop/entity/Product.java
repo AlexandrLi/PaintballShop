@@ -26,10 +26,9 @@ public class Product extends DescriptionedEntity {
 
     @Override
     public String toString() {
-        return "Product{" + super.toString() +
-                "name='" + name + '\'' +
+        return "Product{" + "name='" + name + '\'' +
                 ", price=" + price.getAmount() +
-                ", typeId=" + type.getId() +
+                ", typeId=" + type.getId() + " " + super.toString() +
                 '}';
     }
 

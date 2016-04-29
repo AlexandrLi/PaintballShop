@@ -38,7 +38,6 @@ public class OrderItem extends BaseEntity implements Priceable {
     public String toString() {
         return "OrderItem{" + super.toString() +
                 "productId=" + product.getId() +
-                ", orderId=" + order.getId() +
                 ", amount=" + amount +
                 '}';
     }

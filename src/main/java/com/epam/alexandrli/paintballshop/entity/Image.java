@@ -1,6 +1,7 @@
 package com.epam.alexandrli.paintballshop.entity;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.io.InputStream;
 
@@ -19,7 +20,7 @@ public class Image extends BaseEntity {
     public String toString() {
         return "Image{" + super.toString() +
                 "name='" + name + '\'' +
-                ", modified=" + modified +
+                ", modified=" + DateTimeFormat.forPattern("dd-MM-yyyy hh:mm:ss").print(modified) +
                 ", productId=" + product.getId() +
                 ", contentType='" + contentType + '\'' +
                 '}';

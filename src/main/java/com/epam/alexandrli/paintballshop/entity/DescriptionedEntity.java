@@ -34,7 +34,7 @@ public class DescriptionedEntity extends BaseEntity {
 
     @Override
     public String toString() {
-        return "descriptionRu='" + descriptionRu + '\'' +
+        return super.toString() + "descriptionRu='" + descriptionRu + '\'' +
                 ", descriptionEn='" + descriptionEn + '\'' + ", ";
     }
 }

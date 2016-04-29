@@ -73,14 +73,10 @@ public class Order extends BaseEntity implements Priceable {
         orderItems.add(orderItem);
     }
 
-    public void removeProduct(OrderItem orderItem) {
-        orderItems.remove(orderItem);
-    }
-
     @Override
     public String toString() {
         return "Order{" + super.toString() +
-                "created=" + created +
+                "created=" + DateTimeFormat.forPattern("dd-MM-yyyy hh:mm:ss").print(created) +
                 ", userId=" + user.getId() +
                 ", description='" + description + '\'' +
                 ", statusId=" + status.getId() +
