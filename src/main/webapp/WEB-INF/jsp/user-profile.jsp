@@ -69,11 +69,14 @@
                             <p class="text-danger"
                                style="height: 10px;font-size: 12px;">${balance_error_message}</p>
                         </c:if>
+                        <fmt:formatNumber var="formattedBalanceNeeded" type="currency" currencyCode="KZT"
+                                          maxFractionDigits="0"
+                                          value="${balanceNeeded.amount}"/>
                         <c:if test="${balanceError.equals('notEnough')}">
                             <p class="text-danger"
                                style="height: 10px;font-size: 12px;">${balance_notEnough_message}</p>
                             <p class="text-danger"
-                               style="height: 10px;font-size: 12px;">${notEnough}: ${balanceNeeded}</p>
+                               style="height: 10px;font-size: 12px;">${notEnough}: ${formattedBalanceNeeded}</p>
                         </c:if>
                     </div>
                     <button type="submit" class="btn btn-default">${refill}</button>
