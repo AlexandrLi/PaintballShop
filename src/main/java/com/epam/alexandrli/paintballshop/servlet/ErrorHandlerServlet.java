@@ -21,11 +21,10 @@ public class ErrorHandlerServlet extends HttpServlet {
         String requestUri = (String) req.getAttribute("javax.servlet.error.request_uri");
         req.setAttribute("statusCode", statusCode);
         if (statusCode == 404 || statusCode == 403) {
-            req.setAttribute("errorMessage", message);
-            logger.debug("Exception. Status code: {}. Request URI: {}. Current user: {}.", statusCode, requestUri, req.getSession(false).getAttribute("user"));
+            logger.warn("Error. Status code: {}. Request URI: {}. Message: {}. Current user: {}.", statusCode, requestUri, message, req.getSession(false).getAttribute("loggedUser"));
         } else {
             Exception exception = (Exception) req.getAttribute("javax.servlet.error.exception");
-            logger.debug("Exception. Status code: {}. Request URI: {}. Exception: {}.", statusCode, requestUri, exception);
+            logger.error("Error. Status code: {}. Request URI: {}. Exception: {}.", statusCode, requestUri, exception);
         }
         req.getRequestDispatcher("/WEB-INF/jsp/error-page.jsp").forward(req, resp);
     }

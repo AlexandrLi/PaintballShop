@@ -1,6 +1,8 @@
 package com.epam.alexandrli.paintballshop.servlet;
 
 import com.epam.alexandrli.paintballshop.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @WebFilter(filterName = "SecurityFilter", urlPatterns = "/do/*")
 public class SecurityFilter implements Filter {
+    public static final Logger logger = LoggerFactory.getLogger(SecurityFilter.class);
     List<String> guestAccessList;
     List<String> userAccessList;
 
@@ -24,7 +27,6 @@ public class SecurityFilter implements Filter {
         guestAccessList.add("/register");
         guestAccessList.add("/login");
         guestAccessList.add("/locale");
-        guestAccessList.add("/set/pagesize");
         userAccessList = new ArrayList<>(guestAccessList);
 
     }
@@ -40,6 +42,7 @@ public class SecurityFilter implements Filter {
         if (user == null) {
             if (!guestAccessList.contains(pathInfo) && !pathInfo.startsWith("/cart") || pathInfo.endsWith("buy")) {
                 response.sendRedirect(request.getContextPath() + "/do/login");
+                logger.info("Not logged user redirected to login page from {}", pathInfo);
                 return;
             }
         } else if (pathInfo.startsWith("/login")) {

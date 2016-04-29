@@ -1,5 +1,8 @@
 package com.epam.alexandrli.paintballshop.servlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +15,11 @@ import java.util.Map;
 
 @WebFilter(filterName = "FlashScopeFilter", urlPatterns = "/do/*")
 public class FlashScopeFilter implements Filter {
+    public static final Logger logger = LoggerFactory.getLogger(FlashScopeFilter.class);
     private static final String FLASH_SESSION_KEY = "FLASH_SESSION_KEY";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -32,8 +35,10 @@ public class FlashScopeFilter implements Filter {
             if (flashParams != null) {
                 for (Map.Entry<String, Object> flashEntry : flashParams.entrySet()) {
                     request.setAttribute(flashEntry.getKey(), flashEntry.getValue());
+                    logger.debug("Params added to request. Param name: {}. Param value: {}", flashEntry.getKey(), flashEntry.getValue());
                 }
                 session.removeAttribute(FLASH_SESSION_KEY);
+                logger.debug("Flash params removed from session");
             }
         }
         chain.doFilter(request, response);
@@ -50,12 +55,12 @@ public class FlashScopeFilter implements Filter {
             if (flashParams.size() > 0) {
                 session = request.getSession(false);
                 session.setAttribute(FLASH_SESSION_KEY, flashParams);
+                logger.debug("Flash params added to session");
             }
         }
     }
 
     @Override
     public void destroy() {
-
     }
 }

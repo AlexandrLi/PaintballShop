@@ -3,12 +3,15 @@ package com.epam.alexandrli.paintballshop.action;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.ShopService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ShowManageUsersPageAction implements Action {
+    public static final Logger logger = LoggerFactory.getLogger(ShowManageUsersPageAction.class);
     public final String FIRST_PAGE = "1";
     public final String DEFAULT_PAGE_SIZE = "3";
 
@@ -41,6 +44,7 @@ public class ShowManageUsersPageAction implements Action {
         req.setAttribute("pagesCount", pageCount);
         req.setAttribute("page", page);
         req.setAttribute("pageSize", pageSize);
+        logger.info("Page number: {}. Page size: {}. Pages count: {}", page, pageSize, pageCount);
         return new ActionResult("users");
     }
 

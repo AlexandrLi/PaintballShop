@@ -4,12 +4,15 @@ import com.epam.alexandrli.paintballshop.entity.Order;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ShowUserOrdersPageAction implements Action {
+    public static final Logger logger = LoggerFactory.getLogger(ShowUserOrdersPageAction.class);
     public final String FIRST_PAGE = "1";
     public final String DEFAULT_PAGE_SIZE = "3";
 
@@ -49,6 +52,7 @@ public class ShowUserOrdersPageAction implements Action {
         req.setAttribute("pagesCount", pageCount);
         req.setAttribute("page", page);
         req.setAttribute("pageSize", pageSize);
+        logger.info("Page number: {}. Page size: {}. Pages count: {}", page, pageSize, pageCount);
         return new ActionResult("user-orders");
     }
 }

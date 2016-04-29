@@ -1,18 +1,21 @@
 package com.epam.alexandrli.paintballshop.action;
 
+import com.epam.alexandrli.paintballshop.Validator;
 import com.epam.alexandrli.paintballshop.entity.Address;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
-import com.epam.alexandrli.paintballshop.service.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.epam.alexandrli.paintballshop.service.Validator.NOT_EMPTY_NUMBER;
-import static com.epam.alexandrli.paintballshop.service.Validator.NOT_EMPTY_TEXT;
+import static com.epam.alexandrli.paintballshop.Validator.NOT_EMPTY_NUMBER;
+import static com.epam.alexandrli.paintballshop.Validator.NOT_EMPTY_TEXT;
 
 public class EditUserAddressAction implements Action {
+    public static final Logger logger = LoggerFactory.getLogger(EditUserAddressAction.class);
     private Validator validator = new Validator();
     private boolean invalid;
 
@@ -44,16 +47,18 @@ public class EditUserAddressAction implements Action {
             Address updatedAddress = userService.updateUserAddress(currentUserAddress);
             req.getSession(false).removeAttribute("address");
             req.setAttribute("address", updatedAddress);
+            logger.info("{} updated his address to {}", currentUser, updatedAddress);
+            return new ActionResult("user/profile", true);
         } catch (ServiceException e) {
             throw new ActionException("Could not update profile", e);
         }
-        return new ActionResult("user/profile", true);
     }
 
     private void checkParameter(String parameterValue, String parameterName, String regex, HttpServletRequest req) {
         if (!validator.validate(parameterValue, regex)) {
             req.setAttribute(parameterName + "Error", "true");
             invalid = true;
+            logger.info("Invalid format for {} - {}", parameterName, parameterValue);
         }
     }
 }

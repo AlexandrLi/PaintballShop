@@ -1,13 +1,15 @@
 package com.epam.alexandrli.paintballshop.action;
 
+import com.epam.alexandrli.paintballshop.Validator;
 import com.epam.alexandrli.paintballshop.entity.Image;
 import com.epam.alexandrli.paintballshop.entity.Product;
 import com.epam.alexandrli.paintballshop.entity.ProductType;
 import com.epam.alexandrli.paintballshop.service.ProductService;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
-import com.epam.alexandrli.paintballshop.service.Validator;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
-import static com.epam.alexandrli.paintballshop.service.Validator.MONEY;
+import static com.epam.alexandrli.paintballshop.Validator.MONEY;
 
 public class AddProductAction implements Action {
+    public static final Logger logger = LoggerFactory.getLogger(AddProductAction.class);
     private Validator validator = new Validator();
 
     @Override
@@ -37,6 +40,7 @@ public class AddProductAction implements Action {
             if (!validator.validate(price, MONEY)) {
                 req.setAttribute("moneyError", "true");
                 req.setAttribute("product", product);
+                logger.info("Invalid money format - {}", price);
                 return new ActionResult("add-product");
             }
             product.setPrice(Money.parse("KZT " + price));
@@ -44,6 +48,7 @@ public class AddProductAction implements Action {
             if (!imagePart.getContentType().startsWith("image")) {
                 req.setAttribute("imageError", "true");
                 req.setAttribute("product", product);
+                logger.info("Invalid content type - {}", imagePart.getContentType());
                 return new ActionResult("add-product");
             }
             Image image = new Image();
@@ -53,6 +58,7 @@ public class AddProductAction implements Action {
             image.setContent(imagePart.getInputStream());
             Product newProduct = productService.addProduct(product, image);
             productService.addProductOnStorage(newProduct);
+            logger.info("{} inserted in db and added on central storage by {}", newProduct, req.getSession(false).getAttribute("loggedUser"));
         } catch (ServiceException | IOException | ServletException e) {
             throw new ActionException("Could not add product", e);
         }

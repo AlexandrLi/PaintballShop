@@ -24,7 +24,7 @@ public class ActionFactory {
         actions.put("GET/logout", new LogoutAction());
         actions.put("GET/user/profile", new ShowProfilePageAction());
         actions.put("GET/order", new ShowOrderPageAction());
-        actions.put("GET/cart/deleteitem", new RemoveItemAction());
+        actions.put("GET/cart/deleteitem", new DeleteItemAction());
         actions.put("GET/cart/clear", new ClearCartAction());
         actions.put("GET/cart/buy", new BuyCartAction());
         actions.put("GET/manage/users", new ShowManageUsersPageAction());
@@ -49,7 +49,6 @@ public class ActionFactory {
         actions.put("POST/cart/add", new AddToCartAction());
         actions.put("POST/cart/description", new AddCartDescriptionAction());
         actions.put("POST/cart/recount", new RecountCartAction());
-        actions.put("POST/set/pagesize", new SetPageSizeAction());
     }
 
     public Action getAction(String actionName) {

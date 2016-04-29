@@ -4,6 +4,8 @@ import com.epam.alexandrli.paintballshop.action.Action;
 import com.epam.alexandrli.paintballshop.action.ActionException;
 import com.epam.alexandrli.paintballshop.action.ActionFactory;
 import com.epam.alexandrli.paintballshop.action.ActionResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "FrontControllerServlet", urlPatterns = "/do/*")
 @MultipartConfig(maxFileSize = 20 * 1024 * 1024)
 public class FrontControllerServlet extends HttpServlet {
+    public static final Logger logger = LoggerFactory.getLogger(FrontControllerServlet.class);
     private ActionFactory actionFactory;
 
     @Override
@@ -31,9 +34,11 @@ public class FrontControllerServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
             return;
         }
+        logger.debug("{} init by key: '{}'", action.getClass().getSimpleName(), actionName);
         ActionResult result;
         try {
             result = action.execute(req, resp);
+            logger.debug("Action result view: {}. Redirect: {}", result.getView(), result.isRedirect());
         } catch (ActionException e) {
             throw new ServletException("Could not perform action", e);
         }

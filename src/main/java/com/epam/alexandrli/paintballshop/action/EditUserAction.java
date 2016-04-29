@@ -1,17 +1,20 @@
 package com.epam.alexandrli.paintballshop.action;
 
+import com.epam.alexandrli.paintballshop.Validator;
 import com.epam.alexandrli.paintballshop.entity.Address;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
-import com.epam.alexandrli.paintballshop.service.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.epam.alexandrli.paintballshop.service.Validator.*;
+import static com.epam.alexandrli.paintballshop.Validator.*;
 
 public class EditUserAction implements Action {
+    public static final Logger logger = LoggerFactory.getLogger(EditUserAction.class);
     private Validator validator = new Validator();
     private boolean invalid;
 
@@ -25,8 +28,8 @@ public class EditUserAction implements Action {
             if (!userService.checkEmail(email)) {
                 req.setAttribute("emailError", "true");
                 invalid = true;
+                logger.info("Email already taken - {}", email);
             }
-
         } catch (ServiceException e) {
             throw new ActionException("Could not register user", e);
         }
@@ -52,8 +55,8 @@ public class EditUserAction implements Action {
 
         if (invalid) {
             invalid = false;
-            req.setAttribute("user",user);
-            req.setAttribute("address",user.getAddress());
+            req.setAttribute("user", user);
+            req.setAttribute("address", user.getAddress());
             return new ActionResult("edit-user");
         }
         try {
@@ -76,16 +79,18 @@ public class EditUserAction implements Action {
             userService.updateUserAddress(userAddress);
             userService.updateUserProfile(user);
             req.getSession(false).removeAttribute("genders");
+            logger.info("{} updated data to {}, {}", req.getSession(false).getAttribute("loggedUser"), user, userAddress);
+            return new ActionResult("manage/users", true);
         } catch (ServiceException e) {
             throw new ActionException("Could not update profile", e);
         }
-        return new ActionResult("manage/users", true);
     }
 
     private void checkParameter(String parameterValue, String parameterName, String regex, HttpServletRequest req) {
         if (!validator.validate(parameterValue, regex)) {
             req.setAttribute(parameterName + "Error", "true");
             invalid = true;
+            logger.info("Invalid format for {} - {}", parameterName, parameterValue);
         }
     }
 }
