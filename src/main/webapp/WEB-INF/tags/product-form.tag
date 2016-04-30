@@ -20,7 +20,7 @@
 <%--@elvariable id="product" type="com.epam.alexandrli.paintballshop.entity.Product"--%>
 <%--@elvariable id="types" type="java.util.List"--%>
 <%--@elvariable id="type" type="com.epam.alexandrli.paintballshop.entity.ProductType"--%>
-<form role="form" action="<c:url value="${action}"/>" method="post"
+<form name="product" action="<c:url value="${action}"/>" method="post"
       enctype="multipart/form-data">
     <input hidden name="id" value="${product.id}">
     <div class="col-lg-6" style="width: 300px">
