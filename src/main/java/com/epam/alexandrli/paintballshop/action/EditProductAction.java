@@ -31,12 +31,6 @@ public class EditProductAction implements Action {
             return new ActionResult(req.getHeader("referer"), true);
         }
         try {
-            Part imagePart = req.getPart("image");
-            if (!imagePart.getContentType().startsWith("image")) {
-                req.setAttribute("flash.imageError", "true");
-                logger.info("Invalid content type - {}", imagePart.getContentType());
-                return new ActionResult(req.getHeader("referer"), true);
-            }
             String id = req.getParameter("id");
             String name = req.getParameter("name");
             String type = req.getParameter("typeId");
@@ -50,7 +44,13 @@ public class EditProductAction implements Action {
             product.setDescriptionRu(descriptionRu);
             product.setDescriptionEn(descriptionEn);
             productService.updateProduct(product);
+            Part imagePart = req.getPart("image");
             if (imagePart.getSize() != 0) {
+                if (!imagePart.getContentType().startsWith("image")) {
+                    req.setAttribute("flash.imageError", "true");
+                    logger.info("Invalid content type - {}", imagePart.getContentType());
+                    return new ActionResult(req.getHeader("referer"), true);
+                }
                 Image image = productService.getProductPreviewImage(id);
                 image.setName(name.replaceAll("\\s", "").toLowerCase());
                 image.setContentType(imagePart.getContentType());

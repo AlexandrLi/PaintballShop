@@ -16,9 +16,9 @@ public class ShowEditProductPageAction implements Action {
         ShopService shopService = new ShopService();
         ProductService productService = new ProductService();
         try {
-            Product product = productService.getProductById(req.getParameter("id"));
+            Product product = productService.getFilledProduct(req.getParameter("id"));
             req.setAttribute("product", product);
-            List<ProductType> types = shopService.getAllProductTypes();
+            List<ProductType> types = shopService.getFilledProductTypes();
             req.setAttribute("types", types);
         } catch (ServiceException e) {
             throw new ActionException("Could not show product edit page", e);

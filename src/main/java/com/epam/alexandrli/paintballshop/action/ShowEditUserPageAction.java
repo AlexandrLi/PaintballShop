@@ -16,7 +16,7 @@ public class ShowEditUserPageAction implements Action {
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) throws ActionException {
         try {
             UserService userService = new UserService();
-            User user = userService.getUserById(Integer.valueOf(req.getParameter("id")));
+            User user = userService.getFilledUserById(Integer.valueOf(req.getParameter("id")));
             Address userAddress = userService.getUserAddress(user);
             ShopService shopService = new ShopService();
             List<Gender> genders = shopService.getAllGenders();

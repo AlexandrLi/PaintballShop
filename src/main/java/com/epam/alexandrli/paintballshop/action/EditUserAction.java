@@ -24,7 +24,7 @@ public class EditUserAction implements Action {
         User user;
         String email = req.getParameter("email");
         try {
-            user = userService.getUserById(Integer.valueOf(req.getParameter("userId")));
+            user = userService.getFilledUserById(Integer.valueOf(req.getParameter("userId")));
             if (!userService.checkEmail(email)) {
                 req.setAttribute("emailError", "true");
                 invalid = true;
