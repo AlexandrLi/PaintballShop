@@ -85,7 +85,7 @@ public class UserService {
         return null;
     }
 
-    public User getUserById(Integer id) throws ServiceException {
+    public User getFilledUserById(Integer id) throws ServiceException {
         User user;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
             GenericDao<User> userDao = jdbcDaoFactory.getDao(User.class);

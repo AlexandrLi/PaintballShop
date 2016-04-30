@@ -75,6 +75,22 @@ public class ShopService {
         return types;
     }
 
+    public List<ProductType> getFilledProductTypes() throws ServiceException {
+        List<ProductType> types;
+        try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
+            GenericDao<ProductType> productTypeDao = jdbcDaoFactory.getDao(ProductType.class);
+            GenericDao<Characteristic> characteristicDao = jdbcDaoFactory.getDao(Characteristic.class);
+            types = productTypeDao.findAll();
+            types = types.stream().filter(productType -> !productType.isDeleted()).collect(Collectors.toList());
+            for (ProductType type : types) {
+                type.getCharacteristics().addAll(characteristicDao.findAllByParams(Collections.singletonMap("product_type_id", type.getId().toString())));
+            }
+        } catch (DaoException e) {
+            throw new ServiceException("Could not get product type list", e);
+        }
+        return types;
+    }
+
     public User buyCart(Order cart) throws ServiceException {
         User cartUser;
         try (DaoFactory jdbcDaoFactory = getDaoFactory(JDBC)) {
