@@ -52,12 +52,12 @@
                                     <input hidden name="orderId" value="${order.id}">
                                     <select class="form-control" id="status" name="statusId"
                                             onchange="this.form.submit()">
+                                        <c:forEach items="${statuses}" var="status">
+                                            <option value="${status.id}"<c:if
+                                                    test="${order.status.equals(status)}"> selected </c:if>>${status.getName(locale)}</option>
+                                        </c:forEach>
+                                    </select>
                                 </form>
-                                <c:forEach items="${statuses}" var="status">
-                                    <option value="${status.id}"<c:if
-                                            test="${order.status.equals(status)}"> selected </c:if>>${status.getName(locale)}</option>
-                                </c:forEach>
-                                </select>
                             </div>
                         </td>
                         <td style="width: 100px"><a class="btn btn-default"
