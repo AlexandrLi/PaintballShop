@@ -107,7 +107,7 @@ public abstract class AbstractJdbcDao<T extends BaseEntity> implements GenericDa
     @SuppressWarnings("SqlResolve")
     public void delete(Integer id) throws DaoException {
         try (Statement st = connection.createStatement()) {
-            st.execute("UPDATE " + getTableName() + " SET deleted=1" + WHERE_ID + id);
+            st.executeUpdate("UPDATE " + getTableName() + " SET deleted=1" + WHERE_ID + id);
             logger.debug("Entity with id = {} deleted from {} table", id, getTableName());
         } catch (SQLException e) {
             throw new DaoException("Could not delete object by id", e);
