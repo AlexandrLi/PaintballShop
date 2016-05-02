@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop;
+package com.epam.alexandrli.paintballshop.validator;
 
 public class Validator {
     public static final String EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

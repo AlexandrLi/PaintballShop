@@ -1,6 +1,6 @@
 package com.epam.alexandrli.paintballshop.action;
 
-import com.epam.alexandrli.paintballshop.Validator;
+import com.epam.alexandrli.paintballshop.validator.Validator;
 import com.epam.alexandrli.paintballshop.entity.Order;
 import com.epam.alexandrli.paintballshop.entity.OrderItem;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.alexandrli.paintballshop.Validator.PRODUCT_AMOUNT;
+import static com.epam.alexandrli.paintballshop.validator.Validator.PRODUCT_AMOUNT;
 
 public class RecountCartAction implements Action {
     public static final Logger logger = LoggerFactory.getLogger(RecountCartAction.class);

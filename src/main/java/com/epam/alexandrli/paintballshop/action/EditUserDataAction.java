@@ -1,6 +1,6 @@
 package com.epam.alexandrli.paintballshop.action;
 
-import com.epam.alexandrli.paintballshop.Validator;
+import com.epam.alexandrli.paintballshop.validator.Validator;
 import com.epam.alexandrli.paintballshop.entity.User;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.UserService;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.epam.alexandrli.paintballshop.Validator.*;
+import static com.epam.alexandrli.paintballshop.validator.Validator.*;
 
 public class EditUserDataAction implements Action {
     public static final Logger logger = LoggerFactory.getLogger(EditUserDataAction.class);

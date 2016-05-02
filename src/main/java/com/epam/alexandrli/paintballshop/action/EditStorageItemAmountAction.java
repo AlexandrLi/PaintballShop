@@ -1,6 +1,6 @@
 package com.epam.alexandrli.paintballshop.action;
 
-import com.epam.alexandrli.paintballshop.Validator;
+import com.epam.alexandrli.paintballshop.validator.Validator;
 import com.epam.alexandrli.paintballshop.service.ServiceException;
 import com.epam.alexandrli.paintballshop.service.ShopService;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.epam.alexandrli.paintballshop.Validator.STORAGE_AMOUNT;
+import static com.epam.alexandrli.paintballshop.validator.Validator.STORAGE_AMOUNT;
 
 public class EditStorageItemAmountAction implements Action {
     public static final Logger logger = LoggerFactory.getLogger(EditStorageItemAmountAction.class);

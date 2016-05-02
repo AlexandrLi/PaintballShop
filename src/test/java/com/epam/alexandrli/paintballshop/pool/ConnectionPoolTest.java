@@ -1,4 +1,4 @@
-package com.epam.alexandrli.paintballshop.connectionpool;
+package com.epam.alexandrli.paintballshop.pool;
 
 import org.junit.Test;
 

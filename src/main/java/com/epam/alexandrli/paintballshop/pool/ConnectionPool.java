@@ -1,7 +1,7 @@
-package com.epam.alexandrli.paintballshop.connectionpool;
+package com.epam.alexandrli.paintballshop.pool;
 
-import com.epam.alexandrli.paintballshop.PropertyManager;
-import com.epam.alexandrli.paintballshop.PropertyManagerException;
+import com.epam.alexandrli.paintballshop.util.PropertyManager;
+import com.epam.alexandrli.paintballshop.util.PropertyManagerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

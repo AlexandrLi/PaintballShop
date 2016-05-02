@@ -1,6 +1,6 @@
 package com.epam.alexandrli.paintballshop.action;
 
-import com.epam.alexandrli.paintballshop.Validator;
+import com.epam.alexandrli.paintballshop.validator.Validator;
 import com.epam.alexandrli.paintballshop.entity.Image;
 import com.epam.alexandrli.paintballshop.entity.Product;
 import com.epam.alexandrli.paintballshop.entity.ProductType;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
-import static com.epam.alexandrli.paintballshop.Validator.MONEY;
+import static com.epam.alexandrli.paintballshop.validator.Validator.MONEY;
 
 public class AddProductAction implements Action {
     public static final Logger logger = LoggerFactory.getLogger(AddProductAction.class);

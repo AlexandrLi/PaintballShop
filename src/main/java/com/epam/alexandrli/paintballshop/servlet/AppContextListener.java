@@ -1,6 +1,6 @@
 package com.epam.alexandrli.paintballshop.servlet;
 
-import com.epam.alexandrli.paintballshop.connectionpool.ConnectionPool;
+import com.epam.alexandrli.paintballshop.pool.ConnectionPool;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
