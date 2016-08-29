@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 public class JdbcStorageItemDao extends AbstractJdbcDao<StorageItem> {
 
-    public static final String INSERT_ORDER_ITEM = "INSERT INTO shopdb.storage_item(amount, storage_id, product_id) VALUES (?,?,?)";
-    public static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE shopdb.storage_item SET amount=?, storage_id=?, product_id=? WHERE id=?";
+    private static final String INSERT_ORDER_ITEM = "INSERT INTO storage_item(amount, storage_id, product_id) VALUES (?,?,?)";
+    private static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE storage_item SET amount=?, storage_id=?, product_id=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {

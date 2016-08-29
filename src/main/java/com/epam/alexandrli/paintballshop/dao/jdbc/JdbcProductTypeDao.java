@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class JdbcProductTypeDao extends AbstractJdbcDao<ProductType> {
 
-    public static final String INSERT_PRODUCT_TYPE = "INSERT INTO shopdb.product_type(name_ru, name_en) VALUES (?,?)";
-    public static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE shopdb.product_type SET name_ru=?,name_en=? WHERE id=?";
+    private static final String INSERT_PRODUCT_TYPE = "INSERT INTO product_type(name_ru, name_en) VALUES (?,?)";
+    private static final String UPDATE_PRODUCT_TYPE_BY_ID = "UPDATE product_type SET name_ru=?,name_en=? WHERE id=?";
 
     @SuppressWarnings("Duplicates")
     @Override

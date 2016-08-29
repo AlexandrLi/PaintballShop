@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 
 public class JdbcImageDao extends AbstractJdbcDao<Image> {
 
-    public static final String INSERT_IMAGE = "INSERT INTO shopdb.image(name, content, product_id, modified, content_type) VALUES (?,?,?,?,?)";
-    public static final String UPDATE_IMAGE_BY_ID = "UPDATE shopdb.image SET name=?, content=?, product_id=?, modified=?, content_type=? WHERE id=?";
+    private static final String INSERT_IMAGE = "INSERT INTO image(name, content, product_id, modified, content_type) VALUES (?,?,?,?,?)";
+    private static final String UPDATE_IMAGE_BY_ID = "UPDATE image SET name=?, content=?, product_id=?, modified=?, content_type=? WHERE id=?";
 
     @Override
     protected Image getObjectFromResultSet(ResultSet rs) throws DaoException {

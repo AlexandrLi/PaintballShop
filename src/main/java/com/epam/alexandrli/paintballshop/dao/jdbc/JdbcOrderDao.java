@@ -13,8 +13,8 @@ import java.sql.Timestamp;
 
 public class JdbcOrderDao extends AbstractJdbcDao<Order> {
 
-    public static final String INSERT_ORDER = "INSERT INTO shopdb.order(created, user_id, description, order_status_id) VALUES (?,?,?,?)";
-    public static final String UPDATE_ORDER_BY_ID = "UPDATE shopdb.order SET created=?, user_id=?, description=?, order_status_id=? WHERE id=?";
+    private static final String INSERT_ORDER = "INSERT INTO \"ORDER\"(created, user_id, description, order_status_id) VALUES (?,?,?,?)";
+    private static final String UPDATE_ORDER_BY_ID = "UPDATE \"ORDER\" SET created=?, user_id=?, description=?, order_status_id=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {

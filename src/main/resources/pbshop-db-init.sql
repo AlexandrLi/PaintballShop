@@ -1,3 +1,4 @@
+# noinspection SqlResolveForFile
 # MySQL server variables are temporarily set to enable faster SQL import by the server.
 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
@@ -365,3 +366,12 @@ INSERT INTO order_item (amount, order_id, product_id) VALUES (2, 2, 2);
 INSERT INTO order_item (amount, order_id, product_id) VALUES (2, 2, 5);
 INSERT INTO order_item (amount, order_id, product_id) VALUES (2, 2, 8);
 
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('m2rasta',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\m2-rasta.jpg'),1,now(),'image/jpg');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('m2tiger',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\m2-tiger.jpg'),2,now(),'image/jpg');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('m2woody',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\m2-woody.jpeg'),3,now(),'image/jpeg');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('r2rasta',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\r2-rasta.png'),4,now(),'image/png');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('r2tiger',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\r2-tiger.png'),5,now(),'image/png');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('r2woody',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\r2-woody.jpg'),6,now(),'image/jpg');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('i4rasta',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\i4-rasta.jpg'),7,now(),'image/jpg');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('i4tiger',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\i4-tiger.png'),8,now(),'image/png');
+INSERT INTO PUBLIC.IMAGE(NAME, CONTENT, PRODUCT_ID, MODIFIED, CONTENT_TYPE) VALUES ('i4woody',file_read('D:\dev\projects\PaintballShop\src\main\webapp\images\i4-woody.png'),9,now(),'image/png');

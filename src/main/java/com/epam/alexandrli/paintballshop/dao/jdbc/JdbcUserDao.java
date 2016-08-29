@@ -13,8 +13,8 @@ import java.sql.SQLException;
 
 public class JdbcUserDao extends AbstractJdbcDao<User> {
 
-    public static final String INSERT_USER = "INSERT INTO shopdb.user(email, password, role, first_name, last_name, phone_number, gender_id, cash, address_id) VALUES (?,?,?,?,?,?,?,?,?)";
-    public static final String UPDATE_USER_BY_ID = "UPDATE shopdb.user SET email=?, password=?, role=?, first_name=?, last_name=?, phone_number=?, gender_id=?, cash=?, address_id=? WHERE id=?";
+    private static final String INSERT_USER = "INSERT INTO user(email, password, role, first_name, last_name, phone_number, gender_id, cash, address_id) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String UPDATE_USER_BY_ID = "UPDATE user SET email=?, password=?, role=?, first_name=?, last_name=?, phone_number=?, gender_id=?, cash=?, address_id=? WHERE id=?";
 
     @Override
     protected User getObjectFromResultSet(ResultSet rs) throws DaoException {

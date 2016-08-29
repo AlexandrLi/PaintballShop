@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 public class JdbcOrderItemDao extends AbstractJdbcDao<OrderItem> {
 
-    public static final String INSERT_ORDER_ITEM = "INSERT INTO shopdb.order_item(amount, order_id, product_id) VALUES (?,?,?)";
-    public static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE shopdb.order_item SET amount=?, order_id=?, product_id=? WHERE id=?";
+    private static final String INSERT_ORDER_ITEM = "INSERT INTO order_item(amount, order_id, product_id) VALUES (?,?,?)";
+    private static final String UPDATE_ORDER_ITEM_BY_ID = "UPDATE order_item SET amount=?, order_id=?, product_id=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {

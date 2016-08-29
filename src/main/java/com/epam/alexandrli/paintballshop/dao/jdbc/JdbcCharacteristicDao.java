@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class JdbcCharacteristicDao extends AbstractJdbcDao<Characteristic> {
 
-    public static final String INSERT_CHARACTERISTIC = "INSERT INTO shopdb.characteristic(name_ru, name_en, product_type_id) VALUES (?,?,?)";
-    public static final String UPDATE_CHARACTERISTIC_BY_ID = "UPDATE shopdb.characteristic SET name_ru=?, name_en=?, product_type_id=?  WHERE id=?";
+    private static final String INSERT_CHARACTERISTIC = "INSERT INTO characteristic(name_ru, name_en, product_type_id) VALUES (?,?,?)";
+    private static final String UPDATE_CHARACTERISTIC_BY_ID = "UPDATE characteristic SET name_ru=?, name_en=?, product_type_id=?  WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {

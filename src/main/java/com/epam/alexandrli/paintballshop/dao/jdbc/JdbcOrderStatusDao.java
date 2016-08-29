@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class JdbcOrderStatusDao extends AbstractJdbcDao<OrderStatus> {
 
-    public static final String INSERT_ORDER_STATUS = "INSERT INTO shopdb.order_status(name_ru, name_en) VALUES (?,?)";
-    public static final String UPDATE_ORDER_STATUS_BY_ID = "UPDATE shopdb.order_status SET name_ru=?, name_en=? WHERE id=?";
+    private static final String INSERT_ORDER_STATUS = "INSERT INTO order_status(name_ru, name_en) VALUES (?,?)";
+    private static final String UPDATE_ORDER_STATUS_BY_ID = "UPDATE order_status SET name_ru=?, name_en=? WHERE id=?";
 
     @SuppressWarnings("Duplicates")
     @Override

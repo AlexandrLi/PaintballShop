@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ConnectionPoolTest {
 
-    public static final int NUMBER_OF_TASKS = 5000;
+    public static final int NUMBER_OF_TASKS = 1000;
     public static final int NUMBER_OF_THREADS = 30;
     public static AtomicInteger completedTasksCount = new AtomicInteger(0);
 

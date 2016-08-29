@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class JdbcStorageDao extends AbstractJdbcDao<Storage> {
 
-    public static final String INSERT_STORAGE = "INSERT INTO shopdb.storage(name, description_ru, description_en) VALUES (?,?,?)";
-    public static final String UPDATE_STORAGE_BY_ID = "UPDATE shopdb.storage SET name=?, description_ru=?, description_en=? WHERE id=?";
+    private static final String INSERT_STORAGE = "INSERT INTO storage(name, description_ru, description_en) VALUES (?,?,?)";
+    private static final String UPDATE_STORAGE_BY_ID = "UPDATE storage SET name=?, description_ru=?, description_en=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {

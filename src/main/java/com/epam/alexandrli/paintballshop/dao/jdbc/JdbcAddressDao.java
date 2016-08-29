@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class JdbcAddressDao extends AbstractJdbcDao<Address> {
 
-    public static final String INSERT_ADDRESS = "INSERT INTO shopdb.address(country, city, street, building_number, apartment_number) VALUES (?,?,?,?,?)";
-    public static final String UPDATE_ADDRESS_BY_ID = "UPDATE address SET country=?, city=?, street=?, building_number=?, apartment_number=? WHERE id=?";
+    private static final String INSERT_ADDRESS = "INSERT INTO address(country, city, street, building_number, apartment_number) VALUES (?,?,?,?,?)";
+    private static final String UPDATE_ADDRESS_BY_ID = "UPDATE address SET country=?, city=?, street=?, building_number=?, apartment_number=? WHERE id=?";
 
     @Override
     protected String getQueryForInsert() {
